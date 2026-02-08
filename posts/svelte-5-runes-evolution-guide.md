@@ -15,7 +15,7 @@ Runes are **reactive primitives** that provide explicit, fine-grained reactivity
 
 ```javascript
 // Svelte 5 Runes - Explicit and powerful
-import { $state, $derived, $effect } from 'svelte';
+import { $state, $derived, $effect } from "svelte";
 
 let count = $state(0);
 let doubled = $derived(() => count * 2);
@@ -30,16 +30,17 @@ $effect(() => {
 ### 1. State Management
 
 #### Svelte 4 - Implicit Reactivity
+
 ```svelte
 <!-- Svelte 4 -->
 <script>
   let count = 0;
   let name = 'World';
-  
+
   // Reactive declarations
   $: doubled = count * 2;
   $: greeting = `Hello, ${name}!`;
-  
+
   // Reactive statements
   $: if (count > 10) {
     console.log('Count is getting high!');
@@ -52,18 +53,19 @@ $effect(() => {
 ```
 
 #### Svelte 5 - Explicit Runes
+
 ```svelte
 <!-- Svelte 5 -->
 <script>
   import { $state, $derived, $effect } from 'svelte';
-  
+
   let count = $state(0);
   let name = $state('World');
-  
+
   // Derived state
   let doubled = $derived(() => count * 2);
   let greeting = $derived(() => `Hello, ${name}!`);
-  
+
   // Effects
   $effect(() => {
     if (count > 10) {
@@ -78,6 +80,7 @@ $effect(() => {
 ```
 
 **Key Improvements:**
+
 - ✅ **Explicit state** - `$state()` makes reactive variables clear
 - ✅ **Better performance** - Fine-grained reactivity tracking
 - ✅ **Type safety** - Better TypeScript inference
@@ -86,6 +89,7 @@ $effect(() => {
 ### 2. Complex State Objects
 
 #### Svelte 4 - Assignment-based Reactivity
+
 ```svelte
 <!-- Svelte 4 -->
 <script>
@@ -97,7 +101,7 @@ $effect(() => {
       language: 'en'
     }
   };
-  
+
   // Need to reassign for reactivity
   function updateTheme(newTheme) {
     user = {
@@ -108,7 +112,7 @@ $effect(() => {
       }
     };
   }
-  
+
   function incrementAge() {
     user = { ...user, age: user.age + 1 };
   }
@@ -121,11 +125,12 @@ $effect(() => {
 ```
 
 #### Svelte 5 - Deep Reactivity with Runes
+
 ```svelte
 <!-- Svelte 5 -->
 <script>
   import { $state } from 'svelte';
-  
+
   let user = $state({
     name: 'John',
     age: 30,
@@ -134,12 +139,12 @@ $effect(() => {
       language: 'en'
     }
   });
-  
+
   // Direct mutation works!
   function updateTheme(newTheme) {
     user.preferences.theme = newTheme;
   }
-  
+
   function incrementAge() {
     user.age++;
   }
@@ -152,6 +157,7 @@ $effect(() => {
 ```
 
 **Revolutionary Changes:**
+
 - 🚀 **Deep reactivity** - Nested object mutations are tracked
 - 🚀 **Natural mutations** - No more spread operator gymnastics
 - 🚀 **Better performance** - Only affected parts re-render
@@ -160,6 +166,7 @@ $effect(() => {
 ### 3. Derived State and Computations
 
 #### Svelte 4 - Reactive Declarations
+
 ```svelte
 <!-- Svelte 4 -->
 <script>
@@ -168,65 +175,67 @@ $effect(() => {
     { id: 2, name: 'Bread', price: 2.5, category: 'bakery' },
     { id: 3, name: 'Milk', price: 3.0, category: 'dairy' }
   ];
-  
+
   let filter = '';
   let sortBy = 'name';
-  
+
   // Complex reactive declarations
-  $: filteredItems = items.filter(item => 
+  $: filteredItems = items.filter(item =>
     item.name.toLowerCase().includes(filter.toLowerCase())
   );
-  
+
   $: sortedItems = filteredItems.sort((a, b) => {
     if (sortBy === 'price') return a.price - b.price;
     return a.name.localeCompare(b.name);
   });
-  
+
   $: totalPrice = sortedItems.reduce((sum, item) => sum + item.price, 0);
   $: averagePrice = sortedItems.length > 0 ? totalPrice / sortedItems.length : 0;
 </script>
 ```
 
 #### Svelte 5 - Derived Runes
+
 ```svelte
 <!-- Svelte 5 -->
 <script>
   import { $state, $derived } from 'svelte';
-  
+
   let items = $state([
     { id: 1, name: 'Apple', price: 1.2, category: 'fruit' },
     { id: 2, name: 'Bread', price: 2.5, category: 'bakery' },
     { id: 3, name: 'Milk', price: 3.0, category: 'dairy' }
   ]);
-  
+
   let filter = $state('');
   let sortBy = $state('name');
-  
+
   // Derived state with clear dependencies
-  let filteredItems = $derived(() => 
-    items.filter(item => 
+  let filteredItems = $derived(() =>
+    items.filter(item =>
       item.name.toLowerCase().includes(filter.toLowerCase())
     )
   );
-  
-  let sortedItems = $derived(() => 
+
+  let sortedItems = $derived(() =>
     filteredItems.sort((a, b) => {
       if (sortBy === 'price') return a.price - b.price;
       return a.name.localeCompare(b.name);
     })
   );
-  
-  let totalPrice = $derived(() => 
+
+  let totalPrice = $derived(() =>
     sortedItems.reduce((sum, item) => sum + item.price, 0)
   );
-  
-  let averagePrice = $derived(() => 
+
+  let averagePrice = $derived(() =>
     sortedItems.length > 0 ? totalPrice / sortedItems.length : 0
   );
 </script>
 ```
 
 **Derived State Benefits:**
+
 - 🎯 **Explicit dependencies** - Clear what each computation depends on
 - 🎯 **Better caching** - More efficient memoization
 - 🎯 **Easier debugging** - Clear computation chains
@@ -235,39 +244,40 @@ $effect(() => {
 ### 4. Side Effects and Lifecycle
 
 #### Svelte 4 - Reactive Statements and Lifecycle
+
 ```svelte
 <!-- Svelte 4 -->
 <script>
   import { onMount, onDestroy } from 'svelte';
-  
+
   let count = 0;
   let data = null;
   let interval;
-  
+
   // Reactive side effects
   $: if (count > 0) {
     console.log(`Count changed to ${count}`);
   }
-  
+
   $: {
     // Complex reactive block
     if (count % 5 === 0 && count > 0) {
       fetchData();
     }
   }
-  
+
   onMount(() => {
     interval = setInterval(() => {
       count++;
     }, 1000);
   });
-  
+
   onDestroy(() => {
     if (interval) {
       clearInterval(interval);
     }
   });
-  
+
   async function fetchData() {
     const response = await fetch(`/api/data/${count}`);
     data = await response.json();
@@ -276,38 +286,39 @@ $effect(() => {
 ```
 
 #### Svelte 5 - Effect Runes
+
 ```svelte
 <!-- Svelte 5 -->
 <script>
   import { $state, $effect } from 'svelte';
-  
+
   let count = $state(0);
   let data = $state(null);
-  
+
   // Effect with automatic cleanup
   $effect(() => {
     const interval = setInterval(() => {
       count++;
     }, 1000);
-    
+
     // Cleanup function
     return () => clearInterval(interval);
   });
-  
+
   // Reactive side effect
   $effect(() => {
     if (count > 0) {
       console.log(`Count changed to ${count}`);
     }
   });
-  
+
   // Conditional effect
   $effect(() => {
     if (count % 5 === 0 && count > 0) {
       fetchData();
     }
   });
-  
+
   async function fetchData() {
     const response = await fetch(`/api/data/${count}`);
     data = await response.json();
@@ -316,6 +327,7 @@ $effect(() => {
 ```
 
 **Effect Improvements:**
+
 - 🔄 **Automatic cleanup** - Return cleanup function from effects
 - 🔄 **Fine-grained tracking** - Only re-run when dependencies change
 - 🔄 **No lifecycle confusion** - Effects handle both mount and updates
@@ -326,14 +338,14 @@ $effect(() => {
 ### 1. $state.frozen() for Immutable State
 
 ```javascript
-import { $state } from 'svelte';
+import { $state } from "svelte";
 
 // Mutable state (default)
-let mutableUser = $state({ name: 'John', age: 30 });
+let mutableUser = $state({ name: "John", age: 30 });
 mutableUser.age++; // ✅ Works
 
 // Immutable state
-let immutableUser = $state.frozen({ name: 'Jane', age: 25 });
+let immutableUser = $state.frozen({ name: "Jane", age: 25 });
 // immutableUser.age++; // ❌ Error in development
 
 // Update immutable state
@@ -343,11 +355,11 @@ immutableUser = { ...immutableUser, age: 26 }; // ✅ Works
 ### 2. $derived.by() for Complex Computations
 
 ```javascript
-import { $state, $derived } from 'svelte';
+import { $state, $derived } from "svelte";
 
 let users = $state([
-  { name: 'John', posts: 5, followers: 100 },
-  { name: 'Jane', posts: 12, followers: 250 }
+  { name: "John", posts: 5, followers: 100 },
+  { name: "Jane", posts: 12, followers: 250 },
 ]);
 
 // Complex derived computation
@@ -367,7 +379,7 @@ let topInfluencer = $derived.by(() => {
 ### 3. $effect.pre() for Pre-DOM Updates
 
 ```javascript
-import { $state, $effect } from 'svelte';
+import { $state, $effect } from "svelte";
 
 let scrollY = $state(0);
 let element;
@@ -398,13 +410,17 @@ Runtime overhead: ~2KB       # More efficient runtime
 
 ```javascript
 // Svelte 4 - Coarse-grained reactivity
-let items = [/* 1000 items */];
-$: filteredItems = items.filter(item => item.active);
+let items = [
+  /* 1000 items */
+];
+$: filteredItems = items.filter((item) => item.active);
 // Re-runs entire filter when ANY item changes
 
 // Svelte 5 - Fine-grained reactivity
-let items = $state([/* 1000 items */]);
-let filteredItems = $derived(() => items.filter(item => item.active));
+let items = $state([
+  /* 1000 items */
+]);
+let filteredItems = $derived(() => items.filter((item) => item.active));
 // Only re-runs when items array or relevant item.active changes
 ```
 
@@ -415,12 +431,12 @@ let filteredItems = $derived(() => items.filter(item => item.active));
 ```javascript
 // Before (Svelte 4)
 let count = 0;
-let name = 'World';
+let name = "World";
 
 // After (Svelte 5)
-import { $state } from 'svelte';
+import { $state } from "svelte";
 let count = $state(0);
-let name = $state('World');
+let name = $state("World");
 ```
 
 ### 2. Reactive Declarations → Derived
@@ -431,7 +447,7 @@ $: doubled = count * 2;
 $: greeting = `Hello, ${name}!`;
 
 // After (Svelte 5)
-import { $derived } from 'svelte';
+import { $derived } from "svelte";
 let doubled = $derived(() => count * 2);
 let greeting = $derived(() => `Hello, ${name}!`);
 ```
@@ -441,14 +457,14 @@ let greeting = $derived(() => `Hello, ${name}!`);
 ```javascript
 // Before (Svelte 4)
 $: if (count > 10) {
-  console.log('High count!');
+  console.log("High count!");
 }
 
 // After (Svelte 5)
-import { $effect } from 'svelte';
+import { $effect } from "svelte";
 $effect(() => {
   if (count > 10) {
-    console.log('High count!');
+    console.log("High count!");
   }
 });
 ```
@@ -466,21 +482,22 @@ $effect(() => {
 ## Real-World Example: Shopping Cart
 
 ### Svelte 4 Implementation
+
 ```svelte
 <script>
   let items = [];
   let discount = 0;
-  
+
   $: subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   $: discountAmount = subtotal * (discount / 100);
   $: total = subtotal - discountAmount;
   $: itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  
+
   function addItem(product) {
     const existing = items.find(item => item.id === product.id);
     if (existing) {
-      items = items.map(item => 
-        item.id === product.id 
+      items = items.map(item =>
+        item.id === product.id
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
@@ -488,7 +505,7 @@ $effect(() => {
       items = [...items, { ...product, quantity: 1 }];
     }
   }
-  
+
   function removeItem(id) {
     items = items.filter(item => item.id !== id);
   }
@@ -496,23 +513,24 @@ $effect(() => {
 ```
 
 ### Svelte 5 Implementation
+
 ```svelte
 <script>
   import { $state, $derived } from 'svelte';
-  
+
   let items = $state([]);
   let discount = $state(0);
-  
-  let subtotal = $derived(() => 
+
+  let subtotal = $derived(() =>
     items.reduce((sum, item) => sum + (item.price * item.quantity), 0)
   );
-  
+
   let discountAmount = $derived(() => subtotal * (discount / 100));
   let total = $derived(() => subtotal - discountAmount);
-  let itemCount = $derived(() => 
+  let itemCount = $derived(() =>
     items.reduce((sum, item) => sum + item.quantity, 0)
   );
-  
+
   function addItem(product) {
     const existing = items.find(item => item.id === product.id);
     if (existing) {
@@ -521,7 +539,7 @@ $effect(() => {
       items.push({ ...product, quantity: 1 }); // Direct push works!
     }
   }
-  
+
   function removeItem(id) {
     const index = items.findIndex(item => item.id === id);
     if (index > -1) {
@@ -532,6 +550,7 @@ $effect(() => {
 ```
 
 **Svelte 5 Advantages:**
+
 - 🛒 **Natural mutations** - Direct array/object manipulation
 - 🛒 **Better performance** - Fine-grained reactivity
 - 🛒 **Cleaner code** - No spread operator needed
@@ -543,7 +562,7 @@ $effect(() => {
 
 ```typescript
 // Svelte 5 with TypeScript
-import { $state, $derived, $effect } from 'svelte';
+import { $state, $derived, $effect } from "svelte";
 
 interface User {
   id: number;
@@ -561,14 +580,14 @@ let users = $state<User[]>([]);
 let cart = $state<CartItem[]>([]);
 
 // Derived state with perfect type inference
-let totalItems = $derived(() => 
-  cart.reduce((sum, item) => sum + item.quantity, 0)
+let totalItems = $derived(() =>
+  cart.reduce((sum, item) => sum + item.quantity, 0),
 );
 
 // Type-safe effects
 $effect(() => {
   // TypeScript knows cart is CartItem[]
-  cart.forEach(item => {
+  cart.forEach((item) => {
     console.log(`${item.product.name}: ${item.quantity}`);
   });
 });
@@ -577,6 +596,7 @@ $effect(() => {
 ## When to Migrate to Svelte 5
 
 ### ✅ Migrate If:
+
 - You want better performance
 - You need fine-grained reactivity
 - You're starting a new project
@@ -584,6 +604,7 @@ $effect(() => {
 - You're tired of spread operator patterns
 
 ### ⏳ Wait If:
+
 - You have a large Svelte 4 codebase
 - Your team needs time to learn Runes
 - You're using many Svelte 4-specific libraries
@@ -594,6 +615,7 @@ $effect(() => {
 Svelte 5 Runes represent a **quantum leap** in frontend reactivity:
 
 **Key Benefits:**
+
 - 🚀 **30% smaller bundles** - More efficient compilation
 - 🚀 **Fine-grained reactivity** - Better performance
 - 🚀 **Natural mutations** - Write intuitive code
@@ -601,6 +623,7 @@ Svelte 5 Runes represent a **quantum leap** in frontend reactivity:
 - 🚀 **Explicit dependencies** - Predictable behavior
 
 **The Evolution:**
+
 - **Svelte 3/4**: Magical but sometimes unpredictable
 - **Svelte 5**: Magical AND predictable
 
@@ -608,7 +631,6 @@ Runes make Svelte even more **intuitive, efficient, and powerful**. They represe
 
 **Ready to upgrade?** Start with new components using Runes, then gradually migrate existing ones. The future of Svelte is here, and it's more beautiful than ever! ✨
 
+_Want to see Runes in action? Check out my [RENDER project](https://github.com/workspace-framework) where I'm using Svelte 5 to build revolutionary desktop development tools!_
 
-*Want to see Runes in action? Check out my [RENDER project](https://github.com/workspace-framework) where I'm using Svelte 5 to build revolutionary desktop development tools!*
-
-*This article complements my [Modern Frontend DX Wars series](/blog/modern-frontend-dx-part1-svelte-excellence) - exploring why Svelte continues to lead in developer experience.*
+_This article complements my [Modern Frontend DX Wars series](/blog/modern-frontend-dx-part1-svelte-excellence) - exploring why Svelte continues to lead in developer experience._

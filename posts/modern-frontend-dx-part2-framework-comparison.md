@@ -14,22 +14,23 @@ draft: false
 Let's build the same component in all three frameworks to see the differences:
 
 ### React - JSX Complexity
+
 ```jsx
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 
 function UserProfile({ userId }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '' });
+  const [formData, setFormData] = useState({ name: "", email: "" });
 
   const fetchUser = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
       const response = await fetch(`/api/users/${userId}`);
-      if (!response.ok) throw new Error('Failed to fetch');
+      if (!response.ok) throw new Error("Failed to fetch");
       const userData = await response.json();
       setUser(userData);
       setFormData({ name: userData.name, email: userData.email });
@@ -44,29 +45,32 @@ function UserProfile({ userId }) {
     fetchUser();
   }, [fetchUser]);
 
-  const handleSubmit = useCallback(async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/users/${userId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      if (!response.ok) throw new Error('Failed to update');
-      const updatedUser = await response.json();
-      setUser(updatedUser);
-      setEditMode(false);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }, [userId, formData]);
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      try {
+        const response = await fetch(`/api/users/${userId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+        if (!response.ok) throw new Error("Failed to update");
+        const updatedUser = await response.json();
+        setUser(updatedUser);
+        setEditMode(false);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [userId, formData],
+  );
 
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   }, []);
 
   if (loading) return <div className="spinner">Loading...</div>;
@@ -76,14 +80,14 @@ function UserProfile({ userId }) {
   return (
     <div className="user-profile">
       <div className="user-header">
-        <img 
-          src={user.avatar || '/default-avatar.png'} 
+        <img
+          src={user.avatar || "/default-avatar.png"}
           alt={`${user.name}'s avatar`}
           className="avatar"
         />
         <h2>{user.name}</h2>
       </div>
-      
+
       {editMode ? (
         <form onSubmit={handleSubmit} className="edit-form">
           <input
@@ -104,10 +108,10 @@ function UserProfile({ userId }) {
           />
           <div className="form-actions">
             <button type="submit" disabled={loading}>
-              {loading ? 'Saving...' : 'Save'}
+              {loading ? "Saving..." : "Save"}
             </button>
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={() => setEditMode(false)}
               disabled={loading}
             >
@@ -117,8 +121,13 @@ function UserProfile({ userId }) {
         </form>
       ) : (
         <div className="user-info">
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Joined:</strong> {new Date(user.createdAt).toLocaleDateString()}</p>
+          <p>
+            <strong>Email:</strong> {user.email}
+          </p>
+          <p>
+            <strong>Joined:</strong>{" "}
+            {new Date(user.createdAt).toLocaleDateString()}
+          </p>
           <button onClick={() => setEditMode(true)}>Edit Profile</button>
         </div>
       )}
@@ -130,6 +139,7 @@ export default UserProfile;
 ```
 
 **React Pain Points:**
+
 - 🔴 **Hook complexity** - useState, useEffect, useCallback everywhere
 - 🔴 **Dependency arrays** - Easy to forget, hard to maintain
 - 🔴 **Verbose state updates** - Spread operators and immutability
@@ -137,23 +147,24 @@ export default UserProfile;
 - 🔴 **Conditional rendering** - Ternary operators and && chains
 
 ### Vue 3 - Composition API
+
 ```vue
 <template>
   <div class="user-profile">
     <div v-if="loading" class="spinner">Loading...</div>
     <div v-else-if="error" class="error">Error: {{ error }}</div>
     <div v-else-if="!user">No user found</div>
-    
+
     <template v-else>
       <div class="user-header">
-        <img 
-          :src="user.avatar || '/default-avatar.png'" 
+        <img
+          :src="user.avatar || '/default-avatar.png'"
           :alt="`${user.name}'s avatar`"
           class="avatar"
         />
         <h2>{{ user.name }}</h2>
       </div>
-      
+
       <form v-if="editMode" @submit.prevent="handleSubmit" class="edit-form">
         <input
           v-model="formData.name"
@@ -169,18 +180,14 @@ export default UserProfile;
         />
         <div class="form-actions">
           <button type="submit" :disabled="loading">
-            {{ loading ? 'Saving...' : 'Save' }}
+            {{ loading ? "Saving..." : "Save" }}
           </button>
-          <button 
-            type="button" 
-            @click="editMode = false"
-            :disabled="loading"
-          >
+          <button type="button" @click="editMode = false" :disabled="loading">
             Cancel
           </button>
         </div>
       </form>
-      
+
       <div v-else class="user-info">
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Joined:</strong> {{ formatDate(user.createdAt) }}</p>
@@ -191,20 +198,20 @@ export default UserProfile;
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch, onMounted } from 'vue';
+import { ref, reactive, computed, watch, onMounted } from "vue";
 
 const props = defineProps({
   userId: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const user = ref(null);
 const loading = ref(false);
 const error = ref(null);
 const editMode = ref(false);
-const formData = reactive({ name: '', email: '' });
+const formData = reactive({ name: "", email: "" });
 
 const formatDate = computed(() => (date) => {
   return new Date(date).toLocaleDateString();
@@ -215,7 +222,7 @@ const fetchUser = async () => {
   error.value = null;
   try {
     const response = await fetch(`/api/users/${props.userId}`);
-    if (!response.ok) throw new Error('Failed to fetch');
+    if (!response.ok) throw new Error("Failed to fetch");
     const userData = await response.json();
     user.value = userData;
     formData.name = userData.name;
@@ -231,11 +238,11 @@ const handleSubmit = async () => {
   loading.value = true;
   try {
     const response = await fetch(`/api/users/${props.userId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
     });
-    if (!response.ok) throw new Error('Failed to update');
+    if (!response.ok) throw new Error("Failed to update");
     const updatedUser = await response.json();
     user.value = updatedUser;
     editMode.value = false;
@@ -293,7 +300,8 @@ onMounted(() => {
   cursor: pointer;
 }
 
-.spinner, .error {
+.spinner,
+.error {
   text-align: center;
   padding: 20px;
 }
@@ -301,6 +309,7 @@ onMounted(() => {
 ```
 
 **Vue Improvements:**
+
 - 🟡 **Better template syntax** - v-if, v-model more readable than JSX
 - 🟡 **Scoped CSS** - Built-in component styling
 - 🟡 **Reactive refs** - Cleaner than useState
@@ -308,19 +317,20 @@ onMounted(() => {
 - 🔴 **Still verbose** - Lots of .value and reactive() calls
 
 ### Svelte - Pure Elegance
+
 ```svelte
 <script>
   export let userId;
-  
+
   let user = null;
   let loading = false;
   let error = null;
   let editMode = false;
   let formData = { name: '', email: '' };
-  
+
   // Reactive statements - pure magic!
   $: if (userId) fetchUser();
-  
+
   async function fetchUser() {
     loading = true;
     error = null;
@@ -335,7 +345,7 @@ onMounted(() => {
       loading = false;
     }
   }
-  
+
   async function handleSubmit() {
     loading = true;
     try {
@@ -353,7 +363,7 @@ onMounted(() => {
       loading = false;
     }
   }
-  
+
   function formatDate(date) {
     return new Date(date).toLocaleDateString();
   }
@@ -368,14 +378,14 @@ onMounted(() => {
 {:else}
   <div class="user-profile">
     <div class="user-header">
-      <img 
-        src={user.avatar || '/default-avatar.png'} 
+      <img
+        src={user.avatar || '/default-avatar.png'}
         alt="{user.name}'s avatar"
         class="avatar"
       />
       <h2>{user.name}</h2>
     </div>
-    
+
     {#if editMode}
       <form on:submit|preventDefault={handleSubmit} class="edit-form">
         <input
@@ -394,8 +404,8 @@ onMounted(() => {
           <button type="submit" disabled={loading}>
             {loading ? 'Saving...' : 'Save'}
           </button>
-          <button 
-            type="button" 
+          <button
+            type="button"
             on:click={() => editMode = false}
             disabled={loading}
           >
@@ -461,6 +471,7 @@ onMounted(() => {
 ```
 
 **Svelte Wins:**
+
 - 🟢 **No hooks complexity** - Just variables and functions
 - 🟢 **Automatic reactivity** - `$: if (userId) fetchUser()`
 - 🟢 **Natural data binding** - `bind:value={formData.name}`
@@ -469,40 +480,41 @@ onMounted(() => {
 
 ## Lines of Code Comparison
 
-| Framework | Lines | Complexity | Readability |
-|-----------|-------|------------|-------------|
-| **React** | 95 lines | High | Medium |
-| **Vue 3** | 85 lines | Medium | Good |
-| **Svelte** | 70 lines | Low | Excellent |
+| Framework  | Lines    | Complexity | Readability |
+| ---------- | -------- | ---------- | ----------- |
+| **React**  | 95 lines | High       | Medium      |
+| **Vue 3**  | 85 lines | Medium     | Good        |
+| **Svelte** | 70 lines | Low        | Excellent   |
 
 **Svelte is 26% more concise than React!**
 
 ## State Management Battle
 
 ### React - Redux Toolkit
+
 ```jsx
 // store/userSlice.js
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchUser = createAsyncThunk(
-  'user/fetchUser',
+  "user/fetchUser",
   async (userId, { rejectWithValue }) => {
     try {
       const response = await fetch(`/api/users/${userId}`);
-      if (!response.ok) throw new Error('Failed to fetch');
+      if (!response.ok) throw new Error("Failed to fetch");
       return await response.json();
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState: {
     data: null,
     loading: false,
-    error: null
+    error: null,
   },
   reducers: {
     clearError: (state) => {
@@ -510,7 +522,7 @@ const userSlice = createSlice({
     },
     setEditMode: (state, action) => {
       state.editMode = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -526,29 +538,30 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
-  }
+  },
 });
 
 export const { clearError, setEditMode } = userSlice.actions;
 export default userSlice.reducer;
 
 // Component usage
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchUser, clearError } from './store/userSlice';
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUser, clearError } from "./store/userSlice";
 
 function UserComponent({ userId }) {
   const dispatch = useDispatch();
-  const { data: user, loading, error } = useSelector(state => state.user);
-  
+  const { data: user, loading, error } = useSelector((state) => state.user);
+
   useEffect(() => {
     dispatch(fetchUser(userId));
   }, [dispatch, userId]);
-  
+
   // ... rest of component
 }
 ```
 
 ### Vue - Pinia
+
 ```javascript
 // stores/user.js
 import { defineStore } from 'pinia';
@@ -560,12 +573,12 @@ export const useUserStore = defineStore('user', {
     error: null,
     editMode: false
   }),
-  
+
   getters: {
     isLoggedIn: (state) => !!state.data,
     fullName: (state) => state.data ? `${state.data.firstName} ${state.data.lastName}` : ''
   },
-  
+
   actions: {
     async fetchUser(userId) {
       this.loading = true;
@@ -580,11 +593,11 @@ export const useUserStore = defineStore('user', {
         this.loading = false;
       }
     },
-    
+
     clearError() {
       this.error = null;
     },
-    
+
     setEditMode(mode) {
       this.editMode = mode;
     }
@@ -605,6 +618,7 @@ onMounted(() => {
 ```
 
 ### Svelte - Stores
+
 ```javascript
 // stores/user.js
 import { writable, derived } from 'svelte/store';
@@ -616,10 +630,10 @@ function createUserStore() {
     error: null,
     editMode: false
   });
-  
+
   return {
     subscribe,
-    
+
     async fetchUser(userId) {
       update(state => ({ ...state, loading: true, error: null }));
       try {
@@ -631,7 +645,7 @@ function createUserStore() {
         update(state => ({ ...state, error: error.message, loading: false }));
       }
     },
-    
+
     clearError: () => update(state => ({ ...state, error: null })),
     setEditMode: (mode) => update(state => ({ ...state, editMode: mode }))
   };
@@ -641,16 +655,16 @@ export const userStore = createUserStore();
 
 // Derived stores
 export const isLoggedIn = derived(userStore, $user => !!$user.data);
-export const fullName = derived(userStore, $user => 
+export const fullName = derived(userStore, $user =>
   $user.data ? `${$user.data.firstName} ${$user.data.lastName}` : ''
 );
 
 // Component usage
 <script>
   import { userStore, isLoggedIn } from './stores/user.js';
-  
+
   export let userId;
-  
+
   // Auto-subscription with $ prefix
   $: if (userId) userStore.fetchUser(userId);
 </script>
@@ -660,6 +674,7 @@ export const fullName = derived(userStore, $user =>
 ```
 
 **State Management Winner: Svelte**
+
 - 🏆 **Auto-subscription** - `$store` syntax handles everything
 - 🏆 **No providers** - Global state without context hell
 - 🏆 **Derived stores** - Computed values that update automatically
@@ -668,6 +683,7 @@ export const fullName = derived(userStore, $user =>
 ## Learning Curve Analysis
 
 ### React Learning Path
+
 ```
 Week 1-2: JSX, Components, Props
 Week 3-4: State, Events, Conditional Rendering
@@ -678,12 +694,14 @@ Week 13-16: Advanced Patterns, Testing
 ```
 
 **React Challenges:**
+
 - 🔴 **Hook rules** - Can't call in loops or conditions
 - 🔴 **Dependency arrays** - Easy to get wrong
 - 🔴 **Immutability** - Spread operators everywhere
 - 🔴 **Performance** - Manual optimization needed
 
 ### Vue Learning Path
+
 ```
 Week 1-2: Templates, Directives, Components
 Week 3-4: Reactivity, Computed Properties, Watchers
@@ -693,12 +711,14 @@ Week 9-10: Performance, Testing, Best Practices
 ```
 
 **Vue Advantages:**
+
 - 🟡 **Progressive adoption** - Can start with CDN script
 - 🟡 **Template syntax** - Familiar to HTML developers
 - 🟡 **Good documentation** - Comprehensive guides
 - 🟡 **Flexible** - Options API or Composition API
 
 ### Svelte Learning Path
+
 ```
 Week 1: Components, Reactivity, Events
 Week 2: Stores, Lifecycle, Animations
@@ -707,6 +727,7 @@ Week 4: Performance, Testing, Deployment
 ```
 
 **Svelte Advantages:**
+
 - 🟢 **Fastest learning curve** - Intuitive concepts
 - 🟢 **Less to learn** - No virtual DOM, no hooks
 - 🟢 **Immediate productivity** - Write less, achieve more
@@ -715,6 +736,7 @@ Week 4: Performance, Testing, Deployment
 ## Performance Comparison
 
 ### Bundle Size (Todo App)
+
 ```
 React + ReactDOM: ~42KB (gzipped)
 Vue 3: ~34KB (gzipped)
@@ -722,6 +744,7 @@ Svelte: ~10KB (gzipped)
 ```
 
 ### Runtime Performance
+
 ```javascript
 // Benchmark: 1000 item list updates
 React: ~16ms (with React.memo optimization)
@@ -730,6 +753,7 @@ Svelte: ~8ms (compiled optimization)
 ```
 
 ### Memory Usage
+
 ```
 React: Higher (virtual DOM + reconciliation)
 Vue 3: Medium (reactive system + templates)
@@ -738,37 +762,40 @@ Svelte: Lower (compiled away framework)
 
 ## Developer Experience Metrics
 
-| Aspect | React | Vue | Svelte |
-|--------|-------|-----|--------|
-| **Learning Curve** | Steep | Moderate | Gentle |
-| **Boilerplate** | High | Medium | Low |
-| **Type Safety** | Good (TS) | Good (TS) | Excellent |
-| **Tooling** | Excellent | Good | Good |
-| **Community** | Huge | Large | Growing |
-| **Job Market** | Dominant | Strong | Emerging |
-| **Bundle Size** | Large | Medium | Small |
-| **Performance** | Good* | Good | Excellent |
-| **Debugging** | Complex | Good | Simple |
+| Aspect             | React     | Vue       | Svelte    |
+| ------------------ | --------- | --------- | --------- |
+| **Learning Curve** | Steep     | Moderate  | Gentle    |
+| **Boilerplate**    | High      | Medium    | Low       |
+| **Type Safety**    | Good (TS) | Good (TS) | Excellent |
+| **Tooling**        | Excellent | Good      | Good      |
+| **Community**      | Huge      | Large     | Growing   |
+| **Job Market**     | Dominant  | Strong    | Emerging  |
+| **Bundle Size**    | Large     | Medium    | Small     |
+| **Performance**    | Good\*    | Good      | Excellent |
+| **Debugging**      | Complex   | Good      | Simple    |
 
-*Requires optimization
+\*Requires optimization
 
 ## Real-World Project Comparison
 
 ### E-commerce Product Page
 
 **React Implementation:**
+
 - 150+ lines of component code
 - 5 custom hooks for state management
 - Complex useEffect dependencies
 - Manual performance optimization needed
 
 **Vue Implementation:**
+
 - 120+ lines with Composition API
 - Cleaner template syntax
 - Better built-in performance
 - Some .value verbosity
 
 **Svelte Implementation:**
+
 - 80 lines total
 - Natural reactivity
 - Built-in animations
@@ -777,6 +804,7 @@ Svelte: Lower (compiled away framework)
 ## When to Choose Each Framework
 
 ### Choose React When:
+
 - ✅ **Large team** with existing React expertise
 - ✅ **Enterprise project** requiring extensive ecosystem
 - ✅ **Job market** considerations (most opportunities)
@@ -784,6 +812,7 @@ Svelte: Lower (compiled away framework)
 - ✅ **React Native** mobile development planned
 
 ### Choose Vue When:
+
 - ✅ **Progressive migration** from jQuery/vanilla JS
 - ✅ **Template-heavy** applications
 - ✅ **Balanced approach** between React and Svelte
@@ -791,6 +820,7 @@ Svelte: Lower (compiled away framework)
 - ✅ **Flexible architecture** needs (Options + Composition API)
 
 ### Choose Svelte When:
+
 - ✅ **Developer happiness** is priority
 - ✅ **Performance** is critical
 - ✅ **Small to medium** projects
@@ -803,17 +833,20 @@ Svelte: Lower (compiled away framework)
 Based on our comprehensive analysis:
 
 🥇 **Svelte** - Best overall DX
+
 - Intuitive syntax and concepts
 - Minimal boilerplate
 - Excellent performance by default
 - Fastest learning curve
 
 🥈 **Vue** - Balanced and practical
+
 - Good DX with familiar concepts
 - Progressive adoption path
 - Solid performance and tooling
 
 🥉 **React** - Powerful but complex
+
 - Steep learning curve
 - Verbose syntax
 - Requires optimization knowledge
@@ -832,7 +865,6 @@ Based on our comprehensive analysis:
 
 **Next week in Part 3**, we'll explore how **Astro's Islands Architecture** lets you use the best of all worlds, including Svelte components only where you need them, while keeping the rest of your site fast and lightweight.
 
+_This is Part 2 of the "Modern Frontend DX Wars" series. What's your experience with these frameworks? Which DX do you prefer and why?_
 
-*This is Part 2 of the "Modern Frontend DX Wars" series. What's your experience with these frameworks? Which DX do you prefer and why?*
-
-*Follow my [RENDER project journey](https://github.com/workspace-framework) where I'm using Svelte to build revolutionary desktop development tools! 🚀*
+_Follow my [RENDER project journey](https://github.com/workspace-framework) where I'm using Svelte to build revolutionary desktop development tools! 🚀_

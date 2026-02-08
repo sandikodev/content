@@ -12,31 +12,31 @@ draft: false
 ## The Reactivity Revolution
 
 ### Traditional React Approach
+
 ```jsx
 // React - Verbose and indirect
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 function Counter() {
   const [count, setCount] = useState(0);
   const [doubled, setDoubled] = useState(0);
-  
+
   useEffect(() => {
     setDoubled(count * 2);
   }, [count]);
-  
+
   return (
     <div>
       <p>Count: {count}</p>
       <p>Doubled: {doubled}</p>
-      <button onClick={() => setCount(count + 1)}>
-        Increment
-      </button>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
     </div>
   );
 }
 ```
 
 ### Svelte's Natural Approach
+
 ```svelte
 <!-- Svelte - Direct and intuitive -->
 <script>
@@ -52,6 +52,7 @@ function Counter() {
 ```
 
 **The difference is profound:**
+
 - ✅ **No hooks complexity** - Just variables
 - ✅ **No useState/useEffect** - Reactivity is built-in
 - ✅ **No synthetic events** - Native DOM events
@@ -93,24 +94,23 @@ Compare this to React's JSX:
 // React - Everything is JavaScript pretending to be HTML
 function Greeting({ name }) {
   const [visible, setVisible] = useState(true);
-  
+
   return (
     <div>
       {visible && (
         <div>
-          <h1 style={{ color: '#61dafb' }}>Hello {name}!</h1>
+          <h1 style={{ color: "#61dafb" }}>Hello {name}!</h1>
           <p>This is JSX - JavaScript pretending to be HTML</p>
         </div>
       )}
-      <button onClick={() => setVisible(!visible)}>
-        Toggle visibility
-      </button>
+      <button onClick={() => setVisible(!visible)}>Toggle visibility</button>
     </div>
   );
 }
 ```
 
 **Svelte advantages:**
+
 - 🎯 **Semantic clarity** - `{#if}` vs `{condition &&}`
 - 🎯 **Natural templating** - Feels like server-side templates
 - 🎯 **Scoped CSS** - No className conflicts by default
@@ -136,14 +136,14 @@ npm install
     name: string;
     email: string;
   }
-  
+
   let users: User[] = [];
   let loading = false;
-  
+
   // Type inference works perfectly
   $: userCount = users.length;
   $: hasUsers = userCount > 0;
-  
+
   async function fetchUsers(): Promise<void> {
     loading = true;
     try {
@@ -171,6 +171,7 @@ npm install
 ```
 
 **TypeScript benefits in Svelte:**
+
 - ✅ **Zero configuration** - Works out of the box
 - ✅ **Perfect inference** - Types flow naturally
 - ✅ **Component props typing** - Automatic and safe
@@ -185,17 +186,17 @@ npm install
 <script>
   let firstName = '';
   let lastName = '';
-  
+
   // Reactive declarations - run when dependencies change
   $: fullName = `${firstName} ${lastName}`.trim();
   $: initials = fullName.split(' ').map(n => n[0]).join('');
   $: greeting = `Hello, ${fullName || 'Anonymous'}!`;
-  
+
   // Reactive statements - side effects
   $: if (fullName.length > 20) {
     console.warn('Name is quite long!');
   }
-  
+
   // Complex reactive logic
   $: {
     const words = fullName.split(' ');
@@ -214,6 +215,7 @@ npm install
 ```
 
 **Why this is revolutionary:**
+
 - 🚀 **Automatic dependency tracking** - No manual dependency arrays
 - 🚀 **Declarative updates** - Describe what, not how
 - 🚀 **Performance optimized** - Only runs when needed
@@ -227,16 +229,16 @@ npm install
 <!-- Parent.svelte -->
 <script>
   import Child from './Child.svelte';
-  
+
   let message = '';
-  
+
   function handleCustomEvent(event) {
     message = event.detail.message;
   }
 </script>
 
-<Child 
-  name="Svelte" 
+<Child
+  name="Svelte"
   count={42}
   on:custom={handleCustomEvent}
 />
@@ -248,15 +250,15 @@ npm install
 <!-- Child.svelte -->
 <script>
   import { createEventDispatcher } from 'svelte';
-  
+
   // Type-safe props
   export let name: string;
   export let count: number = 0;
-  
+
   const dispatch = createEventDispatcher<{
     custom: { message: string };
   }>();
-  
+
   function sendMessage() {
     dispatch('custom', {
       message: `Hello from ${name} with count ${count}`
@@ -270,6 +272,7 @@ npm install
 ```
 
 **Component communication benefits:**
+
 - 💫 **Clear prop definitions** - `export let` is intuitive
 - 💫 **Type-safe events** - Custom events with typed payloads
 - 💫 **No prop drilling** - Context API when needed
@@ -281,23 +284,23 @@ npm install
 
 ```javascript
 // stores.js - Simple and powerful
-import { writable, derived, readable } from 'svelte/store';
+import { writable, derived, readable } from "svelte/store";
 
 // Basic writable store
 export const count = writable(0);
 
 // Derived store - automatically updates
-export const doubled = derived(count, $count => $count * 2);
+export const doubled = derived(count, ($count) => $count * 2);
 
 // Custom store with methods
 function createCounter() {
   const { subscribe, set, update } = writable(0);
-  
+
   return {
     subscribe,
-    increment: () => update(n => n + 1),
-    decrement: () => update(n => n - 1),
-    reset: () => set(0)
+    increment: () => update((n) => n + 1),
+    decrement: () => update((n) => n - 1),
+    reset: () => set(0),
   };
 }
 
@@ -308,7 +311,7 @@ export const time = readable(new Date(), function start(set) {
   const interval = setInterval(() => {
     set(new Date());
   }, 1000);
-  
+
   return function stop() {
     clearInterval(interval);
   };
@@ -332,6 +335,7 @@ export const time = readable(new Date(), function start(set) {
 ```
 
 **Store advantages:**
+
 - 🎪 **Auto-subscription** - `$store` syntax handles everything
 - 🎪 **No providers** - Global state without context hell
 - 🎪 **Derived stores** - Computed values that update automatically
@@ -346,8 +350,8 @@ export const time = readable(new Date(), function start(set) {
 <script>
   let items = [1, 2, 3, 4, 5];
   let filter = '';
-  
-  $: filteredItems = items.filter(item => 
+
+  $: filteredItems = items.filter(item =>
     item.toString().includes(filter)
   );
 </script>
@@ -364,9 +368,7 @@ export const time = readable(new Date(), function start(set) {
 function update_filter(filter) {
   if (filter !== old_filter) {
     old_filter = filter;
-    filteredItems = items.filter(item => 
-      item.toString().includes(filter)
-    );
+    filteredItems = items.filter((item) => item.toString().includes(filter));
     update_dom();
   }
 }
@@ -374,12 +376,13 @@ function update_filter(filter) {
 function update_dom() {
   // Direct DOM manipulation, no virtual DOM
   container.innerHTML = filteredItems
-    .map(item => `<div class="item">${item}</div>`)
-    .join('');
+    .map((item) => `<div class="item">${item}</div>`)
+    .join("");
 }
 ```
 
 **Performance benefits:**
+
 - ⚡ **No virtual DOM** - Direct, surgical DOM updates
 - ⚡ **Compile-time optimization** - Dead code elimination
 - ⚡ **Smaller bundles** - No runtime framework overhead
@@ -390,31 +393,34 @@ function update_dom() {
 ### What Makes Svelte Feel So Good
 
 1. **Intuitive Mental Model**
+
    ```svelte
    <!-- What you see is what you get -->
    <script>
      let name = 'World';
    </script>
-   
+
    <h1>Hello {name}!</h1>
    <!-- It's just HTML with data binding -->
    ```
 
 2. **Excellent Error Messages**
+
    ```
    Error: 'coun' is not defined
    Did you mean 'count'?
-   
+
    > 5:   <p>{coun}</p>
            ^^^^^
    ```
 
 3. **Built-in Accessibility**
+
    ```svelte
    <!-- Svelte warns about accessibility issues -->
-   <img src="photo.jpg" /> 
+   <img src="photo.jpg" />
    <!-- Warning: <img> element should have an alt attribute -->
-   
+
    <div on:click={handleClick}></div>
    <!-- Warning: Non-interactive element with click handler -->
    ```
@@ -429,15 +435,16 @@ function update_dom() {
 ## Real-World Example: Todo App Comparison
 
 ### Svelte Implementation
+
 ```svelte
 <!-- TodoApp.svelte -->
 <script>
   let todos = [];
   let newTodo = '';
-  
+
   $: completedCount = todos.filter(t => t.completed).length;
   $: remainingCount = todos.length - completedCount;
-  
+
   function addTodo() {
     if (newTodo.trim()) {
       todos = [...todos, {
@@ -448,15 +455,15 @@ function update_dom() {
       newTodo = '';
     }
   }
-  
+
   function toggleTodo(id) {
     todos = todos.map(todo =>
-      todo.id === id 
+      todo.id === id
         ? { ...todo, completed: !todo.completed }
         : todo
     );
   }
-  
+
   function deleteTodo(id) {
     todos = todos.filter(todo => todo.id !== id);
   }
@@ -465,8 +472,8 @@ function update_dom() {
 <h1>Todo App</h1>
 
 <form on:submit|preventDefault={addTodo}>
-  <input 
-    bind:value={newTodo} 
+  <input
+    bind:value={newTodo}
     placeholder="Add a todo..."
     required
   />
@@ -480,8 +487,8 @@ function update_dom() {
 <ul>
   {#each todos as todo (todo.id)}
     <li class:completed={todo.completed}>
-      <input 
-        type="checkbox" 
+      <input
+        type="checkbox"
         bind:checked={todo.completed}
         on:change={() => toggleTodo(todo.id)}
       />
@@ -536,6 +543,7 @@ Compare this to equivalent React implementation (would be ~100+ lines with hooks
 Svelte succeeds because it **feels like web development should feel**. Instead of fighting the platform, it enhances it. Instead of complex abstractions, it provides intuitive APIs. Instead of runtime overhead, it compiles away.
 
 **Key takeaways:**
+
 - 🎯 **Reactivity is built into the language** - No hooks needed
 - 🎯 **HTML-first approach** - Templates feel natural
 - 🎯 **Zero-config TypeScript** - Type safety without complexity
@@ -546,7 +554,6 @@ Svelte succeeds because it **feels like web development should feel**. Instead o
 
 **Coming in Part 3**, we'll explore how Astro's Islands Architecture combines the best of all worlds, allowing you to use Svelte (or any framework) only where you need it, while keeping the rest of your site fast and lightweight.
 
+_This is Part 1 of the "Modern Frontend DX Wars" series. What's your experience with Svelte? Share your thoughts and let's discuss the future of frontend development! 🚀_
 
-*This is Part 1 of the "Modern Frontend DX Wars" series. What's your experience with Svelte? Share your thoughts and let's discuss the future of frontend development! 🚀*
-
-*Follow my [RENDER project journey](https://github.com/workspace-framework) where I'm building the future of desktop development with web technologies.*
+_Follow my [RENDER project journey](https://github.com/workspace-framework) where I'm building the future of desktop development with web technologies._

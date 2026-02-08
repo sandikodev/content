@@ -16,13 +16,15 @@ When working with text manipulation in development workflows, choosing the right
 ## The Comparison
 
 ### SED Command
+
 - **Token Cost**: ~50 tokens per operation
 - **Learning Curve**: Steep regex syntax
 - **Flexibility**: High for pattern matching
 - **Cross-platform**: Limited on Windows
 
 ### fs_write Tool
-- **Token Cost**: ~120 tokens per operation  
+
+- **Token Cost**: ~120 tokens per operation
 - **Learning Curve**: Intuitive API
 - **Flexibility**: Structured operations
 - **Cross-platform**: Universal support
@@ -30,12 +32,14 @@ When working with text manipulation in development workflows, choosing the right
 ## Use Cases
 
 **Choose SED when:**
+
 - Simple pattern replacements
 - Unix/Linux environments
 - Batch text processing
 - Minimal token usage priority
 
 **Choose fs_write when:**
+
 - Complex file operations
 - Cross-platform compatibility
 - Structured content management

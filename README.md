@@ -10,7 +10,7 @@ This repository contains all blog articles and content, separated from the main 
 posts/
 ├── 12-12-25-ruin-declaration.md          # Historic R.U.I.N declaration
 ├── modern-frontend-dx-part1-svelte-excellence.md
-├── modern-frontend-dx-part2-framework-comparison.md  
+├── modern-frontend-dx-part2-framework-comparison.md
 ├── modern-frontend-dx-part3-astro-islands.md
 ├── svelte-5-runes-evolution-guide.md
 ├── git-filter-branch-vs-manual-rebase.md
@@ -25,7 +25,7 @@ This content is automatically fetched during build process of the main portfolio
 ## 📝 Writing Guidelines
 
 - Use proper frontmatter with date, title, description
-- Include relevant tags and categories  
+- Include relevant tags and categories
 - Follow markdown best practices
 - Add images to `/images/blog/` in main repo
 

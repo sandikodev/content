@@ -53,6 +53,7 @@ Qwik adalah framework JavaScript yang fokus pada **resumability** - kemampuan un
 ```
 
 **Kenapa?**
+
 - User mayoritas **consume content**, bukan interact
 - Initial load instant (0 JS)
 - JS load on-demand saat user interact
@@ -68,6 +69,7 @@ Qwik adalah framework JavaScript yang fokus pada **resumability** - kemampuan un
 ```
 
 **Benefit**:
+
 - Hemat bandwidth = hemat biaya server
 - Better Core Web Vitals
 - Lighthouse score 100/100
@@ -81,6 +83,7 @@ Qwik adalah framework JavaScript yang fokus pada **resumability** - kemampuan un
 ```
 
 **Advantage**:
+
 - First Contentful Paint < 1s
 - Time to Interactive < 100ms
 - Perfect conversion optimization
@@ -96,6 +99,7 @@ Qwik adalah framework JavaScript yang fokus pada **resumability** - kemampuan un
 ```
 
 **Kenapa tidak?**
+
 - Butuh immediate interactivity
 - Canvas libraries (Fabric.js, Konva.js) belum mature di Qwik
 - Lazy loading tidak membantu
@@ -109,6 +113,7 @@ Qwik adalah framework JavaScript yang fokus pada **resumability** - kemampuan un
 ```
 
 **Alasan**:
+
 - Butuh WebSocket connection immediate
 - State management complex
 - React/Vue ecosystem lebih mature
@@ -122,6 +127,7 @@ Qwik adalah framework JavaScript yang fokus pada **resumability** - kemampuan un
 ```
 
 **Why not?**
+
 - Butuh semua JS loaded upfront
 - Resumability tidak relevan
 - Performance critical = React/vanilla JS
@@ -131,6 +137,7 @@ Qwik adalah framework JavaScript yang fokus pada **resumability** - kemampuan un
 ### E-commerce Product Page
 
 **React/Next.js:**
+
 ```
 Initial load: 500KB JS
 Time to Interactive: 3s
@@ -140,6 +147,7 @@ Total: 500KB
 ```
 
 **Qwik:**
+
 ```
 Initial load: 1KB JS
 Time to Interactive: 50ms
@@ -151,6 +159,7 @@ Total: 8KB vs 500KB ✅
 ### Canvas Editor (Figma-like)
 
 **React + Fabric.js:**
+
 ```
 Initial load: 800KB JS
 Time to Interactive: 4s
@@ -159,6 +168,7 @@ Drawing: Smooth ✅
 ```
 
 **Qwik + Fabric.js:**
+
 ```
 Initial load: 1KB JS
 Canvas library load: On-demand
@@ -172,6 +182,7 @@ Better choice: React ✅
 ### Strategi Marketing
 
 Qwik sengaja dibuat mirip React untuk:
+
 - Developer React bisa langsung pakai
 - Migrasi lebih mudah
 - Adoption lebih cepat
@@ -179,6 +190,7 @@ Qwik sengaja dibuat mirip React untuk:
 ### Tapi Filosofi Berbeda
 
 **React:**
+
 ```typescript
 // Load everything, optimize later
 import { useState } from 'react';
@@ -190,6 +202,7 @@ function Counter() {
 ```
 
 **Qwik:**
+
 ```typescript
 // Load nothing, load on-demand
 import { component$, useSignal } from '@builder.io/qwik';
@@ -207,11 +220,13 @@ Perhatikan `$` suffix - ini signal untuk Qwik optimizer bahwa code ini bisa di-l
 ### Analogi Sederhana
 
 **React/Vue/Svelte (Buffet):**
+
 - Semua makanan sudah di meja (load all JS)
 - Mau makan apa aja, langsung ambil
 - Tapi setup buffet lama (hydration)
 
 **Qwik (Restaurant):**
+
 - Menu sudah ada (HTML)
 - Pesan apa, baru masak itu (load JS on-demand)
 - Duduk langsung, lihat menu instant
@@ -221,14 +236,14 @@ Perhatikan `$` suffix - ini signal untuk Qwik optimizer bahwa code ini bisa di-l
 
 ### Lighthouse Scores
 
-| Framework | FCP | TTI | TBT | LCP |
-|-----------|-----|-----|-----|-----|
-| **Qwik** | 0.5s | 0.1s | 0ms | 0.8s |
-| **React** | 1.2s | 3.5s | 200ms | 2.1s |
-| **Vue** | 1.0s | 3.0s | 150ms | 1.8s |
+| Framework  | FCP  | TTI  | TBT   | LCP  |
+| ---------- | ---- | ---- | ----- | ---- |
+| **Qwik**   | 0.5s | 0.1s | 0ms   | 0.8s |
+| **React**  | 1.2s | 3.5s | 200ms | 2.1s |
+| **Vue**    | 1.0s | 3.0s | 150ms | 1.8s |
 | **Svelte** | 0.8s | 2.5s | 100ms | 1.5s |
 
-*Note: Untuk content-heavy sites. Interactive apps akan berbeda.*
+_Note: Untuk content-heavy sites. Interactive apps akan berbeda._
 
 ## Market Reality
 
@@ -253,7 +268,7 @@ Perhatikan `$` suffix - ini signal untuk Qwik optimizer bahwa code ini bisa di-l
 ✅ SEO critical  
 ✅ High traffic, low interaction  
 ✅ Marketing/landing pages  
-✅ Blog/documentation  
+✅ Blog/documentation
 
 ### Pilih React Jika:
 
@@ -261,19 +276,19 @@ Perhatikan `$` suffix - ini signal untuk Qwik optimizer bahwa code ini bisa di-l
 ✅ Canvas/drawing apps  
 ✅ Real-time collaboration  
 ✅ Complex state management  
-✅ Mature ecosystem needed  
+✅ Mature ecosystem needed
 
 ### Pilih Vue Jika:
 
 ✅ Simpler than React  
 ✅ Progressive enhancement  
-✅ Good balance  
+✅ Good balance
 
 ### Pilih Svelte Jika:
 
 ✅ Minimal boilerplate  
 ✅ Best DX  
-✅ Smallest bundle  
+✅ Smallest bundle
 
 ## Code Example: Same App, Different Frameworks
 
@@ -346,6 +361,7 @@ Hampir identik! Tapi Qwik akan lazy load event handlers.
 ### Qwik Bukan Pengganti React
 
 Qwik adalah **specialized tool** untuk use case tertentu:
+
 - Content-heavy sites
 - SEO-critical apps
 - High-traffic, low-interaction
@@ -375,5 +391,4 @@ Pernah coba Qwik? Share pengalaman kamu di comments!
 
 **Tags**: #qwik #react #webdev #performance #javascript #framework
 
-
-*Artikel ini ditulis berdasarkan pengalaman real-world development dan analisis mendalam tentang use cases yang tepat untuk setiap framework.*
+_Artikel ini ditulis berdasarkan pengalaman real-world development dan analisis mendalam tentang use cases yang tepat untuk setiap framework._

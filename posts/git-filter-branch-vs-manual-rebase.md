@@ -57,12 +57,14 @@ git rebase --continue
 ```
 
 ### Pros of Manual Rebase:
+
 - ✅ Full control over each commit
 - ✅ Can make different changes per commit if needed
 - ✅ Easy to understand what's happening
 - ✅ Can abort/fix issues at any step
 
 ### Cons of Manual Rebase:
+
 - ❌ Time-consuming for many commits
 - ❌ Prone to human error
 - ❌ Interactive editor issues in some environments
@@ -75,14 +77,15 @@ Then I discovered `git filter-branch` - a powerful command that can rewrite enti
 ```bash
 # Single command to restructure entire history
 FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch \
-  --tree-filter 'if [ -d packages/astro-terminal-code ]; then 
-    mv packages/astro-terminal-code/* . 2>/dev/null || true; 
-    mv packages/astro-terminal-code/.* . 2>/dev/null || true; 
-    rm -rf packages; 
+  --tree-filter 'if [ -d packages/astro-terminal-code ]; then
+    mv packages/astro-terminal-code/* . 2>/dev/null || true;
+    mv packages/astro-terminal-code/.* . 2>/dev/null || true;
+    rm -rf packages;
   fi' HEAD
 ```
 
 ### Pros of Filter-Branch:
+
 - ✅ **One command** handles entire history
 - ✅ **Consistent** changes across all commits
 - ✅ **Fast** execution
@@ -90,6 +93,7 @@ FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch \
 - ✅ **Atomic operation** - all or nothing
 
 ### Cons of Filter-Branch:
+
 - ❌ Less granular control
 - ❌ Can be dangerous if command is wrong
 - ❌ Harder to debug if something goes wrong
@@ -100,6 +104,7 @@ FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch \
 Let me show you the actual results from my RENDER project restructuring:
 
 ### Before:
+
 ```bash
 $ git log --oneline
 65e77b3 🔥 Update branding: SandikoOS → RENDER
@@ -113,6 +118,7 @@ packages/astro-terminal-code/src/processor.ts
 ```
 
 ### After Filter-Branch:
+
 ```bash
 $ git log --oneline
 31a26da 🔥 Update branding: SandikoOS → RENDER
@@ -126,18 +132,21 @@ src/processor.ts
 ```
 
 **Time taken:**
+
 - Manual rebase: ~10-15 minutes (with interactive editor struggles)
 - Filter-branch: ~5 seconds
 
 ## When to Use Each Approach
 
 ### Use Manual Rebase When:
+
 - You need different changes per commit
 - You want to review each commit individually
 - You're learning Git and want to understand the process
 - You have complex merge conflicts to resolve
 
 ### Use Filter-Branch When:
+
 - You need consistent changes across all commits
 - You have many commits to process
 - You want a fast, automated solution
@@ -177,5 +186,4 @@ However, the manual rebase approach taught me a lot about Git internals and give
 
 **My recommendation:** Start with understanding the manual approach, then graduate to `git filter-branch` for efficiency. Your future self will thank you for learning both! 🚀
 
-
-*This article is part of my journey building the [RENDER ecosystem](https://github.com/workspace-framework) - revolutionizing desktop development with web technologies. Follow along for more Git tips and development insights!*
+_This article is part of my journey building the [RENDER ecosystem](https://github.com/workspace-framework) - revolutionizing desktop development with web technologies. Follow along for more Git tips and development insights!_

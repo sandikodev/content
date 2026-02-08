@@ -4,7 +4,15 @@ description: "Master tmux session management, window splitting, and persistence.
 date: 2025-11-27T10:00:00+07:00
 author: "Sandikodev"
 category: "DevOps"
-tags: ["tmux", "terminal", "linux", "productivity", "session-management", "multiplexer"]
+tags:
+  [
+    "tmux",
+    "terminal",
+    "linux",
+    "productivity",
+    "session-management",
+    "multiplexer",
+  ]
 image: "/images/blog/tmux-guide.webp"
 draft: false
 ---
@@ -30,6 +38,7 @@ TMUX SERVER
 ```
 
 Think of it as:
+
 - **Session** = Your entire workspace (survives disconnection)
 - **Window** = Individual tabs (different projects/tasks)
 - **Pane** = Split areas within a tab (multiple terminals side-by-side)
@@ -230,6 +239,7 @@ tmux display-message -p '#{session_name}:#{window_index}.#{pane_index} - #{pane_
 ### Troubleshooting Common Issues
 
 **Problem**: Tmux not starting
+
 ```bash
 # Check if tmux server is running
 tmux list-sessions
@@ -239,6 +249,7 @@ pkill -f tmux
 ```
 
 **Problem**: Pane not responding
+
 ```bash
 # Refresh client
 tmux refresh-client
@@ -251,6 +262,7 @@ respawn-pane
 ## Pro Tips for Maximum Productivity
 
 ### 1. Use Meaningful Session Names
+
 ```bash
 # Bad
 tmux new-session -s 0
@@ -262,7 +274,9 @@ tmux new-session -s experiments
 ```
 
 ### 2. Master the Command Mode
+
 Press `Ctrl+b :` to enter command mode:
+
 ```bash
 # Rename session
 :rename-session new-name
@@ -275,6 +289,7 @@ Press `Ctrl+b :` to enter command mode:
 ```
 
 ### 3. Copy Mode for Text Selection
+
 ```bash
 # Enter copy mode
 Ctrl+b [
@@ -288,6 +303,7 @@ Ctrl+b [
 ## Integration with Modern Workflows
 
 ### SSH + Tmux Combo
+
 ```bash
 # Connect and attach in one command
 ssh user@server -t 'tmux attach || tmux new'
@@ -297,6 +313,7 @@ alias work='ssh server -t "tmux attach -t work || tmux new -s work"'
 ```
 
 ### Docker Development
+
 ```bash
 # Run tmux inside container
 docker run -it --rm ubuntu bash -c 'apt update && apt install -y tmux && tmux'
@@ -308,6 +325,7 @@ docker run -it --rm -v ~/.tmux.conf:/root/.tmux.conf ubuntu tmux
 ## Performance and Optimization
 
 ### Tmux Configuration Tuning
+
 ```bash
 # Increase scrollback buffer
 set -g history-limit 10000
@@ -324,6 +342,7 @@ set -g renumber-windows on
 ```
 
 ### Resource Monitoring
+
 ```bash
 # Check tmux memory usage
 ps aux | grep tmux
@@ -335,16 +354,20 @@ tmux list-sessions -F '#{session_name}: #{session_activity_string}'
 ## Common Pitfalls and Solutions
 
 ### 1. Nested Tmux Sessions
+
 **Problem**: Running tmux inside tmux
 **Solution**: Use different prefix keys or check before creating sessions
 
 ### 2. Lost Sessions
+
 **Problem**: Can't find your session
 **Solution**: Always use `tmux list-sessions` first
 
 ### 3. Pane Synchronization
+
 **Problem**: Need to type same command in multiple panes
-**Solution**: 
+**Solution**:
+
 ```bash
 # Enable pane synchronization
 Ctrl+b :
@@ -356,6 +379,7 @@ setw synchronize-panes on
 Tmux isn't just a tool—it's a workflow transformation. Once you master session persistence, you'll wonder how you ever worked without it.
 
 **Key takeaways:**
+
 - Sessions survive disconnections (your work is immortal)
 - Windows organize different tasks (like browser tabs)
 - Panes split your workspace (multiple terminals in one view)
@@ -365,6 +389,7 @@ Tmux isn't just a tool—it's a workflow transformation. Once you master session
 Start with basic session management, then gradually add window splitting and custom configurations. Your future self will thank you when that SSH connection drops and your work is still there, waiting patiently in tmux.
 
 **Next steps:**
+
 1. Create your first named session today
 2. Practice detaching and reattaching
 3. Set up a basic `.tmux.conf`
@@ -372,5 +397,4 @@ Start with basic session management, then gradually add window splitting and cus
 
 The terminal is your domain. Tmux makes you its master.
 
-
-*Want more Linux productivity tips? Check out our [terminal optimization guide](/blog/terminal-productivity-hacks) and [i3wm configuration](/blog/i3wm-setup-guide).*
+_Want more Linux productivity tips? Check out our [terminal optimization guide](/blog/terminal-productivity-hacks) and [i3wm configuration](/blog/i3wm-setup-guide)._

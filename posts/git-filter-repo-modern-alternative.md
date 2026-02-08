@@ -47,17 +47,18 @@ sudo mv git-filter-repo /usr/local/bin/
 Let me show you the dramatic performance difference using a real repository:
 
 ### Test Repository Stats:
+
 - **Commits:** 1,247 commits
 - **Files:** 3,892 files
 - **Size:** 45MB repository
 
 ### Benchmark Results:
 
-| Tool | Time | Memory Usage | Safety |
-|------|------|--------------|--------|
-| Manual Rebase | ~2 hours | Low | High control |
-| git filter-branch | 8 minutes | High | Medium |
-| **git filter-repo** | **47 seconds** | Low | High |
+| Tool                | Time           | Memory Usage | Safety       |
+| ------------------- | -------------- | ------------ | ------------ |
+| Manual Rebase       | ~2 hours       | Low          | High control |
+| git filter-branch   | 8 minutes      | High         | Medium       |
+| **git filter-repo** | **47 seconds** | Low          | High         |
 
 **git filter-repo is ~10x faster than filter-branch!**
 
@@ -66,22 +67,25 @@ Let me show you the dramatic performance difference using a real repository:
 Let's revisit our repository restructuring challenge with `git filter-repo`:
 
 ### The Old Way (filter-branch):
+
 ```bash
 FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch \
-  --tree-filter 'if [ -d packages/astro-terminal-code ]; then 
-    mv packages/astro-terminal-code/* . 2>/dev/null || true; 
-    mv packages/astro-terminal-code/.* . 2>/dev/null || true; 
-    rm -rf packages; 
+  --tree-filter 'if [ -d packages/astro-terminal-code ]; then
+    mv packages/astro-terminal-code/* . 2>/dev/null || true;
+    mv packages/astro-terminal-code/.* . 2>/dev/null || true;
+    rm -rf packages;
   fi' HEAD
 ```
 
 ### The Modern Way (filter-repo):
+
 ```bash
 # Simple path rename - much cleaner!
 git filter-repo --path-rename packages/astro-terminal-code/:
 ```
 
 That's it! One clean command that's:
+
 - ✅ **Faster** (47 seconds vs 8 minutes)
 - ✅ **Safer** (built-in validation)
 - ✅ **Cleaner** (no shell scripting needed)
@@ -90,12 +94,14 @@ That's it! One clean command that's:
 ## Advanced Use Cases
 
 ### 1. Extract Subdirectory as New Repository
+
 ```bash
 # Extract only the frontend code into a new repo
 git filter-repo --subdirectory-filter frontend/
 ```
 
 ### 2. Remove Sensitive Files from History
+
 ```bash
 # Remove all .env files from entire history
 git filter-repo --path .env --invert-paths
@@ -105,6 +111,7 @@ git filter-repo --path secrets/api-keys.txt --invert-paths
 ```
 
 ### 3. Rename Multiple Paths
+
 ```bash
 # Rename multiple directories at once
 git filter-repo \
@@ -114,6 +121,7 @@ git filter-repo \
 ```
 
 ### 4. Change Author Information
+
 ```bash
 # Fix author info across entire history
 git filter-repo --mailmap mailmap.txt
@@ -124,6 +132,7 @@ git filter-repo --mailmap mailmap.txt
 ```
 
 ### 5. Complex Filtering with Python
+
 ```bash
 # Use Python callback for complex logic
 git filter-repo --commit-callback '
@@ -137,6 +146,7 @@ if commit.message.startswith(b"WIP"):
 Here's how I migrated a monorepo to separate repositories:
 
 ### Original Structure:
+
 ```
 monorepo/
 ├── frontend/
@@ -146,6 +156,7 @@ monorepo/
 ```
 
 ### Step 1: Extract Frontend
+
 ```bash
 git clone monorepo frontend-repo
 cd frontend-repo
@@ -155,6 +166,7 @@ git push -u origin main
 ```
 
 ### Step 2: Extract Backend
+
 ```bash
 git clone monorepo backend-repo
 cd backend-repo
@@ -168,6 +180,7 @@ git push -u origin main
 ## Safety Features
 
 ### Automatic Backups
+
 ```bash
 # filter-repo automatically creates backups
 $ ls .git/refs/
@@ -178,12 +191,14 @@ git update-ref refs/heads/main refs/original/refs/heads/main
 ```
 
 ### Dry Run Mode
+
 ```bash
 # Test your changes first
 git filter-repo --path-rename old/:new/ --dry-run
 ```
 
 ### Validation Checks
+
 ```bash
 # Built-in repository validation
 git filter-repo --analyze
@@ -193,13 +208,14 @@ git filter-repo --analyze
 ## Integration with CI/CD
 
 ### GitHub Actions Example:
+
 ```yaml
 name: Repository Migration
 on:
   workflow_dispatch:
     inputs:
       source_path:
-        description: 'Path to extract'
+        description: "Path to extract"
         required: true
 
 jobs:
@@ -209,14 +225,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      
+
       - name: Install git-filter-repo
         run: pip install git-filter-repo
-      
+
       - name: Extract subdirectory
         run: |
           git filter-repo --subdirectory-filter ${{ github.event.inputs.source_path }}/
-      
+
       - name: Push to new repository
         run: |
           git remote set-url origin ${{ secrets.NEW_REPO_URL }}
@@ -226,6 +242,7 @@ jobs:
 ## Best Practices
 
 ### 1. Always Use Fresh Clone
+
 ```bash
 # filter-repo requires fresh clone
 git clone original-repo temp-repo
@@ -234,6 +251,7 @@ git filter-repo --path-rename old/:new/
 ```
 
 ### 2. Batch Operations
+
 ```bash
 # Combine multiple operations for efficiency
 git filter-repo \
@@ -244,6 +262,7 @@ git filter-repo \
 ```
 
 ### 3. Preserve Tags and Branches
+
 ```bash
 # Include all refs by default (unlike filter-branch)
 git filter-repo --path-rename old/:new/ --refs --all
@@ -254,16 +273,19 @@ git filter-repo --path-rename old/:new/ --refs --all
 If you have existing `filter-branch` scripts, here's how to migrate:
 
 ### Old filter-branch script:
+
 ```bash
 git filter-branch --tree-filter 'find . -name "*.log" -delete' HEAD
 ```
 
 ### New filter-repo equivalent:
+
 ```bash
 git filter-repo --path-glob '*.log' --invert-paths
 ```
 
 ### Complex tree-filter migration:
+
 ```bash
 # Old way
 git filter-branch --tree-filter '
@@ -280,12 +302,14 @@ git filter-repo --path-rename src/:
 ## Performance Tips
 
 ### 1. Use Specific Refs
+
 ```bash
 # Only process specific branches
 git filter-repo --refs main develop --path-rename old/:new/
 ```
 
 ### 2. Combine with Shallow Clone
+
 ```bash
 # For recent history only
 git clone --depth 100 original-repo temp-repo
@@ -294,6 +318,7 @@ git filter-repo --path-rename old/:new/
 ```
 
 ### 3. Parallel Processing
+
 ```bash
 # Process multiple repositories simultaneously
 parallel -j4 'cd {} && git filter-repo --subdirectory-filter {}/' ::: frontend backend mobile docs
@@ -302,18 +327,21 @@ parallel -j4 'cd {} && git filter-repo --subdirectory-filter {}/' ::: frontend b
 ## Troubleshooting Common Issues
 
 ### Issue 1: "not a fresh clone"
+
 ```bash
 # Solution: Use fresh clone or force
 git filter-repo --force --path-rename old/:new/
 ```
 
 ### Issue 2: Large repository performance
+
 ```bash
 # Use partial clone for large repos
 git clone --filter=blob:none original-repo temp-repo
 ```
 
 ### Issue 3: Complex path patterns
+
 ```bash
 # Use regex for complex patterns
 git filter-repo --path-regex '^(frontend|backend)/' --path-rename-regex '^([^/]+)/(.*)$:\2'
@@ -333,5 +361,4 @@ For the RENDER project and future repository restructuring, I'm definitely switc
 
 **Next time you need to rewrite Git history, skip the old tools and go straight to git filter-repo!** 🚀
 
-
-*This is part 2 of my Git history rewriting series. Check out [part 1](/blog/git-filter-branch-vs-manual-rebase) for the complete comparison. Follow my [RENDER project journey](https://github.com/workspace-framework) for more development insights!*
+_This is part 2 of my Git history rewriting series. Check out [part 1](/blog/git-filter-branch-vs-manual-rebase) for the complete comparison. Follow my [RENDER project journey](https://github.com/workspace-framework) for more development insights!_
