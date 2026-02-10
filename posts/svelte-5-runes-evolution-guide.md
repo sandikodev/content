@@ -3,7 +3,7 @@ title: "Svelte 5 Runes: The Revolutionary Evolution from Svelte 4"
 description: "Complete guide to Svelte 5's Runes system - exploring the syntax evolution, performance improvements, and why Runes make Svelte even more intuitive and efficient."
 date: 2025-12-04T10:00:00+07:00
 author: "Sandikodev"
-category: "Frontend"
+categories: ["Frontend"]
 tags: ["svelte", "svelte5", "runes", "reactivity", "performance", "migration"]
 image: "/images/blog/svelte5-runes.webp"
 draft: false

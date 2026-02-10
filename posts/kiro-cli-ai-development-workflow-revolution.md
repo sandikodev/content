@@ -3,7 +3,7 @@ title: "Kiro CLI: The AI Development Workflow That Actually Gets It Right - Beyo
 description: "Discover how Kiro CLI transforms development with context-aware AI assistance, interactive git workflows, and intelligent code analysis that understands your project."
 date: 2025-12-19T15:30:00+07:00
 author: "Sandikodev"
-category: "Tools"
+categories: ["Tools"]
 tags:
   [
     "kiro-cli",

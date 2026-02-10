@@ -3,7 +3,7 @@ title: "The Enterprise Elephant Theory: Why Big Companies Move Like Glaciers (An
 description: "Discover why enterprise development requires deliberate, careful processes. Learn how the Elephant Theory applies to software teams and scaling challenges."
 date: 2025-12-19T15:25:00+07:00
 author: "Sandikodev"
-category: "Vision"
+categories: ["Vision"]
 tags:
   [
     "enterprise",

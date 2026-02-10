@@ -3,7 +3,7 @@ title: "12-12-25: My Life's Work Begins - Dedicating Everything to R.U.I.N"
 description: "Today I declare my complete dedication to R.U.I.N - Render Unit In Network. A lifelong commitment to preparing desktop computing for the Brain Computer Interface era."
 date: 2025-12-13T10:00:00+07:00
 author: "Sandikodev"
-category: "Vision"
+categories: ["Vision"]
 tags: ["ruin", "bci", "neural-computing", "research", "dedication", "vision"]
 image: "/images/blog/ruin-declaration.webp"
 draft: false

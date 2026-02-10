@@ -3,7 +3,7 @@ title: "Modern Frontend DX Wars Part 3: Astro Islands - The Best of All Worlds"
 description: "Deep dive into Astro's Islands Architecture - how it handles JavaScript, combines multiple frameworks, and delivers the ultimate developer experience with zero-JS by default."
 date: 2025-12-11T10:00:00+07:00
 author: "Sandikodev"
-category: "Frontend"
+categories: ["Frontend"]
 tags:
   ["astro", "islands", "performance", "javascript", "frontend", "architecture"]
 image: "/images/blog/astro-islands.webp"
@@ -15,11 +15,11 @@ draft: false
 Islands Architecture is a paradigm where **interactive components (islands) are surrounded by static HTML (ocean)**. Think of it as selective hydration - only the parts that need JavaScript get JavaScript.
 
 ```astro
-// This runs at build time, not in the browser
-import Header from '../components/Header.astro';
-import BlogPost from '../components/BlogPost.astro';
-import InteractiveComments from '../components/Comments.svelte';
-import NewsletterSignup from '../components/Newsletter.react.jsx';
+// This runs at build time, not in the browser import Header from
+'../components/Header.astro'; import BlogPost from
+'../components/BlogPost.astro'; import InteractiveComments from
+'../components/Comments.svelte'; import NewsletterSignup from
+'../components/Newsletter.react.jsx';
 
 <!-- Static HTML - No JavaScript -->
 <Header />
@@ -55,9 +55,9 @@ function App() {
 ### Astro Islands Approach
 
 ```astro
-// Build-time JavaScript (server-side)
-const posts = await fetch('/api/posts').then(r => r.json());
-const post = posts.find(p => p.slug === Astro.params.slug);
+// Build-time JavaScript (server-side) const posts = await
+fetch('/api/posts').then(r => r.json()); const post = posts.find(p => p.slug ===
+Astro.params.slug);
 
 <!-- Static HTML (zero JavaScript) -->
 <header>
@@ -92,11 +92,9 @@ const post = posts.find(p => p.slug === Astro.params.slug);
 Astro's superpower is **framework agnosticism** - use any framework for any component:
 
 ```astro
-// Mix and match frameworks based on strengths
-import SvelteCounter from './Counter.svelte';
-import ReactChart from './Chart.jsx';
-import VueCalendar from './Calendar.vue';
-import SolidButton from './Button.tsx'; // Solid.js
+// Mix and match frameworks based on strengths import SvelteCounter from
+'./Counter.svelte'; import ReactChart from './Chart.jsx'; import VueCalendar
+from './Calendar.vue'; import SolidButton from './Button.tsx'; // Solid.js
 import LitElement from './CustomElement.js'; // Lit
 
 <main>
@@ -179,7 +177,7 @@ Let's build a complete blog platform showcasing Astro's power:
 
 ### Layout Structure
 
-```astro
+```tsx
 // src/layouts/BlogLayout.astro
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -224,7 +222,7 @@ const { title, description } = Astro.props;
 
 ### Blog Post Page
 
-```astro
+```tsx
 // src/pages/blog/[slug].astro
 import BlogLayout from '../../layouts/BlogLayout.astro';
 import TableOfContents from '../../components/TOC.astro';
@@ -492,7 +490,7 @@ First Contentful Paint: 0.4s
 
 ### Astro's Build Process
 
-```astro
+```javascript
 // This runs at BUILD TIME (Node.js)
 const posts = await fetch('https://api.blog.com/posts').then(r => r.json());
 const featuredPosts = posts.filter(post => post.featured);
@@ -552,17 +550,17 @@ export const collections = {
 };
 ```
 
-```astro
+```tsx
 // Type-safe content queries
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
 // Get all published blog posts
-const allPosts = await getCollection('blog', ({ data }) => {
+const allPosts = await getCollection("blog", ({ data }) => {
   return !data.draft;
 });
 
 // Get featured posts
-const featuredPosts = await getCollection('blog', ({ data }) => {
+const featuredPosts = await getCollection("blog", ({ data }) => {
   return data.featured && !data.draft;
 });
 
@@ -577,7 +575,7 @@ const featuredPosts = await getCollection('blog', ({ data }) => {
       </article>
     );
   })}
-</section>
+</section>;
 ```
 
 ## Integration Ecosystem

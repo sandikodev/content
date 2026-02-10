@@ -3,7 +3,7 @@ title: "Modern Frontend DX Wars Part 2: React vs Vue vs Svelte - The Ultimate Sy
 description: "Deep comparison of React, Vue, and Svelte developer experience - from component syntax to state management, exploring which framework truly wins the DX battle."
 date: 2025-12-09T10:00:00+07:00
 author: "Sandikodev"
-category: "Frontend"
+categories: ["Frontend"]
 tags: ["react", "vue", "svelte", "frontend", "dx", "comparison", "javascript"]
 image: "/images/blog/framework-comparison.webp"
 draft: false

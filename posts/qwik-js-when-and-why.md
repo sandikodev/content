@@ -3,7 +3,7 @@ title: "Qwik.js: Kapan dan Kenapa? Panduan Memilih Framework yang Tepat"
 description: "Deep dive ke Qwik.js - framework dengan resumability yang revolusioner. Pelajari kapan menggunakan Qwik vs React, dan kenapa syntax mirip tapi filosofi berbeda."
 date: 2025-11-22T10:00:00+07:00
 author: "Sandikodev"
-category: "Frontend"
+categories: ["Frontend"]
 tags: ["qwik", "react", "performance", "web-frameworks", "resumability"]
 image: "/images/blog/qwik-framework.webp"
 draft: false
@@ -191,9 +191,9 @@ Qwik sengaja dibuat mirip React untuk:
 
 **React:**
 
-```typescript
+```tsx
 // Load everything, optimize later
-import { useState } from 'react';
+import { useState } from "react";
 
 function Counter() {
   const [count, setCount] = useState(0);
@@ -203,9 +203,9 @@ function Counter() {
 
 **Qwik:**
 
-```typescript
+```tsx
 // Load nothing, load on-demand
-import { component$, useSignal } from '@builder.io/qwik';
+import { component$, useSignal } from "@builder.io/qwik";
 
 export default component$(() => {
   const count = useSignal(0);
@@ -294,12 +294,12 @@ _Note: Untuk content-heavy sites. Interactive apps akan berbeda._
 
 ### Qwik
 
-```typescript
-import { component$, useSignal } from '@builder.io/qwik';
+```tsx
+import { component$, useSignal } from "@builder.io/qwik";
 
 export default component$(() => {
   const todos = useSignal<string[]>([]);
-  const input = useSignal('');
+  const input = useSignal("");
 
   return (
     <div>
@@ -307,10 +307,12 @@ export default component$(() => {
         value={input.value}
         onInput$={(e) => (input.value = e.target.value)}
       />
-      <button onClick$={() => {
-        todos.value = [...todos.value, input.value];
-        input.value = '';
-      }}>
+      <button
+        onClick$={() => {
+          todos.value = [...todos.value, input.value];
+          input.value = "";
+        }}
+      >
         Add
       </button>
       <ul>
@@ -325,23 +327,22 @@ export default component$(() => {
 
 ### React
 
-```typescript
-import { useState } from 'react';
+```tsx
+import { useState } from "react";
 
 export default function TodoApp() {
   const [todos, setTodos] = useState<string[]>([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
 
   return (
     <div>
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <button onClick={() => {
-        setTodos([...todos, input]);
-        setInput('');
-      }}>
+      <input value={input} onChange={(e) => setInput(e.target.value)} />
+      <button
+        onClick={() => {
+          setTodos([...todos, input]);
+          setInput("");
+        }}
+      >
         Add
       </button>
       <ul>

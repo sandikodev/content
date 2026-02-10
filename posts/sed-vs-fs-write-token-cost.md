@@ -3,7 +3,7 @@ title: "SED vs fs_write: Token Cost Analysis"
 description: "Comparing token costs between SED command and fs_write tool for text manipulation tasks in AI-assisted development"
 date: 2025-11-20T10:00:00+07:00
 author: "Sandikodev"
-category: "Tools"
+categories: ["Tools"]
 tags: ["ai", "productivity", "cost-optimization", "developer-tools"]
 image: "/images/blog/dev-tools.webp"
 draft: false
