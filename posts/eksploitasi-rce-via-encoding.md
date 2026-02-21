@@ -46,3 +46,9 @@ Sekuel tertinggal dalam pergerakan transmisi yang berhasil masuk menembus sirkui
 Paradigma kerentanan fatal peracunan multibita siber modern memaksa refleksi bahwa sterilisasi filter komando (_pseudo filtering_) bukan metodologi mitigasi terpercaya apabila ditangani di luar spesifikasi koneksi rujukan. Praktik mutakhir dalam keamanan sisi-peladen—seperti API modern _parameterized queries_ atau rujukan `real_escape_string` generasi mutakhir—dikembangkan dengan syarat penambatan _konteks character-set_ sesi persisten dari peladen SQL untuk mengevaluasi mitigasi asimetris.
 
 Refleksi pembelajaran penting perihal penyelesaian keamanan arsitektur _web enginering_ terdistribusi menegaskan jaminan keabsolutan transmisi. Penetapan satu referensi spesifik komunikasi multiplatform (seperti absolutisasi parameter Universal UTF-8 komando internal koneksi SQL server, hingga transit leksikal JSON API/RPC) mengisyaratkan nilai utama integrasi, setara layaknya kewajiban deklarasi eksplisit resolusi presentasi DOM (<meta charset="utf-8">) pada _browser_.
+
+---
+
+**Kembali ke Seri Encoding Security:**
+- [Membedah Celah Character Encoding: Dari Kesalahan Visual Menuju XSS](/sejarah-gelap-character-encoding) - Memahami vektor serangan awal pada layer presentasi.
+- [Mutational XSS (mXSS): Kerentanan Manipulasi DOM pada Parsial Sisi Klien](/mutational-xss-browser-pengkhianat) - Bagaimana logika normalisasi peramban menjadi celah serangan.

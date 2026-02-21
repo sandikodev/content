@@ -44,3 +44,9 @@ Ketika _browser_ meresolusi format UTF-7 tersebut kembali ke wujud asalnya, rang
 ### Titik Refleksi
 
 Permasalahan _encoding_ membuktikan bahwa kontrol kualitas di sisi pengiriman (_backend parsing_) tidak akan ada gunanya apabila terdapat celah kebingungan resolusi pada sisi penerima (_client-side execution_). Menerapkan ketegasan struktural sejak _byte_ pertama—diawali dengan standar tag `<meta charset="utf-8" />` di puncak struktur HTML—adalah protokol mutlak dalam menciptakan arsitektur aliran data yang higienis.
+
+---
+
+**Baca Selanjutnya dalam Seri Encoding Security:**
+- [Mutational XSS (mXSS): Kerentanan Manipulasi DOM pada Parsial Sisi Klien](/mutational-xss-browser-pengkhianat) - Bagaimana normalisasi peramban dapat membangkitkan payload yang "termutasi".
+- [Multibyte Poisoning: Memahami Interupsi Integritas Resolusi Karakter pada Backend](/eksploitasi-rce-via-encoding) - Eskalasi menuju Remote Code Execution melalui disonansi database.

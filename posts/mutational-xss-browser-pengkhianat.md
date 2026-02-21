@@ -55,3 +55,9 @@ Mentransmisikan gabungan leksikal multibita linguistik yang heterogen lewat arsi
 ### Titik Refleksi
 
 Implementasi rekayasa aman mensyaratkan kewaspadaan melebihi validasi leksikal dasar. Pemenuhan rekomendasi mitigasi terstandar melibatkan meminimalisir fungsi instan modifikasi `.innerHTML`, bergeser pada penggunaan alat transisi hierarki DOM yang didesain secara adaptif memahami pola mutasi eksekusi memori (misalnya penerapan spesifik pustaka _DOMPurify_ tersertifikasi). Memahami bahwa motor _DOM-Parsing_ internal tidaklah menjamin keselarasan keamanan aplikasi.
+
+---
+
+**Lengkapi Pemahaman Anda dalam Seri Encoding Security:**
+- [Membedah Celah Character Encoding: Dari Kesalahan Visual Menuju XSS](/sejarah-gelap-character-encoding) - Dasar-dasar Mojibake dan Charset Sniffing.
+- [Multibyte Poisoning: Memahami Interupsi Integritas Resolusi Karakter pada Backend](/eksploitasi-rce-via-encoding) - Bahaya tersembunyi pada lapisan database dan eskalasi RCE.
