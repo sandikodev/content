@@ -1,7 +1,7 @@
 ---
 title: "Mutational XSS (mXSS): Kerentanan Manipulasi DOM pada Parsial Sisi Klien"
 description: "Pemeriksaan mendalam terhadap fungsi normalisasi DOM oleh browser dan bagaimana celah Mutational XSS memanifestasikan dirinya secara destruktif."
-date: 2026-02-21T21:15:00+07:00
+date: 2026-01-12T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Security", "Web Development"]
 tags: ["mXSS", "DOM", "Security", "Browser Behavior", "Client-Side"]

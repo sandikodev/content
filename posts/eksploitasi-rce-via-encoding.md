@@ -1,7 +1,7 @@
 ---
 title: "Multibyte Poisoning: Memahami Interupsi Integritas Resolusi Karakter pada Backend"
 description: "Studi dan refleksi teknis mengenai eskalasi kerentanan yang bersumber dari pembacaan multibyte, mengungkap keterkaitan antara manajemen karakter dalam aplikasi, database, dan risiko celah Remote Code Execution (RCE)."
-date: 2026-02-21T21:20:00+07:00
+date: 2026-01-28T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Security", "Web Development"]
 tags: ["RCE", "Encoding", "Cybersecurity", "Zero Day", "Backend"]

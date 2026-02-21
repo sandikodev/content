@@ -1,7 +1,7 @@
 ---
 title: "Membedah Celah Character Encoding: Dari Kesalahan Visual Menuju Eksploitasi XSS"
 description: "Analisis teknis mengenai fenomena Mojibake dan bagaimana ketidaksesuaian character encoding dapat tereskalasi dari masalah antarmuka menjadi vektor serangan Cross-Site Scripting (XSS)."
-date: 2026-02-21T21:10:00+07:00
+date: 2025-09-26T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Security", "Web Development"]
 tags: ["Encoding", "Mojibake", "XSS", "UTF-8", "Cybersecurity"]
