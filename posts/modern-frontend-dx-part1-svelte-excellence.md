@@ -1,7 +1,7 @@
 ---
 title: "Modern Frontend DX Wars Part 1: Svelte Excellence - Why It Feels So Natural"
 description: "Deep dive into Svelte's revolutionary developer experience - from intuitive reactivity to zero-config TypeScript, exploring why Svelte feels like the future of frontend development."
-date: 2025-12-06T10:00:00+07:00
+date: 2025-11-22T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Frontend"]
 tags: ["svelte", "frontend", "dx", "javascript", "reactivity", "typescript"]

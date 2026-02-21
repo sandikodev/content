@@ -1,7 +1,7 @@
 ---
 title: "Git Interactive Staging: The Developer's Scalpel - When You Need Surgical Precision"
 description: "Master git add -p for atomic commits. Learn how interactive staging transforms messy development into clean, logical commit history."
-date: 2025-12-19T15:20:00+07:00
+date: 2025-12-20T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Git"]
 tags:

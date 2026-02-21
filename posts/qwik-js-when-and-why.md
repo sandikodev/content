@@ -1,7 +1,7 @@
 ---
 title: "Qwik.js: Kapan dan Kenapa? Panduan Memilih Framework yang Tepat"
 description: "Deep dive ke Qwik.js - framework dengan resumability yang revolusioner. Pelajari kapan menggunakan Qwik vs React, dan kenapa syntax mirip tapi filosofi berbeda."
-date: 2025-11-22T10:00:00+07:00
+date: 2025-09-18T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Frontend"]
 tags: ["qwik", "react", "performance", "web-frameworks", "resumability"]

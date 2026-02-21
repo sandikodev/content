@@ -1,7 +1,7 @@
 ---
 title: "Kiro CLI: The AI Development Workflow That Actually Gets It Right - Beyond GitHub Copilot"
 description: "Discover how Kiro CLI transforms development with context-aware AI assistance, interactive git workflows, and intelligent code analysis that understands your project."
-date: 2025-12-19T15:30:00+07:00
+date: 2026-01-18T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Tools"]
 tags:

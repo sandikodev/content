@@ -1,7 +1,7 @@
 ---
 title: "Modern Frontend DX Wars Part 3: Astro Islands - The Best of All Worlds"
 description: "Deep dive into Astro's Islands Architecture - how it handles JavaScript, combines multiple frameworks, and delivers the ultimate developer experience with zero-JS by default."
-date: 2025-12-11T10:00:00+07:00
+date: 2025-12-06T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Frontend"]
 tags:

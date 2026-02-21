@@ -1,7 +1,7 @@
 ---
 title: "SvelteKit 5 + Runes: Framework Terbaik untuk Canvas-Centered Apps"
 description: "Deep dive SvelteKit 5 dengan Runes API untuk membangun canvas app seperti Canva. Perbandingan dengan React, code examples, dan kenapa Svelte 5 game-changer untuk interactive apps."
-date: 2025-11-25T10:00:00+07:00
+date: 2025-10-02T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Frontend"]
 tags:

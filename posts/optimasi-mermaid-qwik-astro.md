@@ -1,7 +1,7 @@
 ---
 title: "Menjinakkan Concurrency: Mengatasi Error Rendering Mermaid.js pada Arsitektur Astro & Qwik"
 description: "Bagaimana pola Singleton dan pemisahan parser lokal menyelamatkan performa aplikasi dari overload request dan pollution global pada library eksternal."
-date: 2026-02-21T10:00:00+07:00
+date: 2026-02-18T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Frontend", "Architecture"]
 tags: ["Architecture", "Qwik", "MermaidJS", "Performance", "Astro"]
@@ -27,7 +27,7 @@ Berikut adalah gambaran visual saat terjadi kemacetan request:
        |-- GET mermaid.js (Post 3) ------>|      (Race Condition)
        |-- GET mermaid.js (Post 4) ------>|
        |                                  |
-       |<-- [ERR_INVALID_HTTP_RESPONSE] --| 
+       |<-- [ERR_INVALID_HTTP_RESPONSE] --|
 ```
 
 ```tsx
@@ -38,11 +38,11 @@ useVisibleTask$(async () => {
 });
 ```
 
-Vite dev server terkadang kewalahan menangani request paralel yang berlebihan untuk *chunk* ESM yang sama, menyebabkan respon HTTP yang korup.
+Vite dev server terkadang kewalahan menangani request paralel yang berlebihan untuk _chunk_ ESM yang sama, menyebabkan respon HTTP yang korup.
 
 ### Masalah 2: Global Pollution & Library Bloat
 
-Library seperti `marked` bersifat singleton jika digunakan secara global melalui `marked.use()`. Setiap kali komponen baru memanggil fungsi ini, ekstensi atau middleware akan terus bertumpuk. 
+Library seperti `marked` bersifat singleton jika digunakan secara global melalui `marked.use()`. Setiap kali komponen baru memanggil fungsi ini, ekstensi atau middleware akan terus bertumpuk.
 
 Jika Anda memiliki 10 postingan, postingan ke-10 akan menjalankan logika parser sebanyak 10 kali lipat lebih berat dari yang seharusnya. Inilah penyebab utama mengapa halaman menjadi lambat seiring bertambahnya konten.
 
@@ -74,11 +74,11 @@ const loadDependencies = () => {
   sharedDepsPromise = (async () => {
     const [lib1, lib2] = await Promise.all([
       import("heavy-lib-1"),
-      import("heavy-lib-2")
+      import("heavy-lib-2"),
     ]);
     return { lib1, lib2 };
   })();
-  
+
   return sharedDepsPromise;
 };
 ```
@@ -100,7 +100,7 @@ graph LR
 
 ### Solusi: Local Instance Parser
 
-Untuk menghindari penumpukan ekstensi secara global, kita harus beralih dari penggunaan objek `marked` global ke pembuatan *instance* lokal per komponen.
+Untuk menghindari penumpukan ekstensi secara global, kita harus beralih dari penggunaan objek `marked` global ke pembuatan _instance_ lokal per komponen.
 
 ```tsx
 // Gunakan instance lokal (new Marked) alih-alih marked.use() global
@@ -110,12 +110,13 @@ const localMarked = new Marked(
       if (lang === "mermaid") return code; // Jangan sentuh mermaid di tahap ini
       return hljs.highlight(code, { language: lang }).value;
     },
-  })
+  }),
 );
 localMarked.use({ renderer });
 ```
 
 #
+
 ### Test Solidity Highlighting
 
 ```solidity
@@ -124,7 +125,7 @@ pragma solidity ^0.8.0;
 
 contract TestHighlight {
     string public greeting = "Hello KonXC";
-    
+
     function setGreeting(string memory _greeting) public {
         greeting = _greeting;
     }
@@ -134,8 +135,9 @@ contract TestHighlight {
 ## Kesimpulan
 
 Mengintegrasikan library berat ke dalam arsitektur modern membutuhkan ketelitian dalam pengelolaan resource. Dengan menerapkan **Singleton Loader**, kita berhasil:
+
 1. **Menghemat Bandwidth:** Mengurangi request redundan ke server.
-2. **Stabilitas Server:** Menghindari *race condition* pada bundling sistem.
+2. **Stabilitas Server:** Menghindari _race condition_ pada bundling sistem.
 3. **Performa Rendering:** Memastikan parser tetap ringan dengan instance lokal.
 
 Sekarang, diagram bisnis yang kompleks sekalipun dapat termuat mulus di tengah interaktivitas framework Qwik yang responsif!

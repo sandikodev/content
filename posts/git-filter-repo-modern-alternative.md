@@ -1,7 +1,7 @@
 ---
 title: "Git Filter-Repo: The Modern Alternative to Filter-Branch"
 description: "Deep dive into git filter-repo - the faster, safer, and more powerful replacement for git filter-branch with practical examples and migration strategies."
-date: 2025-12-02T10:00:00+07:00
+date: 2025-11-04T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Git"]
 tags: ["git", "version-control", "devops", "tools", "performance"]

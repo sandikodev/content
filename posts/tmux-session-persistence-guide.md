@@ -1,7 +1,7 @@
 ---
 title: "Tmux: The Ultimate Session Persistence Guide for Linux Geeks"
 description: "Master tmux session management, window splitting, and persistence. Never lose your work again with this comprehensive guide to terminal multiplexing."
-date: 2025-11-27T10:00:00+07:00
+date: 2025-10-15T10:00:00+07:00
 author: "Sandikodev"
 categories: ["DevOps"]
 tags:

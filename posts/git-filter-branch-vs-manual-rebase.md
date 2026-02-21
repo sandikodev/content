@@ -1,7 +1,7 @@
 ---
 title: "Git Filter-Branch vs Manual Rebase: Restructuring Repository History"
 description: "Comparing two approaches to restructure Git repository history - the powerful git filter-branch command versus manual rebase strategy for moving files across commits."
-date: 2025-11-29T10:00:00+07:00
+date: 2025-10-28T10:00:00+07:00
 author: "Sandikodev"
 categories: ["Git"]
 tags: ["git", "version-control", "devops", "workflow"]
