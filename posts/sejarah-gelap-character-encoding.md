@@ -48,5 +48,6 @@ Permasalahan _encoding_ membuktikan bahwa kontrol kualitas di sisi pengiriman (_
 ---
 
 **Baca Selanjutnya dalam Seri Encoding Security:**
+
 - [Mutational XSS (mXSS): Kerentanan Manipulasi DOM pada Parsial Sisi Klien](/mutational-xss-browser-pengkhianat) - Bagaimana normalisasi peramban dapat membangkitkan payload yang "termutasi".
 - [Multibyte Poisoning: Memahami Interupsi Integritas Resolusi Karakter pada Backend](/eksploitasi-rce-via-encoding) - Eskalasi menuju Remote Code Execution melalui disonansi database.

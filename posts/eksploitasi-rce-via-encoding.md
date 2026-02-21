@@ -50,5 +50,6 @@ Refleksi pembelajaran penting perihal penyelesaian keamanan arsitektur _web engi
 ---
 
 **Kembali ke Seri Encoding Security:**
+
 - [Membedah Celah Character Encoding: Dari Kesalahan Visual Menuju XSS](/sejarah-gelap-character-encoding) - Memahami vektor serangan awal pada layer presentasi.
 - [Mutational XSS (mXSS): Kerentanan Manipulasi DOM pada Parsial Sisi Klien](/mutational-xss-browser-pengkhianat) - Bagaimana logika normalisasi peramban menjadi celah serangan.

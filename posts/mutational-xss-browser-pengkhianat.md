@@ -59,5 +59,6 @@ Implementasi rekayasa aman mensyaratkan kewaspadaan melebihi validasi leksikal d
 ---
 
 **Lengkapi Pemahaman Anda dalam Seri Encoding Security:**
+
 - [Membedah Celah Character Encoding: Dari Kesalahan Visual Menuju XSS](/sejarah-gelap-character-encoding) - Dasar-dasar Mojibake dan Charset Sniffing.
 - [Multibyte Poisoning: Memahami Interupsi Integritas Resolusi Karakter pada Backend](/eksploitasi-rce-via-encoding) - Bahaya tersembunyi pada lapisan database dan eskalasi RCE.
