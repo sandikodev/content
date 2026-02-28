@@ -1,7 +1,7 @@
 ---
 title: "Evolusi Arsitektur Web: Mengapa Kami Meninggalkan tRPC untuk Astro Actions"
 description: "Sebuah narasi mendalam tentang perjalanan teknis project Roti Sholawat, dari era tRPC + TanStack Query hingga kesederhanaan Astro Actions + Svelte 5 Runes."
-date: 2026-02-27
+date: 2026-03-01
 authors: ["sandikodev"]
 categories: ["engineering", "architecture"]
 tags: ["astro", "svelte", "trpc", "web-dev", "clean-code", "refactoring"]
