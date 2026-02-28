@@ -1,0 +1,116 @@
+---
+title: "JavaScript Fatigue: Sejarah Tsunami Validasi dari ESLint hingga Biome"
+description: "Mengurai benang kusut ekosistem tooling JavaScript. Mengapa kita butuh ESLint, Prettier, TypeScript, Svelte Check, Astro Validate, hingga Biome? Dan mengapa error tetap bocor di runtime?"
+date: 2026-02-28T08:00:00+07:00
+author: "Sandikodev"
+categories: ["Frontend", "Software Engineering"]
+tags: ["JavaScript", "TypeScript", "ESLint", "Biome", "Astro", "Validation", "Fatigue"]
+image: "/images/posts/js-fatigue-tsunami.png"
+draft: false
+---
+
+## Berawal dari Proyek "Roti Sholawat"
+
+Artikel ini lahir bukan sekadar dari teori, melainkan dari realita di "medan tempur" saat kita sedang membangun proyek **Roti Sholawat**. Sebuah proyek ambisius yang menggabungkan **Astro**, **Svelte 5 (Runes)**, **tRPC**, hingga **TanStack Query** untuk menciptakan dashboard admin yang modern dan sangat cepat.
+
+Roti Sholawat sendiri menggunakan kombinasi teknologi *bleeding-edge* untuk memastikan performa maksimal:
+*   **Astro**: Sebagai fondasi utama untuk *Content Delivery* dan orkestrasi pulau-pulau (*islands architecture*).
+*   **Svelte 5 (Runes)**: Memberikan reaktivitas yang sangat halus dengan sistem *runes* baru untuk UI dashboard yang interaktif.
+*   **tRPC**: Membangun jembatan tipe data (End-to-End Type Safety) antara server Cloudflare Workers dan client Svelte.
+*   **TanStack Query**: Menangani manajemen *state* server, *caching*, dan *fetching* data secara efisien.
+*   **Tailwind CSS v4**: Untuk sistem desain yang cepat dan modular.
+*   **Cloudflare (SSR)**: Menjalankan logika sisi server di *edge* untuk latensi yang hampir nihil.
+*   **Zod**: Sebagai garda depan validasi skema data di sisi *runtime*.
+
+Di tengah proses pengembangan tersebut—saat kita sedang berjibaku dengan logika *Inventory*, *Fulfillment*, hingga optimasi arsitektur SSR tersebut—muncul sebuah titik jenuh (fatigue). Kita merasa dibombardir oleh berbagai lapis validasi: ESLint, Prettier, `svelte-check`, `astro check`, hingga `tsc`. Frustrasi ini kemudian meledak menjadi sebuah pertanyaan mendasar: *"Kenapa harus sebanyak ini? Kenapa tidak satu alat saja untuk semuanya? Dan kenapa error tetap muncul di runtime padahal build sukses?"*
+
+Bagi Anda yang ingin melihat draf asli keresahan tersebut beserta catatan proses berpikir (*thought process*) di balik penyusunan narasi ini, silakan kunjungi halaman: [**Behind the Scenes: Proses Brainstorming Tsunami Validasi**](/behind-the-scenes-tsunami-validasi).
+
+---
+
+## Kronologi: Titik Jenuh di Tengah Pengembangan
+
+Dalam perjalanan mengembangkan **Roti Sholawat**, kita melewati beberapa fase krusial yang akhirnya mempertemukan kita dengan fenomena JavaScript Fatigue ini:
+
+1.  **Fase Eksperimen (Pemilihan Stack)**: Kita memilih **Astro** untuk kecepatan pengiriman konten dan **Svelte 5** karena sistem *Runes* yang lebih eksplisit untuk UI yang kompleks. **tRPC** dipasang sebagai jembatan tipe data agar *server* dan *client* selalu sinkron tanpa perlu manual tulis skema API. Ditambah **TanStack Query** untuk kenyamanan manajemen data asinkron, stack ini terasa sangat *powerful* namun juga menambah lapisan kompleksitas baru dalam hal validasi.
+2.  **Fase Integrasi (Layering)**: Saat kode mulai membesar, kita mulai memasang "penjaga gerbang". ESLint untuk gaya bahasa, Prettier untuk keindahan, dan tentu saja TypeScript.
+3.  **Fase Bentrokan (The Conflict)**: Di sinilah masalah dimulai. Kadang ESLint protes hal yang sudah diatur Prettier. Kadang `astro check` bilang aman, tapi `svelte-check` menemukan error di dalam komponen. Puncaknya adalah ketika aplikasi berjalan di browser, muncul error *undefined* yang tidak terdeteksi oleh alat mana pun saat *build time*.
+4.  **Fase Refleksi (Diskusi)**: Dari tumpukan error dan banyaknya konfigurasi inilah dialog panjang mengenai "Tsunami Validasi" ini dimulai. Kita sadar bahwa kompleksitas ini adalah harga yang harus dibayar untuk keamanan aplikasi skala besar, namun untuk menghadapinya tanpa rasa muak, **kita harus memahami terlebih dahulu bagaimana "kekacauan" ini bermula.**
+
+---
+
+## Membedah Ekosistem Validasi JavaScript: Dari Kebebasan Menuju Kedisiplinan
+
+Fenomena yang sering disebut sebagai **"JavaScript Fatigue"** ini sebenarnya bukan muncul tanpa alasan. Setiap alat yang kita gunakan di Roti Sholawat hari ini adalah solusi dari masalah di masa lalu. Agar kita tidak sekadar "ikut-ikutan" memakai alat, mari kita bedah sejarahnya secara kronologis.
+
+![Infografis Evolusi Tooling JavaScript](/images/posts/js-tooling-timeline.png)
+*Gambar 1: Garis waktu evolusi alat validasi JavaScript dari era JSLint hingga konsolidasi Rust.*
+
+### Bab 1: Evolusi—Mengapa Alat Ini Terus Bertambah?
+
+#### Era Tanpa Standar (Pre-2010)
+Pada masa awal, JavaScript adalah bahasa yang sangat fleksibel namun tanpa aturan penulisan yang ketat. Dinamisme ini memudahkan pengembangan cepat, tetapi berisiko besar pada pemeliharaan jangka panjang. Kesalahan logika sering kali baru ditemukan setelah aplikasi dijalankan di browser pengguna, mengakibatkan pengalaman yang buruk tanpa ada filter pencegah sejak awal.
+
+#### Lahirnya Sistem Linter (2010 - 2015)
+Sebagai solusi, Douglas Crockford menciptakan **JSLint**. Ini adalah inspektur pertama yang mencoba mendisiplinkan penulisan kode. Namun, karena aturannya sangat subjektif dan kaku, komunitas merespons dengan menciptakan **ESLint** pada tahun 2013.
+
+ESLint menawarkan fleksibilitas penuh melalui sistem *plugin*. Pengembang diberikan kebebasan untuk menentukan aturan main mereka sendiri. Namun, kebebasan ini juga memicu fragmentasi, di mana perusahaan besar seperti Google, Airbnb, dan Meta mengeluarkan standar mereka masing-masing yang terkadang membingungkan bagi pengembang baru.
+
+#### Pemisahan Format dan Logika dengan Prettier (2017)
+Awalnya, ESLint menangani kesalahan logika sekaligus format penulisan (seperti spasi dan tanda kutip). **Prettier** hadir untuk memisahkan tanggung jawab tersebut. Idenya sederhana: biarkan Prettier menangani estetika kode secara otomatis, sehingga pengembang bisa kembali fokus pada integritas logika di ESLint.
+
+#### Kontrak Tipe Data melalui TypeScript
+Linter dan Formatter hanya menjaga cara kita menulis, namun tidak bisa memastikan apakah data yang kita lempar antar fungsi itu benar. **TypeScript** masuk untuk memberikan sistem pengetikan statis. Dengan TypeScript, kita membuat "kontrak" yang jelas mengenai bentuk data, sehingga kesalahan bisa dicegah sebelum kode sempat dijalankan.
+
+#### Integrasi Framework (Svelte Check & Astro Check)
+TypeScript secara bawaan hanya memahami file `.js` atau `.ts`. Ketika kita menggunakan framework dengan sintaks khusus seperti Svelte (`.svelte`) atau Astro (`.astro`), TypeScript membutuhkan bantuan. Alat seperti `svelte-check` atau `astro check` bertugas menjadi jembatan agar validasi tipe data tetap bekerja di dalam file-file khusus framework tersebut.
+
+#### Konsolidasi melalui Biome (2023 - Sekarang)
+Banyaknya alat berbasis Node.js membuat proses build sering kali terasa berat dan lambat. **Biome** hadir dengan visi penyatuan. Ditulis menggunakan bahasa pemrograman Rust yang berperforma tinggi, Biome menggabungkan fungsi Linter dan Formatter dalam satu alat yang sangat cepat, mencoba menyederhanakan konfigurasi yang selama ini terpencar di Roti Sholawat.
+
+**Namun, di sinilah letak ironinya:** Meskipun kita sudah punya Biome yang secepat kilat dan TypeScript yang setajam silet, kenapa di dashboard Roti Sholawat kita masih saja menemukan error *Runtime* yang memalukan?
+
+---
+
+### Bab 2: Dilema Statis vs Dinamis—Mengapa Error Tetap "Bocor"?
+
+![Diagram Validasi Statis vs Dynamic](/images/posts/static-vs-runtime-diagram.png)
+*Gambar 2: Perbedaan fundamental antara pengecekan saat Build-time (Statis) dan perlindungan saat Runtime (Dinamis).*
+
+Ini adalah realita yang sering membuat kita frustrasi di medan tempur. Kita merasa sudah melewati semua tahap validasi dengan sukses, namun *boom!* aplikasi tetap meledak saat dijalankan. Mengapa proteksi kita seolah tembus pandang?
+
+Kita harus menyadari bahwa semua validasi yang kita puja-puji di Bab 1 hanyalah pemeriksaan "di atas kertas". Ia tidak benar-benar hidup di dalam browser pengguna.
+
+1. **Transformasi Kode**: Saat aplikasi diproduksi, semua proteksi TypeScript dihapus agar file menjadi ringan. Lingkungan produksi (seperti browser atau Node.js) hanya mengeksekusi JavaScript murni yang tidak lagi memiliki "penjaga" tipe data.
+2. **Input Dinamis dari Luar**: TypeScript memvalidasi asumsi konsistensi kode Anda, namun ia tidak bisa menjangkau data yang masuk secara dinamis dari API pihak ketiga atau input pengguna yang tidak terduga saat aplikasi sedang berjalan.
+3. **Perbedaan Lingkungan**: Kode yang berjalan mulus di sisi client belum tentu aman di sisi server (*Server-Side Rendering*). Misalnya, penggunaan objek `window` di lingkungan server yang tidak menyediakannya akan langsung memicu error, meskipun proses build terlihat normal.
+
+**Satu hal lagi yang sering kita lupakan:** Seiring bertambahnya proteksi validasi ini, waktu *feedback loop* kita (DX) sering kali melambat. Itulah mengapa faktor "mesin" di balik layar menjadi sangat krusial.
+
+---
+
+### Bab 3: Mesin Pendukung—Bukan Sekadar Kecepatan
+
+Di luar urusan validasi konten, ada pergerakan besar di sisi *Build Tooling*. Pengalaman kita di Roti Sholawat yang berpindah dari sistem konvensional menuju **Vite**, **esbuild**, hingga **Rolldown** menunjukkan satu visi: validasi yang ketat jangan sampai membunuh produktivitas. Perubahan mesin build ini dilakukan agar Anda mendapatkan hasil validasi secara instan tanpa perlu menunggu "kopi Anda dingin".
+
+> [!TIP]
+> **Pelajari Evolusi Tooling Secara Mendalam:**
+> Kami telah menyusun artikel khusus yang membedah sejarah dan alasan teknis di balik transisi dari Webpack ke era bundler berbasis Rust di sini: [**Evolusi Tooling JavaScript: Masa Depan yang Lebih Cepat**](/evolusi-tooling-javascript-sejarah-dan-masa-depan)
+
+---
+
+### Bab 4: Konklusi Strategis—Menentukan Prioritas
+
+![Diagram Strategi Pertahanan 3 Lapis](/images/posts/three-layer-defense.png)
+*Gambar 3: Strategi pertahanan tiga lapis untuk menjaga integritas kode dan data dalam ekosistem modern.*
+
+Setelah melihat sejarah, celah runtime, hingga kebutuhan akan kecepatan mesin, lantas apa langkah konkrit kita di proyek seperti Roti Sholawat? Jawabannya bukan dengan mengikuti semua tren, melainkan dengan membagi fokus kita pada tiga lapisan utama yang objektif:
+
+1. **Integritas Penulisan (Biome / ESLint)**: Gunakan alat ini untuk menjaga konsistensi gaya kode dan mendeteksi kesalahan logika dasar secara *real-time* di editor.
+2. **Konsistensi Struktur (Astro Check / TSC)**: Pastikan "kontrak" antar komponen dan file Anda tetap valid sebelum kode dikirim ke tahap produksi.
+3. **Validasi Data Runtime (Zod / tRPC)**: Ini adalah benteng terakhir. Gunakan validasi skema seperti **Zod** untuk memastikan data yang datang dari luar saat aplikasi sedang berjalan sesuai dengan ekspektasi aplikasi Anda.
+
+**Kesimpulan:**
+Dunia JavaScript memang kompleks, namun kompleksitas ini hadir untuk memitigasi risiko di aplikasi yang semakin besar dan rumit. Tetaplah fokus pada apa yang dibutuhkan oleh proyek Anda. Selama sistem validasi statis Anda bersih, sisa energinya bisa dialokasikan untuk menangani validasi data di sisi server dan runtime.
+
+Semoga perspektif yang lebih terstruktur dan naratif ini dapat membantu Anda menavigasi ekosistem JavaScript modern dengan lebih tenang dan percaya diri. Ada bagian spesifik yang ingin Anda diskusikan lebih lanjut?
