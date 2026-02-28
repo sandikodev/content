@@ -1,0 +1,85 @@
+---
+title: "Behind the Scenes: Proses Brainstorming Narasi Tsunami Validasi"
+description: "Arsip dokumentasi brainstorming dan proses berpikir (thought process) antara Sandikodev dengan asisten AI dalam menyusun artikel sejarah validasi JavaScript."
+date: 2026-02-28T12:00:00+07:00
+author: "Sandikodev"
+categories: ["Behind The Scenes", "AI"]
+tags: ["Brainstorming", "Process", "JavaScript", "AI"]
+image: "/images/posts/bts-brainstorming.png"
+draft: false
+---
+
+# Arsip Brainstorming: Narasi "Tsunami Validasi"
+
+Artikel utama mengenai [**JavaScript Fatigue: Sejarah Tsunami Validasi dari ESLint hingga Biome**](/sejarah-tsunami-validasi-javascript-fatigue) lahir dari sebuah dialog interaktif. Halaman ini berfungsi sebagai arsip "Behind the Scenes" untuk memberikan gambaran bagaimana sebuah konten teknis di Sandikodev disusun melalui kolaborasi antara penulis dan asisten AI.
+
+Berikut adalah draf asli keresahan yang masuk dan bagaimana kami memetakan solusi secara terstruktur.
+
+## 1. Input: Keresahan Developer (The User Request)
+
+> "ada berbagai macam validate, jujur saya agak bingung ada svelte validate, ada astro validate, ada tsc validate ada bioma validation, ada eslint ada juga prettier, jujur semua ini membuat saya bingung dan mana saja yang harus kita ikuti ? apakah semuanya harus kita ikuti ? kenapa tidak semua itu di jadikan satu saja seperti menggunakan eslint, karena saya sering kali mendapat error saat runtime sedangkan saat build astro dan saat astro validation semuanya normal loh, kenapa bisa begitu ? jujur saya capek dan benci harus bolak balik sisi server dan sisi browser berulang ulang, kenapa tidak dimitigasi sejak di sisi server ? kenapa tidak di mitigasi sejak di runtime ? kenapa tidak di mitigasi sejak di buildtime ? semua ini membuat saya muak, apakah anda bisa menjelaskannya semuanya secara detail, mengakar dan terstruktur ? syukur syukur anda bisa menceritakan sejarah kronologisnya kenapa bisa ada eslint, prettier, bioma, astro validate, svelte validate, tsc dan validation apapun, bahkan kalau masuk dunia eslint/pretier ada gaya sintaks google, amazon, meta dan perusahaan besar lainnya, ini benar benar membuat saya bingung untuk berfikir secara terstruktur dan mengerti narasi/background story dibalik setiap teknologi yang muncul."
+
+---
+
+## 2. Proses Berpikir (AI Thought Process Log)
+
+Dalam menyusun artikel tersebut, asisten AI memetakan beberapa langkah strategis untuk memastikan jawaban tidak hanya teknis, tetapi juga memiliki empati terhadap rasa frustrasi pengembang.
+
+<ThoughtBlock>
+  <ThoughtLog client:load title="Brainstorming Log (44s)" defaultOpen={true}>
+    <ThoughtStep title="Refining The Next Steps">
+      Fokus pada penentuan arah narasi. Mengevaluasi informasi apa yang masih kurang untuk mencapai tujuan penjelasan yang mengakar.
+    </ThoughtStep>
+
+    <ThoughtStep title="Determining Necessary Information">
+      Menilai informasi spesifik untuk menjawab pertanyaan user secara efektif. Mengorganisir topik ke kategori relevan agar alur logika mudah dipahami, sambil menyisipkan rasa empati yang mendalam.
+    </ThoughtStep>
+
+    <ThoughtStep title="Outlining a Narrative">
+      Menyusun respon ke dalam narasi sejarah (kronologis). Fokus pada periode kunci untuk memberikan konteks mengapa sebuah alat diciptakan di zamannya.
+    </ThoughtStep>
+
+    <ThoughtStep title="Analyzing Recent Innovations">
+      Menyelidiki evolusi alat untuk meningkatkan performa. Mempertimbangkan kemunculan solusi terintegrasi (seperti Biome) yang menggabungkan banyak fungsi menjadi satu paket.
+    </ThoughtStep>
+
+    <ThoughtStep title="Evaluating Runtime Considerations">
+      Fokus pada strategi pencegahan runtime error setelah build sukses. Mempertimbangkan faktor integrasi API eksternal dan input user yang tidak bisa divalidasi sepenuhnya pada fase kompilasi.
+    </ThoughtStep>
+    
+    <ThoughtStep title="Clarifying Validation Strategies">
+      Mempertajam spesifikasi validasi runtime. Mempertimbangkan penggunaan schema validation (seperti Zod) selama aplikasi beroperasi.
+    </ThoughtStep>
+
+    <ThoughtStep title="Crafting an Empathetic Response">
+      Menyusun jawaban dalam bahasa Indonesia yang terstruktur, jelas, dan empatik, menyesuaikan latar belakang user agar konten mudah diakses.
+    </ThoughtStep>
+    
+    <ThoughtStep title="Assessing Further Developments">
+      Mengevaluasi bagaimana alat yang berbeda muncul dan beradaptasi dari waktu ke waktu. Dari alat umum menjadi solusi spesifik framework (Astro/Svelte Check).
+    </ThoughtStep>
+
+    <ThoughtStep title="Investigating The Error">
+      Memahami mengapa aplikasi berperilaku berbeda antara fase build dan runtime. Mengidentifikasi area di mana validasi mungkin tidak lengkap atau berbeda antar lingkungan.
+    </ThoughtStep>
+    
+    <ThoughtStep title="Addressing Runtime Issues">
+      Mendalami aspek krusial penanganan error di "dunia nyata" yang muncul setelah kode di-build. Fokus pada respon aplikasi terhadap faktor eksternal (API mati, input aneh).
+    </ThoughtStep>
+    
+    <ThoughtStep title="Focusing On Runtime Defense">
+      Memikirkan peran "penjaga gerbang" (border guard) di sisi server untuk memvalidasi data saat runtime. Fokus untuk mencegah data buruk masuk ke database.
+    </ThoughtStep>
+  </ThoughtLog>
+</ThoughtBlock>
+
+---
+
+## 3. Kesimpulan Brainstorming
+
+Hasil dari proses di atas menyepakati bahwa artikel utama harus:
+1.  Menceritakan **sejarah** agar pembaca paham konteks kemunculan alat satu per satu.
+2.  Menjelaskan perbedaan fundamental antara **Static Validation** (Build Time) dan **Dynamic Validation** (Runtime).
+3.  Memberikan **strategi implementasi** yang tidak membebani pikiran pengembang (*minimal fatigue*).
+
+Dokumentasi ini membuktikan bahwa di balik setiap artikel teknis yang mengalir, ada proses pembedahan masalah yang dilakukan secara mendalam.
