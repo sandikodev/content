@@ -33,7 +33,7 @@ reading_time: true
 
 ## Prolog: Bug yang Terasa Misterius
 
-Kamu sedang pakai Kiro CLI. Kamu minta AI untuk mengedit sebuah fungsi. AI menampilkan diff yang terlihat sempurna. Kamu approve. Lalu:
+Kamu pakai Kiro CLI, minta AI mengedit sebuah fungsi. AI menampilkan diff yang terlihat sempurna. Kamu approve. Lalu:
 
 ```
 Execution failed after 0.0s:
@@ -43,9 +43,9 @@ no occurrences of "    fn calculate() {
 }" were found
 ```
 
-Kamu lihat file-nya. Fungsi itu ada. Persis seperti yang ditampilkan. Tapi CLI bilang tidak ditemukan.
+Kamu buka file-nya. Fungsi itu ada. Persis seperti yang ditampilkan. Tapi CLI bilang tidak ditemukan.
 
-Ini bukan bug random. Ini adalah manifestasi dari sebuah **design flaw fundamental** di boundary antara LLM dan deterministic system — dan memahaminya akan mengubah cara kamu berpikir tentang string, byte, dan I/O di Rust.
+Ini bukan bug random. Ini adalah manifestasi dari sebuah design flaw fundamental di boundary antara LLM dan deterministic system — dan memahaminya akan mengubah cara kamu berpikir tentang string, byte, dan I/O di Rust.
 
 ---
 
@@ -53,17 +53,13 @@ Ini bukan bug random. Ini adalah manifestasi dari sebuah **design flaw fundament
 
 ### LLM bekerja di level visual/semantic
 
-Ketika model bahasa menghasilkan teks, ia bekerja di level **token** — unit abstrak yang merepresentasikan potongan teks. Model tidak "tahu" perbedaan antara tab dan empat spasi. Bagi model, keduanya adalah "indentasi". Bagi model, `\r\n` dan `\n` adalah "baris baru".
+Ketika model bahasa menghasilkan teks, ia bekerja di level token — unit abstrak yang merepresentasikan potongan teks. Model tidak "tahu" perbedaan antara tab dan empat spasi. Bagi model, keduanya adalah "indentasi". Bagi model, `\r\n` dan `\n` adalah "baris baru".
 
-Model mengambil `old_str` dari **konteks percakapan** — bukan dari membaca file secara langsung. Konteks percakapan bisa mengandung representasi kode yang berbeda dari file aktual:
-
-- Diff preview yang ditampilkan di terminal mungkin menggunakan tab
-- Kode yang di-copy-paste user mungkin menggunakan CRLF
-- Output dari tool sebelumnya mungkin sudah di-normalize berbeda
+Model mengambil `old_str` dari konteks percakapan, bukan dari membaca file secara langsung. Konteks percakapan bisa mengandung representasi kode yang berbeda dari file aktual: diff preview yang ditampilkan di terminal mungkin menggunakan tab, kode yang di-copy-paste user mungkin menggunakan CRLF, output dari tool sebelumnya mungkin sudah di-normalize berbeda.
 
 ### Rust bekerja di level byte
 
-Di sisi lain, Rust adalah bahasa yang sangat eksplisit tentang representasi data. Sebuah `String` di Rust adalah:
+Di sisi lain, Rust sangat eksplisit tentang representasi data. Sebuah `String` di Rust adalah:
 
 ```rust
 pub struct String {
@@ -86,7 +82,7 @@ match matches.len() {
 }
 ```
 
-`match_indices` adalah **exact byte comparison**. Ia mencari substring yang identik secara byte-for-byte. Tidak ada toleransi. Tidak ada normalisasi. Tidak ada "kelihatannya sama".
+`match_indices` adalah exact byte comparison. Ia mencari substring yang identik secara byte-for-byte — tidak ada toleransi, tidak ada normalisasi, tidak ada "kelihatannya sama".
 
 ### Visualisasi gap-nya
 
@@ -128,11 +124,7 @@ let borrowed: &str = "hello";
 let bytes: &[u8] = b"hello";
 ```
 
-Perbedaan krusial: `str` dan `String` **dijamin UTF-8**. Ini berarti:
-
-1. Setiap karakter bisa 1-4 byte
-2. Slicing dengan byte index bisa panic jika index jatuh di tengah karakter multi-byte
-3. `len()` mengembalikan **jumlah byte**, bukan jumlah karakter
+Perbedaan krusialnya: `str` dan `String` dijamin UTF-8. Ini berarti setiap karakter bisa 1-4 byte, slicing dengan byte index bisa panic jika index jatuh di tengah karakter multi-byte, dan `len()` mengembalikan jumlah byte — bukan jumlah karakter.
 
 ```rust
 let s = "héllo";
@@ -216,7 +208,7 @@ match exact_count {
 
 ### Strategi 2: Line-Trimmed Match
 
-Bandingkan baris per baris setelah `trim()`. Jika semua baris cocok setelah di-trim, gunakan posisi byte dari baris **asli** (dengan indentasi) untuk replacement.
+Bandingkan baris per baris setelah `trim()`. Jika semua baris cocok setelah di-trim, gunakan posisi byte dari baris asli (dengan indentasi) untuk replacement.
 
 ```rust
 fn line_trimmed_match(content: &str, find: &str) -> Option<(usize, usize)> {
@@ -245,9 +237,7 @@ fn line_trimmed_match(content: &str, find: &str) -> Option<(usize, usize)> {
 }
 ```
 
-**Kenapa return `(usize, usize)` bukan `String`?**
-
-Ini adalah keputusan desain yang krusial. Jika kita return matched substring sebagai `String`, lalu pakai `content.replacen(&matched, new_str, 1)`, kita bisa mengganti **kemunculan pertama** dari substring itu di file — bukan posisi yang kita temukan. Jika substring yang sama muncul lebih awal di file, kita akan memodifikasi tempat yang salah.
+Kenapa return `(usize, usize)` bukan `String`? Ini keputusan desain yang krusial. Kalau kita return matched substring sebagai `String` lalu pakai `content.replacen(&matched, new_str, 1)`, kita bisa mengganti kemunculan pertama dari substring itu di file — bukan posisi yang kita temukan. Jika substring yang sama muncul lebih awal di file, kita akan memodifikasi tempat yang salah.
 
 Dengan return byte range `(start, end)`, replacement selalu tepat di posisi yang ditemukan:
 
@@ -260,7 +250,7 @@ Ok(format!("{}{}{}", &content[..start], new_str, &content[end..]))
 
 Untuk kasus di mana baris tengah sedikit berbeda (bukan hanya whitespace), kita pakai first+last line sebagai anchor dan Levenshtein similarity untuk menilai baris tengah.
 
-**Levenshtein distance** mengukur jumlah operasi minimum (insert, delete, replace) untuk mengubah string A menjadi string B:
+Levenshtein distance mengukur jumlah operasi minimum (insert, delete, replace) untuk mengubah string A menjadi string B:
 
 ```rust
 // O(n) space — rolling row, bukan O(m×n) matrix
@@ -287,18 +277,16 @@ fn levenshtein(a: &str, b: &str) -> usize {
 }
 ```
 
-**Kenapa O(n) bukan O(m×n)?**
+Kenapa O(n) bukan O(m×n)? Algoritma Levenshtein klasik menggunakan matrix `m×n`. Untuk baris kode yang panjang (misalnya 200 karakter), ini berarti alokasi 40.000 elemen per perbandingan. Dengan rolling row, kita hanya butuh dua array berukuran `n`.
 
-Algoritma Levenshtein klasik menggunakan matrix `m×n`. Untuk baris kode yang panjang (misalnya 200 karakter), ini berarti alokasi 40.000 elemen per perbandingan. Dengan rolling row, kita hanya butuh dua array berukuran `n`.
-
-**Kenapa `chars().count()` bukan `len()` untuk denominator similarity?**
+Kenapa `chars().count()` bukan `len()` untuk denominator similarity?
 
 ```rust
 let max_len = a.chars().count().max(b.chars().count());
 // BUKAN: a.len().max(b.len())
 ```
 
-`len()` mengembalikan jumlah byte. Untuk string UTF-8 dengan karakter multi-byte (misalnya kode dengan komentar dalam bahasa Indonesia atau Jepang), `len()` akan memberikan angka yang lebih besar dari jumlah karakter aktual, sehingga similarity score menjadi terlalu rendah dan match yang valid bisa ditolak.
+`len()` mengembalikan jumlah byte. Untuk string UTF-8 dengan karakter multi-byte — misalnya kode dengan komentar dalam bahasa Indonesia atau Jepang — `len()` akan memberikan angka yang lebih besar dari jumlah karakter aktual, sehingga similarity score menjadi terlalu rendah dan match yang valid bisa ditolak.
 
 ---
 
@@ -330,28 +318,24 @@ fn build_line_offsets(lines: &[&str]) -> Vec<usize> {
 }
 ```
 
-`offsets[i]` = byte offset dari awal baris ke-i. Lookup O(1). Build O(n) sekali.
+`offsets[i]` adalah byte offset dari awal baris ke-i. Build O(n) sekali, lookup O(1) selamanya.
 
 ```rust
 let start = offsets[i];           // O(1)
 let end = offsets[i + n] - 1;     // O(1)
 ```
 
-Ini adalah pola yang sangat umum di competitive programming dan systems programming — tapi sering diabaikan di application code. Di Rust, ini sangat natural karena `Vec<usize>` adalah contiguous memory yang cache-friendly.
+Pola ini sangat umum di competitive programming dan systems programming, tapi sering diabaikan di application code. Di Rust, ini sangat natural karena `Vec<usize>` adalah contiguous memory yang cache-friendly.
 
 ---
 
 ## Bagian 6: File Freshness Check — Berpikir tentang Time dan State
 
-Fuzzy matching menyelesaikan masalah whitespace. Tapi ada masalah lain: **apa yang terjadi jika file berubah antara `fs_read` dan `str_replace`?**
+Fuzzy matching menyelesaikan masalah whitespace. Tapi ada masalah lain: apa yang terjadi jika file berubah antara `fs_read` dan `str_replace`?
 
-Skenario:
-1. AI membaca file (mtime = T1)
-2. User mengedit file secara manual (mtime = T2 > T1)
-3. AI mengirim `str_replace` berdasarkan konten lama
-4. Kita overwrite perubahan user tanpa tahu
+Skenarionya: AI membaca file (mtime = T1), user mengedit file secara manual (mtime = T2 > T1), lalu AI mengirim `str_replace` berdasarkan konten lama. Kita overwrite perubahan user tanpa tahu.
 
-Solusinya: simpan mtime saat `fs_read`, verifikasi sebelum `fs_write`.
+Solusinya sederhana — simpan mtime saat `fs_read`, verifikasi sebelum `fs_write`:
 
 ```rust
 // Di FileLineTracker (state yang persist antar tool calls)
@@ -380,7 +364,7 @@ if let Some(read_mtime) = tracker.last_read_mtime {
 }
 ```
 
-`SystemTime` di Rust adalah representasi platform-agnostic dari waktu sistem. `metadata().modified()` mengembalikan `Result<SystemTime>` — bisa gagal di beberapa filesystem yang tidak mendukung mtime (misalnya FAT32). Kita handle dengan `if let Ok(...)` — jika tidak bisa dapat mtime, kita skip check (fail open, bukan fail closed).
+`SystemTime` di Rust adalah representasi platform-agnostic dari waktu sistem. `metadata().modified()` mengembalikan `Result<SystemTime>` — bisa gagal di beberapa filesystem yang tidak mendukung mtime (misalnya FAT32). Kita handle dengan `if let Ok(...)`: jika tidak bisa dapat mtime, kita skip check (fail open, bukan fail closed).
 
 ---
 
@@ -493,17 +477,9 @@ fn is_stale(path: &Path, read_at: SystemTime) -> bool {
 
 ## Epilog: Dari Bug ke Insight
 
-Bug "no occurrences found" di Kiro CLI terlihat seperti masalah kecil. Tapi ketika kita bedah sampai ke level byte, ia mengungkap sesuatu yang lebih dalam:
+Bug "no occurrences found" di Kiro CLI terlihat seperti masalah kecil. Tapi ketika kita bedah sampai ke level byte, ia mengungkap sesuatu yang lebih dalam: setiap boundary antara sistem probabilistik (LLM) dan sistem deterministik (file I/O, string matching) adalah titik rawan representation mismatch.
 
-**Setiap boundary antara sistem probabilistik (LLM) dan sistem deterministik (file I/O, string matching) adalah titik rawan representation mismatch.**
-
-Rust, dengan sistem tipe-nya yang eksplisit dan model ownership-nya, sebenarnya memberikan semua alat yang dibutuhkan untuk menangani ini dengan benar:
-- `str::get()` yang aman untuk byte slicing
-- `char_indices()` untuk iterasi berbasis karakter
-- `SystemTime` untuk temporal reasoning
-- `Vec<usize>` sebagai prefix sum yang cache-friendly
-
-Yang dibutuhkan hanyalah kesadaran bahwa **string bukan teks — string adalah bytes** — dan membangun lapisan normalisasi yang tepat di setiap boundary.
+Rust, dengan sistem tipe-nya yang eksplisit dan model ownership-nya, sebenarnya sudah menyediakan semua alat yang dibutuhkan untuk menangani ini dengan benar — `str::get()` yang aman untuk byte slicing, `char_indices()` untuk iterasi berbasis karakter, `SystemTime` untuk temporal reasoning, `Vec<usize>` sebagai prefix sum yang cache-friendly. Yang dibutuhkan hanyalah kesadaran bahwa string bukan teks, string adalah bytes, dan membangun lapisan normalisasi yang tepat di setiap boundary.
 
 ---
 

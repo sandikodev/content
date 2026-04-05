@@ -15,7 +15,7 @@ auto_toc: true
 reading_time: true
 ---
 
-Ketika pertama kali membangun AI agent yang bisa memanggil tools — membaca file, menjalankan perintah shell, mengakses API — kamu mungkin berpikir tantangan terbesarnya adalah integrasi dengan LLM atau parsing output-nya. Tapi ada masalah yang lebih halus dan lebih berbahaya: **siapa yang boleh mengubah state, kapan, dan bagaimana memastikan tidak ada dua hal yang mengubahnya secara bersamaan?**
+Ketika pertama kali membangun AI agent yang bisa memanggil tools — membaca file, menjalankan perintah shell, mengakses API — kamu mungkin mengira tantangan terbesarnya ada di integrasi LLM atau parsing output-nya. Tapi ada masalah yang lebih halus dan jauh lebih berbahaya: siapa yang boleh mengubah state, kapan, dan bagaimana memastikan tidak ada dua hal yang mengubahnya secara bersamaan?
 
 Rust punya jawaban untuk ini. Dan jawabannya bukan sekadar "gunakan mutex". Jawabannya adalah sistem tipe yang memaksa kamu berpikir tentang kepemilikan state sejak awal.
 
@@ -23,12 +23,7 @@ Rust punya jawaban untuk ini. Dan jawabannya bukan sekadar "gunakan mutex". Jawa
 
 ## State yang Dikelola AI Agent
 
-Bayangkan sebuah AI agent seperti Kiro CLI. Di balik setiap percakapan, ada beberapa lapisan state yang harus dijaga konsistensinya:
-
-- **Conversation history** — semua pesan antara user dan model
-- **Tool results** — output dari setiap tool call yang sudah dieksekusi
-- **File line tracker** — mapping dari nama file ke baris-baris yang sudah dibaca, supaya agent tahu konteks mana yang sudah "dilihat"
-- **Mtime cache** — timestamp modifikasi file, untuk mendeteksi apakah file sudah berubah sejak terakhir dibaca
+Bayangkan sebuah AI agent seperti Kiro CLI. Di balik setiap percakapan, ada beberapa lapisan state yang harus dijaga konsistensinya: conversation history berisi semua pesan antara user dan model, tool results menyimpan output dari setiap tool call yang sudah dieksekusi, file line tracker memetakan nama file ke baris-baris yang sudah dibaca agar agent tahu konteks mana yang sudah "dilihat", dan mtime cache menyimpan timestamp modifikasi file untuk mendeteksi apakah file sudah berubah sejak terakhir dibaca.
 
 Semua ini hidup dalam satu sesi percakapan. Dan setiap kali agent memanggil sebuah tool, tool itu berpotensi membaca atau memodifikasi sebagian dari state ini.
 
@@ -69,13 +64,9 @@ async function toolB(session: AgentSession) {
 await Promise.all([toolA(session), toolB(session)]);
 ```
 
-Ini adalah **shared mutable state** — dua pihak memegang referensi yang sama dan keduanya bisa mengubahnya. Di lingkungan async seperti ini, hasilnya tidak deterministik. Kamu bisa mendapat:
+Inilah shared mutable state — dua pihak memegang referensi yang sama dan keduanya bisa mengubahnya. Di lingkungan async seperti ini, hasilnya tidak deterministik. Kamu bisa mendapat race condition di mana dua tool menulis ke key yang sama dan salah satu hasilnya hilang, atau stale data di mana tool B membaca state yang sudah dimodifikasi tool A di tengah eksekusi, atau context pollution di mana tool yang gagal meninggalkan state setengah jadi dan tool berikutnya membaca data yang korup.
 
-- **Race condition** — dua tool menulis ke key yang sama, salah satu hasil hilang
-- **Stale data** — tool B membaca state yang sudah dimodifikasi tool A di tengah eksekusi
-- **Context pollution** — tool yang gagal meninggalkan state yang setengah jadi, dan tool berikutnya membaca state yang korup
-
-Yang lebih berbahaya: bug ini tidak selalu muncul. Mereka muncul hanya ketika timing-nya tepat — di production, di bawah load tinggi, atau ketika LLM kebetulan memanggil dua tools yang berinteraksi dengan state yang sama.
+Yang lebih berbahaya: bug ini tidak selalu muncul. Mereka baru muncul ketika timing-nya tepat — di production, di bawah load tinggi, atau ketika LLM kebetulan memanggil dua tools yang berinteraksi dengan state yang sama.
 
 ---
 
@@ -83,7 +74,7 @@ Yang lebih berbahaya: bug ini tidak selalu muncul. Mereka muncul hanya ketika ti
 
 Rust punya aturan sederhana yang terdengar membatasi tapi justru membebaskan:
 
-> **Pada satu waktu, kamu boleh punya satu mutable reference, atau banyak immutable references — tapi tidak keduanya.**
+> Pada satu waktu, kamu boleh punya satu mutable reference, atau banyak immutable references — tapi tidak keduanya.
 
 Aturan ini ditegakkan oleh borrow checker pada waktu kompilasi. Bukan runtime. Bukan test. Kompilasi.
 
@@ -187,12 +178,11 @@ impl SharedToolState {
 }
 ```
 
-`Arc` (Atomic Reference Counting) memungkinkan multiple owners. `Mutex` memastikan hanya satu yang bisa mengakses data di dalamnya pada satu waktu. Tapi yang penting: kamu tidak bisa mengakses data di dalam `Mutex` tanpa mengunci-nya terlebih dahulu. Tipe sistem memaksamu.
+`Arc` (Atomic Reference Counting) memungkinkan multiple owners. `Mutex` memastikan hanya satu yang bisa mengakses data di dalamnya pada satu waktu. Tapi yang penting: kamu tidak bisa mengakses data di dalam `Mutex` tanpa menguncinya terlebih dahulu. Tipe sistem memaksamu.
 
-Bandingkan dengan JavaScript:
+Bandingkan dengan JavaScript, di mana locking adalah konvensi yang bisa diabaikan:
 
 ```typescript
-// Tidak ada yang mencegah kamu mengakses cache tanpa "lock"
 class SharedToolState {
   resultsCache: Map<string, ToolResult> = new Map();
   
@@ -253,17 +243,13 @@ Ini bukan berarti TypeScript buruk. Tapi untuk sistem yang mengelola state kompl
 
 ---
 
-## Insight: Ownership Adalah Model untuk Reasoning tentang State Mutation
+## Ownership Adalah Model untuk Reasoning tentang State Mutation
 
-Ini poin yang sering terlewat ketika orang belajar Rust: ownership bukan hanya tentang memory management. Memory management adalah *implementasi* dari sesuatu yang lebih fundamental.
+Ini poin yang sering terlewat ketika orang belajar Rust: ownership bukan hanya tentang memory management. Memory management adalah implementasi dari sesuatu yang lebih fundamental.
 
-Ownership adalah cara untuk **reasoning tentang siapa yang bertanggung jawab atas sebuah state, kapan state itu boleh berubah, dan siapa yang boleh melihat perubahan itu.**
+Ownership adalah cara untuk reasoning tentang siapa yang bertanggung jawab atas sebuah state, kapan state itu boleh berubah, dan siapa yang boleh melihat perubahan itu.
 
-Di AI agent, ini sangat relevan karena:
-
-1. **State mutation harus auditable** — kamu perlu tahu tool mana yang mengubah state apa, untuk debugging dan untuk membangun trust terhadap agent
-2. **Concurrency adalah default** — LLM bisa memanggil multiple tools, async I/O adalah norma, dan race condition adalah musuh nyata
-3. **Context pollution adalah bug yang sulit di-debug** — kalau tool yang gagal meninggalkan state yang korup, agent berikutnya akan membuat keputusan berdasarkan informasi yang salah
+Di AI agent, ini sangat relevan karena state mutation harus auditable — kamu perlu tahu tool mana yang mengubah state apa, untuk debugging dan untuk membangun trust terhadap agent. Concurrency adalah default karena LLM bisa memanggil multiple tools, async I/O adalah norma, dan race condition adalah musuh nyata. Dan context pollution adalah bug yang sulit di-debug — kalau tool yang gagal meninggalkan state yang korup, agent berikutnya akan membuat keputusan berdasarkan informasi yang salah.
 
 Rust memaksamu untuk membuat keputusan ini eksplisit. Bukan sebagai komentar atau dokumentasi, tapi sebagai bagian dari tipe sistem yang dikompilasi.
 
