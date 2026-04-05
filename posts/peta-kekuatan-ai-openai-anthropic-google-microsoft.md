@@ -56,20 +56,30 @@ graph TD
     G["Google DeepMind\n(London + Mountain View)"] --> H["Gemini 2.0, Gemini Ultra\n(model)"]
     H --> I["Google Gemini, NotebookLM\n(produk)"]
 
-    J["Microsoft\n(Redmond)"] --> K["Copilot\n(produk, pakai model OpenAI)"]
-    J --> L["Kerjasama strategis\ndengan OpenAI"]
+    J["Microsoft\n(Redmond)"] --> K["Microsoft Copilot\n(Windows, Office 365, Teams)\npakai model OpenAI"]
+    J --> L["Investasi + lisensi\nstrategis ke OpenAI"]
+    M["GitHub\n(dimiliki Microsoft, DNA developer-first)"] --> N["GitHub Copilot\n(code completion di IDE)"]
+    M --> O["GitHub Copilot Workspace\n(agentic coding)"]
+    M --> P["GitHub Models\n(eksperimen multi-model)"]
 ```
 
 Yang perlu diperhatikan: **Microsoft tidak punya model sendiri yang dipublikasikan secara luas**. Copilot — baik Copilot di Windows, Microsoft 365 Copilot, maupun GitHub Copilot — semuanya berjalan di atas model OpenAI (GPT-4 dan variannya). Microsoft adalah investor terbesar OpenAI, dan hubungan keduanya jauh lebih dalam dari sekadar lisensi API.
 
+Tapi ada nuansa penting di sini: **Microsoft Copilot dan GitHub Copilot adalah dua jalur yang berbeda**, meski keduanya berada di bawah payung Microsoft.
+
+Microsoft Copilot adalah produk untuk pengguna umum dan enterprise — terintegrasi di Windows, Office 365, Teams, dan Bing. Fokusnya adalah produktivitas sehari-hari: merangkum email, membuat presentasi, menjawab pertanyaan di dalam dokumen.
+
+GitHub Copilot adalah produk yang dikelola GitHub — perusahaan yang dimiliki Microsoft tapi beroperasi dengan DNA developer-first yang berbeda. GitHub punya roadmap, komunitas, dan ekosistem tersendiri. GitHub Copilot Workspace, GitHub Models, GitHub Actions — semua ini dibangun dengan perspektif developer, bukan perspektif enterprise productivity. Keduanya memperkuat ekosistem Microsoft, tapi dari arah yang berbeda.
+
 Perbandingan yang apple to apple:
 
-| Yang dibandingkan | Perbandingan yang tepat |
-|---|---|
-| Perusahaan | OpenAI vs Anthropic vs Google DeepMind vs Microsoft |
-| Model | GPT-4o vs Claude 3.5 Sonnet vs Gemini 2.0 vs *(Microsoft pakai lisensi OpenAI)* |
-| Chatbot | ChatGPT vs Claude.ai vs Google Gemini vs Microsoft Copilot |
-| AI Cowork/Agent | ChatGPT Agent vs Claude Cowork vs Gemini Advanced vs GitHub Copilot Workspace |
+| Yang dibandingkan | OpenAI | Anthropic | Google DeepMind | Microsoft / GitHub |
+|---|---|---|---|---|
+| **Perusahaan** | OpenAI | Anthropic | Google DeepMind | Microsoft + GitHub |
+| **Model** | GPT-4o, o1, o3 | Claude 3.5 Sonnet, Claude 3 Opus | Gemini 2.0, Gemini Ultra | *(pakai lisensi OpenAI)* |
+| **Chatbot** | ChatGPT | Claude.ai | Google Gemini | Microsoft Copilot |
+| **AI Cowork (umum)** | ChatGPT Agent | Claude Cowork | Gemini Advanced | Microsoft Copilot (enterprise) |
+| **AI Cowork (developer)** | — | — | — | GitHub Copilot Workspace |
 
 Microsoft bermain dengan strategi yang berbeda dari tiga lainnya — bukan membangun model sendiri, tapi **menguasai lisensi dan distribusi**. Dengan investasi miliaran dolar ke OpenAI dan integrasi Copilot ke seluruh ekosistem Microsoft 365, Windows, dan GitHub, mereka tidak perlu punya model terbaik untuk menjadi pemain terkuat di enterprise. Ini adalah keputusan bisnis yang sangat cerdas: biarkan OpenAI yang menanggung biaya riset dan infrastruktur model, sementara Microsoft mengontrol jalur distribusi ke ratusan juta pengguna korporat.
 
