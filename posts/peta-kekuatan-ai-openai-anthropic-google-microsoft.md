@@ -73,9 +73,8 @@ GitHub Copilot adalah produk yang dikelola GitHub — perusahaan yang dimiliki M
 
 Perbandingan yang apple to apple:
 
-| Yang dibandingkan | OpenAI | Anthropic | Google DeepMind | Microsoft / GitHub |
+| | OpenAI | Anthropic | Google DeepMind | Microsoft / GitHub |
 |---|---|---|---|---|
-| **Perusahaan** | OpenAI | Anthropic | Google DeepMind | Microsoft + GitHub |
 | **Model** | GPT-4o, o1, o3 | Claude 3.5 Sonnet, Claude 3 Opus | Gemini 2.0, Gemini Ultra | *(pakai lisensi OpenAI)* |
 | **Chatbot** | ChatGPT | Claude.ai | Google Gemini | Microsoft Copilot |
 | **AI Cowork (umum)** | ChatGPT Agent | Claude Cowork | Gemini Advanced | Microsoft Copilot (enterprise) |
