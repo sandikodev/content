@@ -19,7 +19,7 @@ tags:
     "representation-mismatch",
     "cookbook",
   ]
-draft: false
+draft: true
 
 ai_features:
   mermaid_diagrams: true

@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["Git"]
 tags: ["git", "version-control", "devops", "tools", "performance"]
 image: "/images/blog/git-filter-repo.webp"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

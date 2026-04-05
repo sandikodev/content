@@ -16,7 +16,7 @@ tags:
     "open-source",
     "kiro-cli",
   ]
-draft: false
+draft: true
 
 ai_features:
   mermaid_diagrams: true

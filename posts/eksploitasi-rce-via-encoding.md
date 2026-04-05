@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["Security", "Web Development"]
 tags: ["RCE", "Encoding", "Cybersecurity", "Zero Day", "Backend"]
 image: "/images/blog/encoding-rce.png"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

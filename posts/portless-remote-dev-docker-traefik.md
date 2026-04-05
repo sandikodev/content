@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["DevOps", "Architecture"]
 tags: ["docker", "traefik", "ssh", "security", "development", "productivity"]
 image: "/images/blog/portless-dev-thumbnail.png"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

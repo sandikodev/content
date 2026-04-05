@@ -15,7 +15,7 @@ tags:
     "kontribusi",
     "lifecycle",
   ]
-draft: false
+draft: true
 
 ai_features:
   mermaid_diagrams: true

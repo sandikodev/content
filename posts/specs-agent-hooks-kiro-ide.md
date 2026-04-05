@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["AI", "Developer Tools"]
 tags: ["kiro", "ai", "developer-tools", "productivity"]
 image: "/images/blog/kiro-specs-hooks-cover.png"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

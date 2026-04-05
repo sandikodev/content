@@ -5,7 +5,7 @@ date: 2026-04-05T06:30:00+07:00
 author: "Sandikodev"
 categories: ["Rust", "AI Engineering", "Software Engineering"]
 tags: ["rust", "ownership", "borrowing", "ai-agent", "context", "state", "kiro-cli", "tool-execution", "memory"]
-draft: false
+draft: true
 ai_features:
   mermaid_diagrams: true
   code_snippets: true

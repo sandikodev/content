@@ -17,7 +17,7 @@ tags:
     "pemula",
     "open-source",
   ]
-draft: false
+draft: true
 
 ai_features:
   mermaid_diagrams: true

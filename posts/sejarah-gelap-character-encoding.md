@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["Security", "Web Development"]
 tags: ["Encoding", "Mojibake", "XSS", "UTF-8", "Cybersecurity"]
 image: "/images/blog/encoding-history.png"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

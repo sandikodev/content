@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["Frontend", "Architecture"]
 tags: ["Architecture", "Qwik", "MermaidJS", "Performance", "Astro"]
 image: "/images/blog/optimasi-mermaid.png"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

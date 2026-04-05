@@ -7,6 +7,13 @@ categories: ["Backend", "DevOps"]
 tags:
   ["Bun", "PNPM", "Vite", "PackageManager", "Performance", "Troubleshooting"]
 image: "/images/blog/bun-vs-pnpm.png"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

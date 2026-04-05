@@ -19,7 +19,7 @@ tags:
     "agentic-ai",
     "peta-ai",
   ]
-draft: false
+draft: true
 
 ai_features:
   mermaid_diagrams: true

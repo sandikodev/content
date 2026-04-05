@@ -6,6 +6,14 @@ authors: ["sandikodev"]
 categories: ["engineering", "architecture"]
 tags: ["astro", "svelte", "trpc", "web-dev", "clean-code", "refactoring"]
 image: "/images/posts/architecture-evolution.png"
+author: "Sandikodev"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["DevOps", "AI"]
 tags: ["ai", "vscode", "antigravity", "remote-ssh"]
 image: "/images/blog/ai_split_brain_thumbnail.png"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

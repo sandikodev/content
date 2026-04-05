@@ -5,7 +5,7 @@ date: 2026-04-05T07:00:00+07:00
 author: "Sandikodev"
 categories: ["Rust", "AI Engineering", "Open Source", "Vision"]
 tags: ["rust", "ast", "lsp", "byok", "kiro-cli", "opencode", "ai-agent", "llm", "open-source", "vision"]
-draft: false
+draft: true
 ai_features:
   mermaid_diagrams: true
   code_snippets: true

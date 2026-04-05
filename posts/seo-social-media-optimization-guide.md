@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["SEO", "Web Performance"]
 tags: ["seo", "lighthouse", "open-graph", "social-media", "ux", "web-dev"]
 image: "/images/blog/seo-social-mastery.png"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

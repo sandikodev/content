@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["Tools"]
 tags: ["ai", "productivity", "cost-optimization", "developer-tools"]
 image: "/images/blog/dev-tools.webp"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["Frontend"]
 tags: ["qwik", "react", "performance", "web-frameworks", "resumability"]
 image: "/images/blog/qwik-framework.webp"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

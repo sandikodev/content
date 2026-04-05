@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["AI", "Developer Tools"]
 tags: ["kiro", "steering", "skills", "ai", "workflow"]
 image: "/images/blog/kiro-steering-skills-cover.png"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 

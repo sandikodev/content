@@ -6,6 +6,13 @@ author: "Sandikodev"
 categories: ["Frontend"]
 tags: ["svelte", "svelte5", "runes", "reactivity", "performance", "migration"]
 image: "/images/blog/svelte5-runes.webp"
+ai_features:
+  mermaid_diagrams: false
+  code_snippets: true
+  technical_depth: "intermediate"
+content_type: "technical"
+auto_toc: true
+reading_time: true
 draft: false
 ---
 
