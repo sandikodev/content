@@ -66,10 +66,12 @@ Perbandingan yang apple to apple:
 
 | Yang dibandingkan | Perbandingan yang tepat |
 |---|---|
-| Perusahaan | OpenAI vs Anthropic vs Google DeepMind |
-| Model | GPT-4o vs Claude 3.5 Sonnet vs Gemini 2.0 |
-| Chatbot | ChatGPT vs Claude.ai vs Google Gemini |
-| AI Cowork/Agent | ChatGPT Agent vs Claude Cowork vs Gemini Advanced |
+| Perusahaan | OpenAI vs Anthropic vs Google DeepMind vs Microsoft |
+| Model | GPT-4o vs Claude 3.5 Sonnet vs Gemini 2.0 vs *(Microsoft pakai lisensi OpenAI)* |
+| Chatbot | ChatGPT vs Claude.ai vs Google Gemini vs Microsoft Copilot |
+| AI Cowork/Agent | ChatGPT Agent vs Claude Cowork vs Gemini Advanced vs GitHub Copilot Workspace |
+
+Microsoft bermain dengan strategi yang berbeda dari tiga lainnya — bukan membangun model sendiri, tapi **menguasai lisensi dan distribusi**. Dengan investasi miliaran dolar ke OpenAI dan integrasi Copilot ke seluruh ekosistem Microsoft 365, Windows, dan GitHub, mereka tidak perlu punya model terbaik untuk menjadi pemain terkuat di enterprise. Ini adalah keputusan bisnis yang sangat cerdas: biarkan OpenAI yang menanggung biaya riset dan infrastruktur model, sementara Microsoft mengontrol jalur distribusi ke ratusan juta pengguna korporat.
 
 ---
 
