@@ -4,7 +4,17 @@ description: "Panduan naratif tentang cara berkontribusi ke proyek open source d
 date: 2026-04-04T02:00:00+07:00
 author: "Sandikodev"
 categories: ["Open Source", "Developer Culture"]
-tags: ["open-source", "github", "kontribusi", "pemula", "git", "pull-request", "gitkraken", "mcp"]
+tags:
+  [
+    "open-source",
+    "github",
+    "kontribusi",
+    "pemula",
+    "git",
+    "pull-request",
+    "gitkraken",
+    "mcp",
+  ]
 draft: false
 
 ai_features:
@@ -44,7 +54,7 @@ Hampir semua proyek open source punya file `CONTRIBUTING.md`. Ini adalah "peratu
 
 - Semua PR harus merujuk ke issue yang sudah ada
 - Deskripsi PR tidak boleh panjang dan terkesan di-generate AI
-- Judul PR harus mengikuti format *conventional commit* (`feat:`, `fix:`, `docs:`, dll)
+- Judul PR harus mengikuti format _conventional commit_ (`feat:`, `fix:`, `docs:`, dll)
 - Ada template PR yang wajib diisi
 
 > [!WARNING]
@@ -182,6 +192,7 @@ Selama proses kontribusi ini, saya menggunakan **GitKraken MCP** yang terintegra
 **MCP (Model Context Protocol)** adalah protokol terbuka yang memungkinkan AI assistant seperti Kiro untuk berkomunikasi dengan tools eksternal secara langsung. Dengan MCP, Kiro bisa mengakses GitHub, membaca PR, bahkan membuat komentar — semua dari dalam sesi chat.
 
 **GitKraken CLI (`gk`)** adalah command-line tool dari GitKraken yang menyediakan MCP server untuk GitHub. Dengan ini, Kiro bisa:
+
 - Mengecek detail PR
 - Membaca komentar
 - Membuat review
@@ -261,6 +272,7 @@ Buka URL tersebut di browser lokal kamu, login, lalu salin token yang diberikan 
 Beberapa organisasi GitHub (termasuk `anomalyco` pemilik OpenCode) mengaktifkan **OAuth App access restrictions**. Ini berarti tool pihak ketiga seperti GitKraken MCP tidak bisa mengakses data organisasi tersebut meskipun kamu sudah login.
 
 Error yang muncul:
+
 ```
 403 -- Although you appear to have the correct authorization credentials,
 the `anomalyco` organization has enabled OAuth App access restrictions,
@@ -310,4 +322,4 @@ Sampai jumpa di kontribusi berikutnya. 🚀
 
 ---
 
-*Ditulis berdasarkan pengalaman nyata berkontribusi ke [anomalyco/opencode](https://github.com/anomalyco/opencode) pada April 2026.*
+_Ditulis berdasarkan pengalaman nyata berkontribusi ke [anomalyco/opencode](https://github.com/anomalyco/opencode) pada April 2026._

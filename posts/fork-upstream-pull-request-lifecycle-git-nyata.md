@@ -4,7 +4,17 @@ description: "Catatan teknis dari sesi kontribusi ke OpenCode — origin vs upst
 date: 2026-04-04T06:00:00+07:00
 author: "Sandikodev"
 categories: ["Open Source", "Git", "Developer Culture"]
-tags: ["git", "github", "open-source", "fork", "upstream", "pull-request", "kontribusi", "lifecycle"]
+tags:
+  [
+    "git",
+    "github",
+    "open-source",
+    "fork",
+    "upstream",
+    "pull-request",
+    "kontribusi",
+    "lifecycle",
+  ]
 draft: false
 
 ai_features:
@@ -134,16 +144,17 @@ Titik perubahan ada di `HighlightedText` di `packages/ui/src/components/message-
 
 Penambahan parser:
 
-```typescript
+````typescript
 function parseCode(text: string): HighlightSegment[] {
-  const re = /```([\w.-]*)[^\S\r\n]*\r?\n?([\s\S]*?)```|`([^`\n]+)`/g
+  const re = /```([\w.-]*)[^\S\r\n]*\r?\n?([\s\S]*?)```|`([^`\n]+)`/g;
   // triple backtick → code-block segment
   // single backtick → code-inline segment
   // teks biasa → plain segment, tidak disentuh
 }
-```
+````
 
 Hasilnya mencakup:
+
 - Render inline code dan fenced code block dengan styling konsisten
 - Auto-collapse untuk code block yang melebihi 8 baris
 - Tombol copy menggunakan `IconButton` dari design system yang sudah ada
@@ -217,6 +228,7 @@ git push origin branch-name --no-verify
 <summary>📋 Conventional commit dan scope</summary>
 
 Format yang digunakan di OpenCode:
+
 - `feat(ui):` — fitur baru di package UI
 - `fix(app):` — bug fix di package app
 - `tweak(ui):` — penyesuaian minor
@@ -230,6 +242,7 @@ Scope dalam tanda kurung bersifat opsional tapi membantu maintainer memahami are
 <summary>🔗 Automatic issue linking</summary>
 
 `Closes #NOMOR` di deskripsi PR mengaktifkan dua hal secara otomatis:
+
 1. PR ditampilkan di halaman issue sebagai "linked pull request"
 2. Issue ditutup otomatis ketika PR di-merge
 
@@ -277,5 +290,5 @@ Ekosistem version control itu luas. Git adalah yang paling survive dan mature, t
 
 ---
 
-*Ditulis berdasarkan pengalaman kontribusi ke [anomalyco/opencode](https://github.com/anomalyco/opencode) pada April 2026.*
-*PR yang dihasilkan: [#20942](https://github.com/anomalyco/opencode/pull/20942) dan [#20946](https://github.com/anomalyco/opencode/pull/20946).*
+_Ditulis berdasarkan pengalaman kontribusi ke [anomalyco/opencode](https://github.com/anomalyco/opencode) pada April 2026._
+_PR yang dihasilkan: [#20942](https://github.com/anomalyco/opencode/pull/20942) dan [#20946](https://github.com/anomalyco/opencode/pull/20946)._
