@@ -93,6 +93,8 @@ Kenapa? Karena produk konsumer mereka — Google Gemini — tidak sepopuler Chat
 
 DeepMind juga punya sejarah yang berbeda dari OpenAI dan Anthropic. Mereka diakuisisi Google pada 2014 — jauh sebelum era ChatGPT — dan fokus awalnya lebih ke riset fundamental daripada produk konsumer. Ini membuat mereka kurang "viral" tapi tidak kurang berpengaruh.
 
+Ada satu momen yang sering terlupakan: **Google Duplex** pada 2018 — sistem yang bisa menelepon restoran dan membuat reservasi secara otomatis, dengan suara yang terdengar sangat manusiawi. Demonstrasinya di Google I/O 2018 membuat penonton terdiam. Ini bukan lagi chatbot biasa — ini adalah sesuatu yang berbeda secara fundamental. Tapi Google terlalu berhati-hati untuk merilisnya secara luas, dan Duplex tidak pernah menjadi produk mainstream. Pola ini berulang: Google punya teknologi revolusioner, tapi ragu untuk mendorongnya ke publik — sampai ChatGPT memaksa mereka bergerak cepat dengan Bard (yang kemudian menjadi Gemini). Google Antigravity, IDE agent-first mereka yang diluncurkan November 2025 bersama Gemini 3, adalah tanda bahwa Google akhirnya memilih untuk tidak menahan diri lagi.
+
 ---
 
 ## Microsoft dan Copilot: Kekuatan yang Tersembunyi di Balik Ekosistem
@@ -119,9 +121,11 @@ GitHub Copilot Workspace — yang diluncurkan 2024 — adalah upaya Microsoft/Gi
 
 Tidak bisa membahas Microsoft AI tanpa menyebut Cortana — dan nasibnya yang tragis.
 
-Cortana diluncurkan 2014 sebagai asisten virtual Microsoft, pesaing langsung Siri (Apple) dan Google Assistant. Pada masanya, Cortana cukup inovatif — terintegrasi di Windows 10, bisa menjawab pertanyaan, mengatur jadwal, bahkan berinteraksi dengan Xbox.
+Cortana diluncurkan 2014 sebagai asisten virtual Microsoft, pesaing langsung Siri (Apple) dan Google Assistant. Pada masanya, Cortana cukup inovatif — terintegrasi di Windows 10, bisa menjawab pertanyaan, mengatur jadwal, bahkan berinteraksi dengan Xbox. Yang sering terlupakan: Cortana punya beberapa keunggulan nyata — ia bisa membaca email dan kalendermu untuk memberikan konteks yang relevan, mengingatkanmu berdasarkan lokasi, dan Microsoft mempekerjakan penulis fiksi untuk membuat kepribadiannya terasa lebih manusiawi.
 
-Tapi ketika OpenAI merilis ChatGPT pada November 2022 dan langsung viral, Cortana seperti kehilangan relevansi dalam semalam. Microsoft — yang sudah berinvestasi besar di OpenAI sejak 2019 — memilih untuk pivot: daripada mengembangkan Cortana lebih jauh, mereka mengintegrasikan teknologi OpenAI ke dalam produk-produk mereka dan meluncurkan Copilot sebagai brand baru.
+Tapi ada satu masalah yang tidak bisa diselesaikan dengan kepribadian yang bagus: **data gap**. Google punya miliaran query pencarian setiap hari sebagai training signal. Microsoft tidak punya itu. Cortana kalah bukan karena buruk — tapi karena Google punya keunggulan data yang hampir tidak bisa dikejar.
+
+Ketika OpenAI merilis ChatGPT pada November 2022 dan langsung viral, Cortana seperti kehilangan relevansi dalam semalam. Microsoft — yang sudah berinvestasi besar di OpenAI sejak 2019 — memilih untuk pivot: daripada mengembangkan Cortana lebih jauh, mereka mengintegrasikan teknologi OpenAI ke dalam produk-produk mereka dan meluncurkan Copilot sebagai brand baru.
 
 Cortana secara resmi dihentikan untuk konsumer pada 2023. Sebuah akhir yang sunyi untuk AI yang pernah menjadi andalan Microsoft.
 
@@ -209,6 +213,12 @@ Ini adalah alasan kenapa OpenCode — yang bisa dipakai dengan model apapun, ter
 Lanskap AI bergerak sangat cepat. Nama-nama baru muncul setiap bulan. Tapi kalau kamu sudah memahami strukturnya — basis proyek, model, produk, agentic layer — kamu tidak akan mudah tersesat oleh hype atau narasi pemasaran.
 
 Cortana mengingatkan kita bahwa tidak ada yang terlalu besar untuk tenggelam. DeepMind mengingatkan kita bahwa yang paling berpengaruh tidak selalu yang paling viral. Dan OpenCode mengingatkan kita bahwa yang paling terbuka sering kali yang paling powerful dalam jangka panjang.
+
+Tapi peta ini masih belum lengkap. Ada pemain-pemain lain yang jarang masuk dalam diskusi AI sehari-hari — Apple dengan Vision Pro dan riset spatial computing-nya, IBM yang diam-diam menguasai infrastruktur enterprise, Meta yang memegang data interaktivitas sosial terbesar di dunia, dan Nvidia yang jauh lebih dari sekadar perusahaan GPU. Microsoft sendiri baru saja mempublikasikan **GigaTIME** di jurnal *Cell* (Desember 2025) — model AI yang bisa memetakan tumor microenvironment dari slide jaringan seharga $10, sesuatu yang sebelumnya membutuhkan ribuan dolar per sampel. Ini bukan lagi soal chatbot atau coding agent — ini adalah AI yang menyentuh fondasi peradaban manusia.
+
+Untuk ulasan yang lebih dalam tentang pemain-pemain ini dan ke mana semuanya bermuara, baca: [Fondasi yang Tak Terlihat: Apple, IBM, Meta, Nvidia, dan Pertarungan untuk Masa Depan Manusia](/posts/fondasi-tak-terlihat-apple-ibm-meta-nvidia).
+
+Ingin tahu lebih dalam tentang era sebelum LLM — ketika Siri, Alexa, Cortana, dan Google Assistant masih merajai? Baca: [Sebelum LLM: Era Gelap yang Melahirkan Segalanya](/posts/sebelum-llm-era-gelap-siri-alexa-cortana).
 
 ---
 
