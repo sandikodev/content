@@ -36,17 +36,17 @@ reading_time: true
 
 ## Prolog: Semua Ini Bukan Tentang Komunitas
 
-Ketika kamu melihat daftar ini — OpenCode, Kiro CLI, Cline, Aider, Copilot CLI, Codex, Gemini CLI, Claude CLI, Kimi CLI, Qwen Code, Cody, Windsurf, NxCode, AwanCode, KiloClaw — kamu mungkin berpikir ini adalah persaingan ekosistem. Siapa yang punya komunitas terbesar, toolchain terlengkap, integrasi terbanyak.
+Coba perhatikan daftar ini sebentar — OpenCode, Kiro CLI, Cline, Aider, Copilot CLI, Codex, Gemini CLI, Claude CLI, Kimi CLI, Qwen Code, Cody, Windsurf, NxCode, AwanCode, KiloClaw. Kalau kamu baru pertama kali melihatnya, wajar kalau yang terlintas adalah: *ini persaingan ekosistem*. Siapa yang punya komunitas terbesar, toolchain terlengkap, integrasi terbanyak.
 
-Tapi semakin dalam kamu masuk ke source code masing-masing, semakin kamu menyadari bahwa semua itu adalah **lapisan permukaan**. Ada sesuatu yang jauh lebih esensial di bawahnya.
+Tapi semakin dalam kamu masuk ke source code masing-masing — dan saya sudah melakukannya cukup dalam belakangan ini — semakin kamu menyadari bahwa semua itu hanyalah lapisan permukaan. Ada sesuatu yang jauh lebih esensial di bawahnya, sesuatu yang jarang dibicarakan secara eksplisit.
 
-Pertanyaan yang sebenarnya bukan *"tool mana yang terbaik?"* — tapi *"bagaimana sebuah respons probabilistik dari LLM bisa menjadi instruksi deterministik yang dieksekusi oleh mesin?"*
+Pertanyaan yang sebenarnya bukan *"tool mana yang terbaik?"* Pertanyaan yang lebih menarik adalah: *bagaimana sebuah respons probabilistik dari LLM bisa menjadi instruksi deterministik yang dieksekusi oleh mesin?* Dan lebih jauh lagi: *apakah cara kita menjembatani dua dunia itu sudah benar?*
 
 ---
 
-## Bagian 1: Anatomi Sebuah "AI Coding Agent"
+## Bagian 1: Semua Tool Ini Sebenarnya Adalah Orkestrator
 
-Semua tool yang disebutkan di atas, pada dasarnya, adalah **orkestrator** — program yang duduk di antara dua dunia yang sangat berbeda:
+Kalau kamu strip semua UI, semua branding, semua fitur tambahan — yang tersisa dari semua tool di atas adalah satu hal yang sama: sebuah program yang duduk di antara dua dunia yang sangat berbeda.
 
 ```mermaid
 graph LR
@@ -64,15 +64,15 @@ graph LR
     B <-->|"syscall\nI/O\nshell exec"| C
 ```
 
-LLM tidak "menulis kode". LLM menghasilkan **token** yang, ketika di-decode, membentuk JSON yang berisi instruksi. Orkestrator yang menginterpretasikan JSON itu dan menjalankan aksi nyata di mesin.
+LLM tidak "menulis kode" dalam arti yang kita bayangkan. LLM menghasilkan **token** yang, ketika di-decode, membentuk JSON berisi instruksi. Orkestrator yang kemudian menginterpretasikan JSON itu dan menjalankan aksi nyata di mesin.
 
-Ini adalah perbedaan yang sangat fundamental — dan sebagian besar diskusi tentang AI coding agent melewatkannya.
+Ini terdengar sederhana. Tapi di sinilah semua kompleksitas bersembunyi.
 
 ---
 
-## Bagian 2: Masalah Intent Boundary
+## Bagian 2: Di Mana Semua Kerumitan Bersembunyi
 
-Ketika kamu minta AI untuk "refactor fungsi ini", apa yang sebenarnya terjadi?
+Ketika kamu minta AI untuk "refactor fungsi ini", ada serangkaian peristiwa yang terjadi di balik layar:
 
 ```mermaid
 sequenceDiagram
@@ -93,31 +93,26 @@ sequenceDiagram
     ToolQueue->>Machine: write bytes to disk
 ```
 
-Di titik **"Intent boundary"** itulah semua kompleksitas berada. Orkestrator harus:
+Titik yang saya tandai sebagai "Intent boundary" itu — di situlah semua kerumitan bersembunyi. Orkestrator harus memvalidasi bahwa instruksi LLM masuk akal secara teknis, menerjemahkan dari representasi LLM ke operasi mesin, mengelola state antara tool calls yang berurutan, dan memastikan dua tool calls yang berjalan paralel tidak saling merusak state yang sama.
 
-1. **Memvalidasi** bahwa instruksi LLM masuk akal secara teknis
-2. **Menerjemahkan** dari representasi LLM (string, JSON) ke operasi mesin (byte, syscall)
-3. **Mengelola state** antara tool calls yang berurutan
-4. **Tidak saling mengunci** — jika dua tool calls berjalan paralel, mereka tidak boleh corrupt state yang sama
-
-Inilah yang membedakan orkestrator yang baik dari yang buruk. Bukan fiturnya. Bukan UI-nya. Tapi **seberapa cerdas ia mengelola boundary antara intent LLM dan eksekusi mesin**.
+Yang membedakan orkestrator yang baik dari yang buruk bukan fiturnya, bukan UI-nya. Tapi seberapa cerdas ia mengelola boundary ini — dan seberapa jujur ia kepada LLM tentang apa yang sebenarnya terjadi di mesin.
 
 ---
 
-## Bagian 3: Mengapa Semua Tool Ini Masih "Berbohong" kepada LLM
+## Bagian 3: Semua Tool Ini Masih "Berbohong" kepada LLM
 
-Ada ironi yang menarik di semua AI coding agent saat ini: mereka semua, dalam berbagai derajat, **menyembunyikan realitas mesin dari LLM**.
+Ada ironi yang menarik di semua AI coding agent saat ini: mereka semua, dalam berbagai derajat, menyembunyikan realitas mesin dari LLM.
 
-Ketika `fs_read` mengembalikan konten file, LLM menerima string UTF-8 yang sudah di-decode. LLM tidak tahu bahwa file itu sebenarnya adalah sequence of bytes. LLM tidak tahu tentang encoding, line endings, atau byte order marks.
+Ketika `fs_read` mengembalikan konten file, LLM menerima string UTF-8 yang sudah di-decode. LLM tidak tahu bahwa file itu sebenarnya adalah sequence of bytes. LLM tidak tahu tentang encoding, line endings, atau byte order marks. Ketika `str_replace` gagal karena tab vs spasi, LLM menerima pesan error dalam bahasa manusia — ia tidak tahu bahwa di level byte, `\t` (0x09) dan empat spasi (0x20 0x20 0x20 0x20) adalah hal yang sama sekali berbeda.
 
-Ketika `str_replace` gagal karena tab vs spasi, LLM menerima pesan error dalam bahasa manusia. LLM tidak tahu bahwa di level byte, `\t` (0x09) dan `    ` (0x20 0x20 0x20 0x20) adalah hal yang sama sekali berbeda.
-
-Ini bukan salah LLM. LLM dilatih pada teks manusia, bukan pada byte sequences. Tapi ini menciptakan **abstraction gap** yang menjadi sumber bug sistematis di semua tool ini.
+Ini bukan salah LLM. LLM dilatih pada teks manusia, bukan pada byte sequences. Tapi ini menciptakan abstraction gap yang menjadi sumber bug sistematis di semua tool ini.
 
 ```
-LLM "melihat":          "    fn foo() {"
-Mesin "melihat":        0x20 0x20 0x20 0x20 0x66 0x6E 0x20 0x66 0x6F 0x6F 0x28 0x29 0x20 0x7B
+LLM "melihat":    "    fn foo() {"
+Mesin "melihat":  0x20 0x20 0x20 0x20 0x66 0x6E 0x20 0x66 0x6F 0x6F 0x28 0x29 0x20 0x7B
 ```
+
+Dua representasi yang secara visual identik, tapi secara byte bisa berbeda total tergantung dari mana LLM mengambil konteksnya.
 
 ---
 
@@ -259,9 +254,9 @@ pub fn transform(input: *const u8, len: usize) -> *mut u8 {
 
 ## Bagian 9: Lanskap Saat Ini — Radar untuk Navigasi
 
-Jika kamu ingin mengikuti perkembangan di ruang ini, ada satu resource yang sangat berguna: **[Big Model Radar](https://github.com/gsscsd/big_model_radar)** — sebuah repository yang melacak perkembangan model dan tool AI secara komprehensif.
+Kalau kamu ingin mengikuti perkembangan di ruang ini secara lebih sistematis, **[Big Model Radar](https://github.com/gsscsd/big_model_radar)** adalah salah satu resource terbaik yang ada — repository yang melacak perkembangan model dan tool AI secara komprehensif dan terus diperbarui.
 
-Dari perspektif yang kita bahas di artikel ini, berikut cara membaca lanskap saat ini:
+Dari perspektif yang kita bahas di artikel ini, begini cara membaca lanskap saat ini secara jujur:
 
 | Tool | String-based | AST-aware | LSP Integration | BYOK | WASM |
 |------|-------------|-----------|-----------------|------|------|
@@ -279,29 +274,27 @@ Tidak ada yang sudah sampai ke WASM. Tidak ada yang benar-benar AST-aware secara
 
 ## Bagian 10: Apa yang Sebenarnya Kita Bangun
 
-Ketika kita berkontribusi ke Kiro CLI — memperbaiki UTF-8 panic, menambahkan fuzzy matching, mengimplementasikan file freshness check — kita tidak hanya memperbaiki bug.
+Ketika kita berkontribusi ke Kiro CLI — memperbaiki UTF-8 panic, menambahkan fuzzy matching, mengimplementasikan file freshness check — rasanya seperti hanya memperbaiki bug kecil. Tapi kalau kamu lihat dari sudut pandang yang lebih luas, setiap keputusan desain yang kita buat adalah keputusan tentang **di mana abstraksi harus berada** dan **di mana realitas byte harus diekspos**.
 
-Kita sedang **mendefinisikan bagaimana seharusnya boundary antara LLM dan mesin dikelola**.
+Return byte range bukan string — supaya replacement selalu di posisi yang benar. Normalize CRLF di boundary — supaya mesin Windows dan Unix bisa bekerja dengan model yang sama. Check mtime sebelum write — supaya perubahan eksternal tidak hilang diam-diam.
 
-Setiap keputusan desain yang kita buat — return byte range bukan string, normalize CRLF di boundary, check mtime sebelum write — adalah keputusan tentang **di mana abstraksi harus berada** dan **di mana realitas byte harus diekspos**.
-
-Ini adalah pertanyaan yang akan terus relevan selama ada AI yang berinteraksi dengan mesin. Dan jawabannya akan membentuk bagaimana AI coding agent berevolusi — dari string-based ke AST-aware ke, mungkin suatu hari, WASM-native.
+Semua ini adalah keputusan tentang bagaimana seharusnya boundary antara LLM dan mesin dikelola. Dan pertanyaan itu akan terus relevan selama ada AI yang berinteraksi dengan mesin — jauh melampaui Kiro CLI, jauh melampaui semua tool yang ada sekarang.
 
 ---
 
 ## Epilog: Undangan untuk Berpikir Lebih Dalam
 
-Jika kamu tertarik dengan ruang ini, beberapa titik masuk yang bagus:
+Kalau kamu tertarik untuk menggali lebih jauh:
 
-- **[Big Model Radar](https://github.com/gsscsd/big_model_radar)** — untuk mengikuti perkembangan model dan tool
-- **[tree-sitter](https://tree-sitter.github.io/)** — untuk memahami AST-aware parsing
+- **[Big Model Radar](https://github.com/gsscsd/big_model_radar)** — untuk mengikuti perkembangan model dan tool secara komprehensif
+- **[tree-sitter](https://tree-sitter.github.io/)** — untuk memahami AST-aware parsing yang mendukung 100+ bahasa
 - **[wasmtime](https://wasmtime.dev/)** — untuk mengeksplorasi WASM runtime di Rust
 - **[tower-lsp](https://github.com/ebkalderon/tower-lsp)** — untuk membangun LSP server di Rust
 - **[aws/amazon-q-developer-cli](https://github.com/aws/amazon-q-developer-cli)** — untuk berkontribusi langsung ke Kiro CLI
 
 Pertanyaan yang paling menarik bukan *"tool mana yang terbaik sekarang?"* — tapi *"arsitektur apa yang akan membuat semua tool ini menjadi lebih baik secara fundamental?"*
 
-Dan jawabannya, saya percaya, ada di persimpangan antara byte-level precision Rust, AST-aware parsing, LSP feedback loops, dan — mungkin — WebAssembly sebagai lingua franca antara LLM dan mesin.
+Jawabannya, saya percaya, ada di persimpangan antara byte-level precision Rust, AST-aware parsing, LSP feedback loops, dan — mungkin suatu hari — WebAssembly sebagai lingua franca antara LLM dan mesin.
 
 ---
 
