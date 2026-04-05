@@ -172,7 +172,7 @@ Tidak ada satupun dari ini yang bisa kamu lakukan di Claude Cowork atau ChatGPT 
 
 Ada beberapa kesalahpahaman yang sangat umum yang perlu diluruskan:
 
-**"Claude Cowork lebih pintar dari ChatGPT"** — ini membandingkan apel dengan jeruk. Claude Cowork adalah *mode* dari Claude, bukan model yang berbeda. Yang berbeda adalah kemampuan agentic-nya, bukan kecerdasan dasarnya.
+**"Claude Cowork lebih pintar dari ChatGPT Agent"** — ini membandingkan hal yang berbeda dimensi. Kalau yang dimaksud adalah "kecerdasan dasar", maka yang perlu dibandingkan adalah modelnya — Claude 3.5 Sonnet vs GPT-4o, misalnya. Dan bahkan itu pun bukan soal "kecerdasan" dalam arti manusia, melainkan soal kapasitas model dan bagaimana ia di-tune untuk memahami konteks dari token-token yang masuk. Sedangkan Claude Cowork vs ChatGPT Agent adalah perbandingan di layer yang sama sekali berbeda — layer tooling, layer perkakas yang bersinggungan langsung dengan dunia nyata. Dua hal ini tidak bisa disamakan dalam satu kalimat perbandingan.
 
 **"OpenWork gratis, Claude Cowork berbayar, jadi OpenWork lebih baik"** — gratis bukan berarti lebih baik. OpenWork membutuhkan setup, pemeliharaan, dan pemahaman teknis. Untuk pengguna non-teknis, Claude Cowork mungkin tetap pilihan yang lebih tepat.
 
