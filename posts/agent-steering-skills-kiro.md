@@ -2,7 +2,7 @@
 title: "Agent Steering dan Skills di Kiro: Mengarahkan AI agar Sesuai Keinginan"
 description: "Specs dan hooks sudah, sekarang belajar mengarahkan AI agent melalui steering rules dan skills agar bekerja sesuai standar tim."
 date: 2026-04-01T12:00:00+07:00
-author: "sandikodev"
+author: "Sandikodev"
 categories: ["AI", "Developer Tools"]
 tags: ["kiro", "steering", "skills", "ai", "workflow"]
 image: "/images/blog/kiro-steering-skills-cover.png"

@@ -2,7 +2,7 @@
 title: "Specs dan Agent Hooks di Kiro IDE: Cara Baru Kerja Bareng AI"
 description: "Bukan sekadar autocomplete. Specs dan hooks mengubah cara kamu merencanakan, mengeksekusi, dan menjaga kualitas kode bersama AI agent."
 date: 2026-04-01T10:00:00+07:00
-author: "sandikodev"
+author: "Sandikodev"
 categories: ["AI", "Developer Tools"]
 tags: ["kiro", "ai", "developer-tools", "productivity"]
 image: "/images/blog/kiro-specs-hooks-cover.png"

@@ -2,7 +2,7 @@
 title: "Kiro IDE vs Kiro CLI: Kapan Pakai Yang?"
 description: "IDE untuk coding interaktif, CLI untuk automation dan scripting. Ini panduan kapan pakai masing-masing berdasarkan kasus nyata."
 date: 2026-04-01T11:00:00+07:00
-author: "sandikodev"
+author: "Sandikodev"
 categories: ["AI", "Developer Tools"]
 tags: ["kiro", "cli", "ai", "developer-tools", "workflow"]
 image: "/images/blog/kiro-ide-vs-cli-cover.png"
