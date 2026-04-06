@@ -98,7 +98,37 @@ Ini bukan berarti OpenClaw adalah produk yang buruk — ini adalah peringatan ba
 
 ---
 
-## Masalah yang Lebih Fundamental: AI Tahu Banyak tapi Sering Salah
+## Arsitektur OpenClaw: Empat Komponen Utama
+
+Berdasarkan analisis mendalam dari [AIMultiple](https://aimultiple.com/moltbot), OpenClaw terdiri dari empat komponen utama:
+
+```mermaid
+graph TD
+    A["Gateway\n(background service, front door)\nManages messaging platform connections"] --> B["Agent\n(LLM reasoning engine)\nInterprets intent"]
+    B --> C["Skills\n(modular capabilities)\nbrowser, filesystem, calendar, API"]
+    B --> D["Memory\n(persistent storage)\nMarkdown files, long-term context"]
+    E["User via WhatsApp/Telegram"] --> A
+    A --> F["Host Machine\n(local execution)"]
+```
+
+Yang membuat arsitektur ini unik dibanding agent lain:
+
+**vs Visual Agents** — Visual agents mengambil screenshot, memproses pixel data, dan menghitung koordinat untuk simulasi klik mouse. OpenClaw bypass GUI sepenuhnya — ia tidak "melihat" ikon file untuk memindahkannya, ia langsung mengeksekusi shell command (`mv /downloads/*.pdf /documents`). Hasilnya: tidak ada grounding errors, beroperasi di machine speed bukan human interface speed.
+
+**vs CLI Agents** — CLI agents seperti Claude Code atau Open Interpreter berjalan dalam terminal window dan hanya merespons ketika user menginput command. Mereka menderita "session amnesia" — tutup terminal, context hilang. OpenClaw berjalan sebagai gateway daemon 24/7, mempertahankan memori jangka panjang di file lokal (MEMORY.md), dan bisa **menginisiasi interaksi sendiri** melalui Heartbeat Engine dan cron job integration.
+
+## Moltworker: OpenClaw di Cloudflare Workers
+
+Salah satu deployment pattern yang menarik adalah **Moltworker** — cara menjalankan OpenClaw di Cloudflare Workers (serverless) alih-alih VPS tradisional.
+
+Dalam setup ini:
+- Execution logic OpenClaw berjalan di Cloudflare Workers
+- Agent memory, logs, dan artifacts disimpan di Cloudflare R2 (object storage)
+- R2 menyediakan free tier hingga 10GB — deployment kecil bisa berjalan tanpa biaya infrastruktur tambahan
+
+Cocok untuk: chat-based assistants, on-demand automation agents, dan personal/experimental agents dengan traffic rendah. Tidak cocok untuk: long-running autonomous agents atau agents yang butuh GPU atau local filesystem access.
+
+
 
 Di luar isu keamanan, ada paradoks yang dialami siapapun yang pernah serius menggunakan AI coding agent: model yang sangat canggih, tapi sering menghasilkan kode yang salah untuk library atau framework tertentu.
 
