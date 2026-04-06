@@ -1,9 +1,9 @@
 ---
 title: "SKILL.md dan Agent Skills: Standar Baru yang Mengubah Cara AI Bekerja dengan Tools"
-description: "Dari drama rebranding Clawdbot → Moltbot → OpenClaw hingga lahirnya SKILL.md sebagai open standard — bagaimana ekosistem agent skills sedang membentuk ulang cara LLM memahami dan menggunakan tools secara presisi."
+description: "Dari drama rebranding Clawdbot → Moltbot → OpenClaw hingga lahirnya SKILL.md sebagai open standard, risiko keamanan yang diungkap Palo Alto Networks, dan 5 skill nyata yang dipakai engineer setiap hari — panduan lengkap ekosistem agent skills."
 date: 2026-04-06T14:00:00+07:00
 author: "Sandikodev"
-categories: ["AI Engineering", "Agentic AI", "Tools"]
+categories: ["AI Engineering", "Agentic AI", "Tools", "Security"]
 tags:
   [
     "skill-md",
@@ -14,9 +14,12 @@ tags:
     "opencode",
     "claude",
     "cursor",
+    "gemini-cli",
     "agentic-ai",
     "open-standard",
     "llm",
+    "security",
+    "prompt-injection",
   ]
 draft: true
 
@@ -34,21 +37,74 @@ reading_time: true
 
 Januari 2026. Seorang developer bernama Peter Steinberger merilis sebuah tool bernama **Clawdbot** — personal AI assistant yang langsung viral. Dalam hitungan minggu, ia mendapat surat dari Anthropic: nama itu terlalu mirip dengan "Claude". Ia harus ganti nama.
 
-Pada 27 Januari 2026, ia mengumumkan rebranding ke **Moltbot** — terinspirasi dari proses molting lobster, melepas cangkang lama untuk tumbuh. Tapi nama itu pun tidak bertahan lama. Akhirnya ia menetap di **OpenClaw** — nama yang sekarang dikenal sebagai salah satu personal AI assistant paling populer di 2026 dengan ratusan ribu stars di GitHub.
+Pada 27 Januari 2026, ia mengumumkan rebranding ke **Moltbot** — terinspirasi dari proses molting lobster, melepas cangkang lama untuk tumbuh:
+
+> *"Molt fits perfectly — it's what lobsters do to grow."*
+
+Tapi nama itu pun tidak bertahan lama. Akhirnya ia menetap di **OpenClaw** — nama yang sekarang dikenal sebagai salah satu personal AI assistant paling populer di 2026 dengan ratusan ribu stars di GitHub, lebih dari 11.500 forks, semua dalam waktu kurang dari seminggu.
 
 Tiga nama, satu produk. Tapi yang menarik bukan dramanya — yang menarik adalah *mengapa* tool ini begitu cepat viral, dan apa yang ia ungkap tentang arah ekosistem AI agent.
 
 ---
 
-## Masalah yang Belum Terpecahkan: AI Tahu Banyak tapi Sering Salah
+## Apa yang Membuat OpenClaw Berbeda
 
-Ada paradoks yang dialami siapapun yang pernah serius menggunakan AI coding agent: model yang sangat canggih, tapi sering menghasilkan kode yang salah untuk library atau framework tertentu.
+OpenClaw bukan sekadar chatbot. Ia adalah autonomous agent yang bisa:
+
+- Browse web dan merangkum PDF
+- Menjadwalkan kalender
+- Membaca dan menulis file di sistemmu
+- Mengirim email atas namamu
+- Mengambil screenshot dan mengontrol aplikasi desktop
+- Terintegrasi dengan WhatsApp, Telegram, dan messaging app lainnya
+- **Menyimpan memori persisten** — ia ingat interaksi dari minggu atau bulan lalu
+
+Memori persisten inilah yang menjadi pembeda sekaligus sumber kontroversi terbesar.
+
+---
+
+## Sisi Gelap: Ketika Power Bertemu Kerentanan
+
+Palo Alto Networks mempublikasikan analisis keamanan yang sangat detail tentang OpenClaw (saat itu masih bernama Moltbot) pada Januari 2026. Judulnya cukup provokatif: *"Why Moltbot May Signal the Next AI Security Crisis"*.
+
+Argumen utamanya: OpenClaw memiliki akses ke root files, authentication credentials, browser history, cookies, dan semua folder di sistemmu. Kombinasi ini dengan memori persisten menciptakan attack surface yang sangat luas.
+
+Palo Alto memperkenalkan konsep **"Lethal Trifecta + 1"** — memperluas konsep Simon Willison tentang tiga kerentanan fundamental AI agent:
+
+```mermaid
+graph TD
+    A["Lethal Trifecta (Simon Willison, 2025)"]
+    A --> B["1. Akses ke Private Data\n(credentials, personal info)"]
+    A --> C["2. Exposure ke Untrusted Content\n(web, messages, third-party)"]
+    A --> D["3. Kemampuan External Communication\n(send messages, API calls, execute)"]
+    E["+ Persistent Memory\n(Palo Alto, 2026)"] --> F["Time-shifted prompt injection\nMemory poisoning\nLogic bomb activation"]
+    B & C & D & E --> G["OpenClaw Attack Surface"]
+```
+
+Skenario serangan yang paling mengkhawatirkan: pesan WhatsApp yang berisi payload berbahaya tersimpan di memori persisten agent, lalu dieksekusi beberapa hari kemudian ketika kondisi tertentu terpenuhi — tanpa ada human-in-the-loop check.
+
+Palo Alto memetakan kerentanan OpenClaw ke **OWASP Top 10 for Agentic Applications 2026**:
+
+| OWASP Risk | Kerentanan OpenClaw |
+|---|---|
+| A01: Prompt Injection | Web results dan messages bisa inject instruksi berbahaya |
+| A02: Insecure Tool Invocation | Tools dipanggil berdasarkan reasoning yang termasuk untrusted memory |
+| A03: Excessive Autonomy | Root access + credential access + network, tanpa privilege boundaries |
+| A04: Missing Human-in-the-Loop | Tidak ada approval untuk operasi destruktif |
+| A05: Memory Poisoning | Semua memory tidak dibedakan berdasarkan sumber atau trust level |
+| A06: Insecure Third-Party Skills | Skills pihak ketiga berjalan dengan full agent privileges |
+
+Ini bukan berarti OpenClaw adalah produk yang buruk — ini adalah peringatan bahwa **power yang besar membutuhkan governance yang setara**.
+
+---
+
+## Masalah yang Lebih Fundamental: AI Tahu Banyak tapi Sering Salah
+
+Di luar isu keamanan, ada paradoks yang dialami siapapun yang pernah serius menggunakan AI coding agent: model yang sangat canggih, tapi sering menghasilkan kode yang salah untuk library atau framework tertentu.
 
 Bukan karena modelnya bodoh. Tapi karena **dokumentasi ditulis untuk manusia, bukan untuk AI**.
 
 Dokumentasi manusia menyebar informasi di puluhan halaman, mengasumsikan pembaca akan browsing secara non-linear, dan sering melewatkan detail teknis yang "sudah jelas" bagi developer berpengalaman. LLM tidak bisa memegang seluruh dokumentasi dalam context window-nya sekaligus — dan bahkan kalau bisa, performa model menurun drastis ketika context terlalu panjang.
-
-Hasilnya: AI menggunakan API yang sudah deprecated, melewatkan best practice yang tidak eksplisit, dan membuat keputusan yang salah karena tidak punya konteks yang tepat.
 
 **SKILL.md** adalah jawaban untuk masalah ini.
 
@@ -68,6 +124,9 @@ name: git-release
 description: Create consistent releases and changelogs
 license: MIT
 compatibility: opencode
+metadata:
+  audience: maintainers
+  workflow: github
 ---
 
 ## What I do
@@ -84,101 +143,150 @@ Use this when you are preparing a tagged release.
 
 - Never use `git tag` directly — always use `gh release create`
 - Version bumps follow semver strictly
+- Always check CHANGELOG.md exists before creating release
 ```
 
-Frontmatter-nya minimal: `name` (required), `description` (required), dan beberapa field opsional. Kontennya bebas — tapi yang efektif biasanya berisi decision tables, explicit boundaries, dan gotchas section.
+Frontmatter-nya minimal: `name` (required, 1-64 karakter, lowercase alphanumeric), `description` (required, max 1024 karakter), dan beberapa field opsional.
 
 ---
 
-## Bagaimana Agent Menemukan dan Menggunakan Skills
+## Tiga Level Progressive Disclosure
 
-OpenCode — salah satu tool yang paling mature dalam mengimplementasikan agent skills — mencari SKILL.md di beberapa lokasi:
+Salah satu desain paling cerdas dari agent skills adalah **progressive disclosure** — cara agent memuat informasi secara bertahap sesuai kebutuhan:
 
 ```mermaid
 graph TD
-    A["Agent membutuhkan skill"] --> B["skill tool dipanggil"]
-    B --> C["OpenCode mencari SKILL.md"]
-    C --> D[".opencode/skills/*/SKILL.md"]
-    C --> E["~/.config/opencode/skills/*/SKILL.md"]
-    C --> F[".claude/skills/*/SKILL.md"]
-    C --> G[".agents/skills/*/SKILL.md"]
-    D & E & F & G --> H["Daftar skills tersedia\ndikirim ke model"]
-    H --> I["Model memilih skill yang relevan"]
-    I --> J["skill({ name: 'git-release' })"]
-    J --> K["Konten SKILL.md dimuat ke context"]
-    K --> L["Agent bekerja dengan konteks yang tepat"]
+    A["Level 1: Metadata\n(selalu dimuat, ~100 tokens)\nname + description"] --> B["Agent melihat skill tersedia"]
+    B --> C{"Skill relevan\nuntuk task ini?"}
+    C -->|Ya| D["Level 2: Instructions\n(dimuat saat triggered, ~5k tokens)\nworkflows, procedures, best practices"]
+    C -->|Tidak| E["Skip — tidak masuk context"]
+    D --> F{"Butuh resource\ntambahan?"}
+    F -->|Ya| G["Level 3: Resources & Code\n(dimuat sesuai kebutuhan)\nscripts, templates, reference data"]
+    F -->|Tidak| H["Eksekusi dengan instruksi yang ada"]
 ```
 
-Yang menarik dari desain ini: **skills dimuat on-demand**, bukan semuanya sekaligus. Agent melihat daftar nama dan deskripsi skill yang tersedia, lalu memilih mana yang relevan untuk task saat ini. Ini mencegah context bloat — agent tidak perlu membawa semua instruksi setiap saat.
+Ini mencegah context bloat — agent tidak perlu membawa semua instruksi setiap saat. Hanya yang relevan yang masuk ke working memory.
 
 ---
 
-## Ekosistem yang Tumbuh: Dari OpenCode ke Standar Universal
+## Bagaimana Berbagai Tool Mengimplementasikan Skills
 
-SKILL.md bukan hanya fitur OpenCode. Ia sedang menjadi **open standard** yang diadopsi oleh banyak tool sekaligus.
+### OpenCode
 
-Pada Januari 2026, Mintlify mengumumkan bahwa semua dokumentasi yang dihosting di platform mereka otomatis menghasilkan file `/.well-known/skills/default/SKILL.md` — berisi ringkasan best practice, gotchas, dan decision tables yang dioptimalkan untuk agent. Setiap kali dokumentasi diupdate, SKILL.md-nya diregenerasi otomatis.
+OpenCode mencari SKILL.md di beberapa lokasi secara hierarkis:
 
-Vercel merilis `skills` CLI — tool untuk menginstall skills dari URL ke berbagai agent sekaligus:
+```
+.opencode/skills/<name>/SKILL.md          # project-local
+~/.config/opencode/skills/<name>/SKILL.md  # global
+.claude/skills/<name>/SKILL.md            # Claude-compatible
+.agents/skills/<name>/SKILL.md            # agent-compatible
+```
+
+Dokumentasi lengkap: [opencode.ai/docs/skills](https://opencode.ai/docs/skills/)
+
+### Claude Code (Anthropic)
+
+Anthropic mendokumentasikan agent skills di [platform.claude.com/docs/en/agents-and-tools/agent-skills/overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview). Skills di Claude Code berjalan di VM environment dengan filesystem access — memungkinkan skills untuk menjalankan scripts dan mengakses resources secara langsung.
+
+Perbedaan penting antar platform Claude:
+- **Claude API**: Tidak ada network access untuk skills
+- **Claude Code**: Full network access
+- **Claude.ai**: Bervariasi tergantung settings
+
+### Cursor
+
+Cursor mengimplementasikan skills sebagai bagian dari sistem rules-nya. Dokumentasi di [cursor.com/docs/skills](https://cursor.com/docs/skills).
+
+### Gemini CLI
+
+Google Gemini CLI juga mendukung skills dengan format yang kompatibel. Dokumentasi di [geminicli.com/docs/cli/skills](https://geminicli.com/docs/cli/skills/).
+
+### GitHub Copilot CLI
+
+Copilot CLI mengimplementasikan skills melalui AGENTS.md dan Agent Skills — memungkinkan kustomisasi behavior yang konsisten across models, sessions, dan delegated work.
+
+---
+
+## Ekosistem yang Tumbuh: Dari Tool ke Standar Universal
+
+SKILL.md bukan hanya fitur satu tool. Ia sedang menjadi **open standard** yang diadopsi secara luas.
+
+**Mintlify** mengumumkan bahwa semua dokumentasi yang dihosting di platform mereka otomatis menghasilkan file `/.well-known/skills/default/SKILL.md`. Setiap kali dokumentasi diupdate, SKILL.md-nya diregenerasi otomatis. Artikel lengkap: [mintlify.com/blog/skill-md](https://www.mintlify.com/blog/skill-md).
+
+**Vercel** merilis `skills` CLI — tool untuk menginstall skills dari URL ke berbagai agent sekaligus:
 
 ```bash
 # Install skill dari URL dokumentasi
 npx skills add https://mintlify.com/docs
 
 # Skills otomatis terdeteksi dan diinstall ke semua agent yang terdeteksi
-# (OpenCode, Claude Code, Cursor, dll)
 ```
 
-[agentskills.so](https://agentskills.so) menjadi direktori komunitas untuk berbagi skills — mirip npm registry tapi untuk instruksi agent.
+**[agentskills.so](https://agentskills.so)** menjadi direktori komunitas untuk berbagi skills — mirip npm registry tapi untuk instruksi agent.
 
-```mermaid
-graph LR
-    A["Developer menulis SKILL.md"] --> B["agentskills.so\n(direktori komunitas)"]
-    B --> C["OpenCode"]
-    B --> D["Claude Code"]
-    B --> E["Cursor"]
-    B --> F["GitHub Copilot CLI"]
-    B --> G["Kiro CLI"]
-    C & D & E & F & G --> H["Agent bekerja lebih presisi\ndengan konteks yang tepat"]
-```
+**[awesome-agent-skills](https://github.com/heilcheng/awesome-agent-skills)** adalah kurasi komunitas dari skills terbaik yang tersedia.
+
+**[CommandCodeAI/agent-skills](https://github.com/CommandCodeAI/agent-skills)** menyediakan koleksi skills yang bisa langsung diinstall.
+
+**Anthropic** sendiri memaintain repository skills resmi di [github.com/anthropics/skills](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md), termasuk skill untuk membuat skills baru.
 
 ---
 
-## Apa yang Membuat SKILL.md Berbeda dari README atau Docs?
+## 5 Agent Skills yang Dipakai Engineer Setiap Hari
 
-Perbedaannya bukan di format — tapi di **audiens dan tujuan**.
+Matt Pocock dari AIHero.dev mendokumentasikan 5 skills yang ia gunakan setiap hari dalam artikel [5 Agent Skills I Use Every Day](https://www.aihero.dev/5-agent-skills-i-use-every-day). Ini adalah contoh nyata bagaimana skills mengubah cara kerja dengan AI:
 
-| | README | Dokumentasi | SKILL.md |
-|---|---|---|---|
-| **Audiens** | Developer baru | Developer yang browsing | AI agent |
-| **Tujuan** | Orientasi | Referensi | Instruksi eksekusi |
-| **Panjang** | Bebas | Panjang | Ringkas (max 1024 char description) |
-| **Gaya** | Naratif | Komprehensif | Decision tables + gotchas |
-| **Update** | Manual | Manual | Bisa otomatis |
+### 1. `/grill-me` — Flesh Out an Idea
 
-Yang paling penting: SKILL.md berisi **keputusan yang sudah dibuat**. Alih-alih menjelaskan semua opsi dan membiarkan agent memilih, SKILL.md bilang: "Untuk use case X, gunakan Y. Jangan gunakan Z karena deprecated."
+```bash
+npx skills@latest add mattpocock/skills/grill-me
+```
 
-Ini adalah perbedaan antara memberikan peta dan memberikan GPS dengan rute yang sudah dipilih.
+Hanya tiga kalimat, tapi sangat impactful:
 
----
+> *"Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one by one. And finally, if a question can be answered by exploring the code base, explore the code base instead."*
 
-## OpenClaw, Moltbot, dan Mengapa Ini Relevan
+Konsep "design tree" dari buku *The Design of Design* oleh Frederick P. Brooks — kamu harus menjelajahi semua cabang keputusan sebelum commit ke kode. Skill ini memaksa Claude untuk bertanya 16-50 pertanyaan sebelum mulai coding.
 
-Kembali ke drama rebranding di awal. OpenClaw (sebelumnya Clawdbot, lalu Moltbot) viral bukan hanya karena fiturnya — tapi karena ia menunjukkan bahwa **personal AI assistant yang bisa dikustomisasi secara mendalam** adalah sesuatu yang sangat diinginkan orang.
+### 2. `/write-a-prd` — From Conversation to Document
 
-OpenClaw mendukung agent skills sejak awal. Pengguna bisa mendefinisikan skills untuk workflow mereka sendiri — cara mereka menulis commit message, cara mereka mengelola branch, cara mereka berinteraksi dengan API internal perusahaan. Skills ini kemudian bisa dibagikan ke komunitas atau disimpan secara private.
+```bash
+npx skills@latest add mattpocock/skills/write-a-prd
+```
 
-Ini adalah visi yang berbeda dari ChatGPT Agent atau Claude Cowork: bukan AI yang bekerja dengan cara yang ditentukan vendor, tapi AI yang bekerja dengan cara yang kamu tentukan sendiri.
+Setelah mencapai shared understanding, skill ini membuat Product Requirements Document lengkap dengan user stories. Workflow-nya: interview → eksplorasi repo → sketch modules → tulis PRD → submit sebagai GitHub issue.
+
+### 3. `/prd-to-issues` — Breaking Down the Destination
+
+```bash
+npx skills@latest add mattpocock/skills/prd-to-issues
+```
+
+Mengubah PRD menjadi Kanban board berisi independent issues. Setiap issue adalah "vertical slice" — potongan tipis yang menembus semua integration layers, bukan horizontal slice dari satu layer. Ini memungkinkan multiple agents bekerja paralel.
+
+### 4. `/tdd` — Test-Driven Development
+
+```bash
+npx skills@latest add mattpocock/skills/tdd
+```
+
+Memaksa agent mengikuti red-green-refactor loop. Skill ini berisi filosofi tentang refactoring, mocking, dan deep modules. Menurut Matt: *"Doing really good TDD has been the most consistent way to improve agent outputs."*
+
+### 5. `/improve-codebase-architecture` — Making Code Agent-Friendly
+
+```bash
+npx skills@latest add mattpocock/skills/improve-codebase-architecture
+```
+
+Mengeksplorasi codebase untuk menemukan "deepening opportunities" — tempat di mana shallow modules bisa diperdalam untuk membuat testing lebih mudah dan agent output lebih baik. *"If you have a garbage code base, the AI will produce garbage within that code base."*
 
 ---
 
 ## Menulis SKILL.md yang Efektif
 
-Berdasarkan praktik terbaik dari komunitas, ada beberapa pola yang terbukti efektif:
+Berdasarkan praktik terbaik dari komunitas dan artikel [Deep Dive: SKILL.md](https://abvijaykumar.medium.com/deep-dive-skill-md-part-1-2-09fc9a536996) oleh Abhijay Kumar:
 
 **1. Decision tables untuk tribal knowledge**
-
-Alih-alih menjelaskan semua opsi, buat tabel keputusan:
 
 ```markdown
 ## Component Selection
@@ -188,28 +296,21 @@ Alih-alih menjelaskan semua opsi, buat tabel keputusan:
 | Hide optional details | `<Accordion>` |
 | Sequential steps | `<Steps>` |
 | Code in multiple languages | `<CodeGroup>` |
-| Warning/info callout | `<Note>` or `<Warning>` |
 ```
 
 **2. Explicit boundaries**
-
-Pisahkan apa yang bisa dilakukan agent dari apa yang butuh intervensi manusia:
 
 ```markdown
 ## What agents can do
 - Update content in any .mdx file
 - Add new pages to existing sections
-- Modify navigation in docs.json
 
 ## Requires human action
 - Custom domain setup (needs DNS access)
 - Billing changes (needs dashboard access)
-- New integrations (needs API key setup)
 ```
 
-**3. Gotchas section**
-
-Ini yang paling sering dilewatkan tapi paling berharga:
+**3. Gotchas section** — ini yang paling sering dilewatkan tapi paling berharga:
 
 ```markdown
 ## Gotchas
@@ -217,31 +318,71 @@ Ini yang paling sering dilewatkan tapi paling berharga:
 - Never use `mint.json` — it's deprecated, use `docs.json` only
 - Every MDX file needs a `title` frontmatter at minimum
 - Images must be in `/public/images/`, not `/assets/`
-- Don't use `export default` in MDX files
 ```
 
-**4. Versi dan kompatibilitas**
+**4. Link ke dokumentasi lengkap**
 
-```markdown
+SKILL.md adalah cheat sheet, bukan pengganti docs. Selalu sertakan link ke dokumentasi lengkap untuk konteks yang lebih dalam.
+
 ---
-name: my-framework-skill
-description: Best practices for MyFramework v3.x
-compatibility: opencode, claude-code, cursor
-metadata:
-  version: "3.x"
-  last-updated: "2026-04"
----
+
+## Panduan untuk Pemula
+
+Untuk yang baru mulai, artikel [What Are Agent Skills: Beginner's Guide](https://dev.to/debs_obrien/what-are-agent-skills-beginners-guide-e2n) oleh Debbie O'Brien di dev.to adalah titik masuk yang bagus.
+
+Cara paling mudah untuk mulai:
+
+```bash
+# Install skills CLI
+npm install -g skills
+
+# Cari skills yang tersedia
+npx skills search git
+
+# Install skill dari komunitas
+npx skills add mattpocock/skills/tdd
+
+# Atau install dari URL dokumentasi
+npx skills add https://your-docs-url.com
 ```
 
 ---
 
-## Implikasi yang Lebih Luas
+## Implikasi Keamanan: Jangan Abaikan
 
-SKILL.md adalah gejala dari sesuatu yang lebih besar: **ekosistem AI agent sedang bergerak dari "AI yang tahu segalanya" ke "AI yang tahu apa yang perlu diketahui untuk task ini"**.
+Kembali ke peringatan Palo Alto Networks — ada beberapa prinsip keamanan yang harus diikuti ketika menggunakan agent skills:
+
+**Hanya gunakan skills dari sumber yang dipercaya.** Skills dari sumber tidak dikenal bisa berisi instruksi berbahaya yang akan dieksekusi agent dengan privilege penuh.
+
+**Audit semua file dalam skill directory** — bukan hanya SKILL.md, tapi juga scripts, templates, dan resources yang disertakan.
+
+**Waspadai skills yang meminta akses luar biasa** — network calls yang tidak relevan, akses ke credentials, atau operasi file yang tidak sesuai dengan tujuan skill.
+
+**Gunakan permission system** yang disediakan OpenCode:
+
+```json
+{
+  "permission": {
+    "skill": {
+      "*": "allow",
+      "internal-*": "deny",
+      "experimental-*": "ask"
+    }
+  }
+}
+```
+
+---
+
+## Mengapa Ini Penting: Shift dalam Nilai AI
+
+Seperti yang diargumentasikan dalam artikel [What Are Agent Skills](https://medium.com/@tahirbalarabe2/what-are-agent-skills-c7793b206daf) oleh Tahir Balarabe:
+
+> *"The value shifts from the raw capability of the AI to the quality of the Skills built for it. The AI is the engine. The Skills are the specialized attachments."*
 
 Model LLM yang lebih besar tidak selalu lebih baik untuk task spesifik. Model yang lebih kecil dengan konteks yang tepat — termasuk SKILL.md yang relevan — sering menghasilkan output yang lebih akurat dan lebih konsisten.
 
-Ini juga mengubah cara kita berpikir tentang dokumentasi. Dokumentasi bukan lagi hanya untuk manusia — ia adalah input untuk sistem AI yang akan bekerja dengan produkmu. SKILL.md adalah layer baru dalam stack dokumentasi: di atas README, di bawah full docs, dioptimalkan untuk mesin.
+Ini juga mengubah cara kita berpikir tentang dokumentasi. Dokumentasi bukan lagi hanya untuk manusia — ia adalah input untuk sistem AI yang akan bekerja dengan produkmu.
 
 ```mermaid
 graph TD
@@ -256,58 +397,30 @@ graph TD
 
 ---
 
-## Cara Mulai
-
-Kalau kamu punya proyek atau library yang sering digunakan dengan AI agent, membuat SKILL.md adalah investasi yang sangat worth it:
-
-```bash
-# Buat struktur skill untuk OpenCode
-mkdir -p .opencode/skills/my-project
-cat > .opencode/skills/my-project/SKILL.md << 'EOF'
----
-name: my-project
-description: Best practices and gotchas for working with my-project
----
-
-## Setup
-
-Always run `npm install` before starting development.
-
-## Gotchas
-
-- Use `src/` for all source files, never `lib/`
-- Config goes in `.env.local`, not `.env`
-
-## Common tasks
-
-- Start dev server: `npm run dev`
-- Run tests: `npm test`
-- Build: `npm run build`
-EOF
-```
-
-Atau install skills dari komunitas:
-
-```bash
-# Install skill dari agentskills.so atau URL dokumentasi
-npx skills add https://your-docs-url.com
-```
-
----
-
 ## Penutup
 
-Dari drama rebranding Clawdbot → Moltbot → OpenClaw, sampai lahirnya SKILL.md sebagai open standard yang diadopsi Mintlify, Vercel, OpenCode, Claude, dan Cursor — ada satu benang merah yang jelas: **komunitas sedang membangun infrastruktur untuk membuat AI agent bekerja lebih presisi**.
+Dari drama rebranding Clawdbot → Moltbot → OpenClaw, peringatan keamanan dari Palo Alto Networks, hingga lahirnya SKILL.md sebagai open standard yang diadopsi Mintlify, Vercel, OpenCode, Claude, Cursor, dan Gemini CLI — ada satu benang merah yang jelas: **ekosistem AI agent sedang membangun infrastruktur untuk membuat AI bekerja lebih presisi dan lebih aman**.
 
-Bukan dengan membuat model lebih besar. Tapi dengan memberikan konteks yang lebih tepat, pada waktu yang tepat, dalam format yang dioptimalkan untuk mesin.
+Bukan dengan membuat model lebih besar. Tapi dengan memberikan konteks yang lebih tepat, pada waktu yang tepat, dalam format yang dioptimalkan untuk mesin — sambil membangun governance yang setara dengan power yang diberikan.
 
 SKILL.md adalah langkah kecil tapi signifikan dalam arah itu.
 
 ---
 
-**Referensi:**
-- [OpenCode Agent Skills Documentation](https://opencode.ai/docs/skills/)
-- [skill.md: An open standard for agent skills — Mintlify](https://www.mintlify.com/blog/skill-md)
+**Referensi lengkap:**
+- [What are Clawdbot, Moltbot, and OpenClaw? — Medium](https://medium.com/data-science-collective/what-are-clawdbot-moltbot-and-openclaw-7cc9faaae6c3)
+- [Why Moltbot May Signal the Next AI Security Crisis — Palo Alto Networks](https://www.paloaltonetworks.com/blog/network-security/why-moltbot-may-signal-ai-crisis/)
+- [Moltbot Overview — AIMultiple](https://aimultiple.com/moltbot)
 - [agentskills.so — Community Skills Directory](https://agentskills.so)
 - [awesome-agent-skills — GitHub](https://github.com/heilcheng/awesome-agent-skills)
-- [What are Clawdbot, Moltbot, and OpenClaw? — Medium](https://medium.com/data-science-collective/what-are-clawdbot-moltbot-and-openclaw-7cc9faaae6c3)
+- [Agent Skills Overview — Anthropic](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
+- [agent-skills — CommandCodeAI GitHub](https://github.com/CommandCodeAI/agent-skills)
+- [What Are Agent Skills? — Medium (Tahir Balarabe)](https://medium.com/@tahirbalarabe2/what-are-agent-skills-c7793b206daf)
+- [Agent Skills — OpenCode Docs](https://opencode.ai/docs/skills/)
+- [5 Agent Skills I Use Every Day — AIHero.dev](https://www.aihero.dev/5-agent-skills-i-use-every-day)
+- [Agent Skills — Cursor Docs](https://cursor.com/docs/skills)
+- [Skills — Gemini CLI Docs](https://geminicli.com/docs/cli/skills/)
+- [What Are Agent Skills: Beginner's Guide — dev.to](https://dev.to/debs_obrien/what-are-agent-skills-beginners-guide-e2n)
+- [SKILL.md — Anthropic Skills Repository](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)
+- [skill.md: An open standard — Mintlify](https://www.mintlify.com/blog/skill-md)
+- [Deep Dive: SKILL.md — Medium (Abhijay Kumar)](https://abvijaykumar.medium.com/deep-dive-skill-md-part-1-2-09fc9a536996)
