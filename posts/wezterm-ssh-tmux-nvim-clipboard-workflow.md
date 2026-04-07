@@ -28,9 +28,9 @@ reading_time: true
 draft: false
 ---
 
-Satu hal yang selalu mengganggu saat kerja via SSH: copy-paste yang tidak nyambung. Kamu select teks di Neovim, tekan `y`, tapi clipboard laptop kamu tetap kosong.
+Satu hal yang selalu mengganggu saat kerja via SSH: copy-paste yang tidak nyambung. Kita select teks di Neovim, tekan `y`, tapi clipboard laptop tetap kosong.
 
-Artikel ini mendokumentasikan setup yang saya gunakan sehari-hari — dan setelah konfigurasi ini, `y` di Neovim langsung masuk ke clipboard laptop.
+Artikel ini mendokumentasikan setup yang bisa kita terapkan — dan setelah konfigurasi ini, `y` di Neovim langsung masuk ke clipboard laptop.
 
 ---
 
@@ -104,15 +104,15 @@ WezTerm menampilkan context menu saat klik kanan — lengkap dengan Cut, Copy, P
 
 ### Dengan Keyboard di Neovim
 
-| Key | Aksi |
-|-----|------|
-| `v` | Visual mode (per karakter) |
-| `V` | Visual line (per baris) |
-| `Ctrl+v` | Visual block (kolom) |
-| `viw` | Select satu kata |
-| `vi"` | Select isi dalam tanda kutip |
-| `vip` | Select satu paragraf |
-| `y` | Yank → langsung ke clipboard laptop |
+| Key      | Aksi                                |
+| -------- | ----------------------------------- |
+| `v`      | Visual mode (per karakter)          |
+| `V`      | Visual line (per baris)             |
+| `Ctrl+v` | Visual block (kolom)                |
+| `viw`    | Select satu kata                    |
+| `vi"`    | Select isi dalam tanda kutip        |
+| `vip`    | Select satu paragraf                |
+| `y`      | Yank → langsung ke clipboard laptop |
 
 ### Dengan Keyboard di tmux (luar Neovim)
 
@@ -126,12 +126,12 @@ y             → copy & keluar
 
 ## Perbandingan Metode Clipboard via SSH
 
-| Metode | Kelebihan | Kekurangan |
-|--------|-----------|------------|
-| **OSC 52** | Native, zero dependency | Butuh terminal yang support |
-| X11 Forwarding | Lengkap | Lambat, butuh X server di laptop |
-| `xclip` / `xsel` | Familiar | Tidak bekerja tanpa X forwarding |
-| tmux-yank plugin | Mudah setup | Butuh `xclip`/`xsel` di server |
+| Metode           | Kelebihan               | Kekurangan                       |
+| ---------------- | ----------------------- | -------------------------------- |
+| **OSC 52**       | Native, zero dependency | Butuh terminal yang support      |
+| X11 Forwarding   | Lengkap                 | Lambat, butuh X server di laptop |
+| `xclip` / `xsel` | Familiar                | Tidak bekerja tanpa X forwarding |
+| tmux-yank plugin | Mudah setup             | Butuh `xclip`/`xsel` di server   |
 
 OSC 52 adalah pilihan terbaik untuk setup SSH murni — tidak ada overhead, tidak ada dependency tambahan di server.
 
@@ -145,7 +145,7 @@ Jalankan ini di dalam tmux via SSH, lalu coba paste di laptop:
 printf '\033]52;c;%s\007' "$(echo -n 'test osc52' | base64)"
 ```
 
-Kalau berhasil paste "test osc52" di laptop, setup sudah benar.
+Kalau berhasil paste "test osc52" di laptop kita, setup sudah benar.
 
 ---
 
@@ -153,4 +153,4 @@ Kalau berhasil paste "test osc52" di laptop, setup sudah benar.
 
 Tiga baris config di tmux dan satu baris di Neovim — clipboard antara laptop dan remote server langsung seamless. Tidak perlu plugin berat, tidak perlu port forwarding, tidak perlu X server.
 
-Setup ini juga kompatibel dengan Vim biasa menggunakan plugin vim-oscyank, sehingga bisa dipakai di server yang belum punya Neovim.
+Setup ini juga kompatibel dengan Vim biasa menggunakan plugin vim-oscyank, sehingga bisa kita pakai di server yang belum punya Neovim.
