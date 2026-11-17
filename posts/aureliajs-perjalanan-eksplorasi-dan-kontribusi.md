@@ -55,13 +55,13 @@ Artikel ini mencatat lima hari setelah titik itu: membaca source `@aurelia/runti
 
 Latar belakang saya menentukan kenapa perjalanan ini terjadi, jadi saya mulai dari situ.
 
-| Ekosistem   | Paradigma inti            | Yang saya bawa ke kepala saya                                                                                                                        |
-| ----------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ekosistem   | Paradigma inti            | Yang saya bawa ke kepala saya                                                                                                                         |
+| ----------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **React**   | `UI = f(state)`           | Render ulang adalah mekanisme utama. Setiap perubahan state memicu rekonsiliasi Virtual DOM. `useEffect`, `useMemo`, `useCallback`, dependency array. |
 | **Vue**     | SFC + reactivity proxy    | Template dan logic dalam satu file. Reactivity otomatis lewat proxy. `ref()`, `computed()`, `watch()`.                                                |
-| **Svelte**  | Compile-time reactivity   | Tidak ada runtime diffing. Assignment itu sendiri adalah sinyal. Runes (`$state`, `$derived`, `$effect`).                                            |
-| **Astro**   | Islands + zero-JS default | HTML dulu, JavaScript hanya di tempat yang butuh. Hydration directive eksplisit.                                                                     |
-| **Flutter** | Imperative widget tree    | Widget dibangun ulang, tapi identitas elemen dijaga oleh framework.                                                                                  |
+| **Svelte**  | Compile-time reactivity   | Tidak ada runtime diffing. Assignment itu sendiri adalah sinyal. Runes (`$state`, `$derived`, `$effect`).                                             |
+| **Astro**   | Islands + zero-JS default | HTML dulu, JavaScript hanya di tempat yang butuh. Hydration directive eksplisit.                                                                      |
+| **Flutter** | Imperative widget tree    | Widget dibangun ulang, tapi identitas elemen dijaga oleh framework.                                                                                   |
 
 Kelima ekosistem itu berbeda dalam banyak hal, tapi punya satu asumsi yang sama, dan asumsi itu tidak pernah saya pertanyakan:
 
@@ -251,6 +251,7 @@ Sintaks `target.command="expression"` bukan soal selera. Setiap command punya ko
 Di React, semua perbedaan itu disatukan oleh satu mekanisme: render ulang. Di Aurelia, saya harus tahu command mana yang saya pakai, karena pilihan itu menentukan apakah komponen anak ikut dihancurkan atau tidak.
 
 ---
+
 ## Empat asumsi yang harus dibongkar
 
 ### Komponen dijalankan ulang
@@ -674,6 +675,7 @@ Dari kelimanya, `multi-request` yang paling penting. Isinya dua render paralel, 
 > README paket ini sempat menampilkan badge "81 tests" karena saya lupa memperbarui angkanya setelah menambah test. Angka saat ini 83. Selisih dua test terlihat kecil, tapi README adalah tempat orang pertama kali menilai apakah proyek ini bisa dipercaya.
 
 ---
+
 ## `@hono/aurelia-ssr`: adapter untuk Hono
 
 Mesin SSR tanpa adapter hanya library. Yang membuatnya berguna adalah bagaimana ia bertemu dengan server nyata.
@@ -1120,6 +1122,7 @@ Pernyataan ini ada di README plugin, di README ekstensi, di dokumen riset, dan s
 > Proyek `.aux` adalah inisiatif riset komunitas independen. Ini bukan rilis resmi tim inti Aurelia maupun Aurelia Foundation. Otoritas kanonikal atas Aurelia sepenuhnya berada pada Rob Eisenberg, Aurelia Core Team, dan maintainer resmi di `aurelia.io` dan `github.com/aurelia`. Kalau eksperimen ini terbukti matang, hasilnya akan diajukan sebagai RFC atau kontribusi, bukan diklaim sebagai arah resmi.
 
 ---
+
 ## `ssr-playground`: alat ukur untuk SSR
 
 Test unit membuktikan sebuah fungsi mengembalikan nilai yang diharapkan. Test itu tidak membuktikan bahwa HTML yang dihasilkan punya marker hydration yang utuh, bahwa payload tidak membocorkan token, atau bahwa ukuran wire-nya masuk akal. Untuk tiga hal itu saya butuh alat yang bisa saya jalankan berulang dan saya bandingkan hasilnya.
@@ -1144,14 +1147,14 @@ bun run --cwd packages/ssr-playground serve --port 4700
 
 ### Enam kemampuan inspeksi
 
-| #   | Kemampuan                         | Yang diukur                                                                                                 |
-| --- | --------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| 1   | **Server rendering breakdown**    | Waktu render vs waktu serialisasi, total TTFB, delta alokasi memori                                         |
-| 2   | **Network transfer**              | Byte HTML mentah vs gzip, byte payload hydration vs gzip, rasio overhead state                              |
-| 3   | **Marker & whitelist audit**      | Integritas pasangan `<!--au-start-->` / `<!--au-end-->`, pemindaian DTO whitelist, escaping konteks script  |
+| #   | Kemampuan                         | Yang diukur                                                                                                         |
+| --- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| 1   | **Server rendering breakdown**    | Waktu render vs waktu serialisasi, total TTFB, delta alokasi memori                                                 |
+| 2   | **Network transfer**              | Byte HTML mentah vs gzip, byte payload hydration vs gzip, rasio overhead state                                      |
+| 3   | **Marker & whitelist audit**      | Integritas pasangan `<!--au-start-->` / `<!--au-end-->`, pemindaian DTO whitelist, escaping konteks script          |
 | 4   | **Client hydration & reactivity** | Hydration di JSDOM, assertion zero DOM thrashing (pencegahan `AUR0757`), hitungan listener, verifikasi mutasi state |
-| 5   | **Estimasi Core Web Vitals**      | FCP, LCP, TBT, risiko CLS, grade keseluruhan                                                                |
-| 6   | **AST & compiler**                | Inspeksi output TypeScript, jumlah node AST                                                                 |
+| 5   | **Estimasi Core Web Vitals**      | FCP, LCP, TBT, risiko CLS, grade keseluruhan                                                                        |
+| 6   | **AST & compiler**                | Inspeksi output TypeScript, jumlah node AST                                                                         |
 
 Nomor 4 yang paling berguna. Playground benar-benar menjalankan hydration di JSDOM dan membandingkan struktur DOM sebelum dan sesudah. Kalau ada node yang dihancurkan lalu dibuat ulang padahal seharusnya dipakai ulang, itu terdeteksi sebagai kegagalan, bukan sebagai selisih visual yang lolos dari mata.
 
@@ -1373,18 +1376,19 @@ Tidak ada niat menyesatkan. Yang terjadi: README ditulis di puncak optimisme, ko
 Saya mencantumkannya di sini karena artikel yang hanya menampilkan sisi bersih tidak berguna untuk siapa pun, termasuk untuk saya enam bulan lagi.
 
 ---
+
 ## Enam dokumen riset yang tidak bisa dijalankan
 
 Di `docs/` ada enam dokumen panjang yang tidak bisa dieksekusi sebagai kode, tapi jadi alasan mengapa kodenya ditulis dengan cara tertentu.
 
-| Dokumen                               | Isi                                                                                                                                 | Kenapa penting                                                                                                 |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| **`the-angular-aurelia-heritage.md`** | Sejarah Rob Eisenberg di Google, dekomposisi mental model React/Vue/Flutter vs Angular/Aurelia, perbandingan sintaksis head-to-head | Menjelaskan mengapa saya butuh berhari-hari untuk memahami hal yang bagi developer Angular terasa sepele        |
-| **`the-resumable-frontier.md`**       | Manifesto `.aux` + Hono + resumability ala Qwik, tiga lapisan tanggung jawab, etika komunitas                                       | Menjelaskan arah jangka panjang: dari hydration menuju resumability                                            |
-| **`the-reactive-continuum.md`**       | Matriks perbandingan React, Vue, Solid, Angular, Svelte, Astro, Qwik, dan Aurelia 2 di sepanjang spektrum runtime tax dan lifecycle | Menempatkan Aurelia dalam peta evolusi reaktivitas, bukan sebagai outlier                                      |
-| **`the-javascript-fallacy.md`**       | Kritik terhadap kelahiran prematur JavaScript, ilusi TypeScript, dan kerendahan hati terhadap Go/Rust/Zig                           | Alasan mengapa saya memilih strict TypeScript di seluruh monorepo                                              |
-| **`architecture.md`**                 | Spesifikasi teknis multi-tenant, isolasi, hydration state, Stripe                                                                   | Dokumen yang membuat `apps/api` bisa diaudit                                                                   |
-| **`case-study.md`**                   | Narasi pengembangan Aurelia Ops, termasuk yang belum selesai                                                                        | Work sample, bukan brosur                                                                                      |
+| Dokumen                               | Isi                                                                                                                                 | Kenapa penting                                                                                           |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **`the-angular-aurelia-heritage.md`** | Sejarah Rob Eisenberg di Google, dekomposisi mental model React/Vue/Flutter vs Angular/Aurelia, perbandingan sintaksis head-to-head | Menjelaskan mengapa saya butuh berhari-hari untuk memahami hal yang bagi developer Angular terasa sepele |
+| **`the-resumable-frontier.md`**       | Manifesto `.aux` + Hono + resumability ala Qwik, tiga lapisan tanggung jawab, etika komunitas                                       | Menjelaskan arah jangka panjang: dari hydration menuju resumability                                      |
+| **`the-reactive-continuum.md`**       | Matriks perbandingan React, Vue, Solid, Angular, Svelte, Astro, Qwik, dan Aurelia 2 di sepanjang spektrum runtime tax dan lifecycle | Menempatkan Aurelia dalam peta evolusi reaktivitas, bukan sebagai outlier                                |
+| **`the-javascript-fallacy.md`**       | Kritik terhadap kelahiran prematur JavaScript, ilusi TypeScript, dan kerendahan hati terhadap Go/Rust/Zig                           | Alasan mengapa saya memilih strict TypeScript di seluruh monorepo                                        |
+| **`architecture.md`**                 | Spesifikasi teknis multi-tenant, isolasi, hydration state, Stripe                                                                   | Dokumen yang membuat `apps/api` bisa diaudit                                                             |
+| **`case-study.md`**                   | Narasi pengembangan Aurelia Ops, termasuk yang belum selesai                                                                        | Work sample, bukan brosur                                                                                |
 
 Dokumen-dokumen ini bukan pelengkap. Menulis adalah cara saya berpikir, dan saya tidak bisa membangun mesin SSR tanpa lebih dulu menuliskan mengapa SSR itu ada, apa yang salah dengan pendekatan lain, dan di mana batas etika eksperimen ini.
 
@@ -1465,77 +1469,78 @@ Saya susun sebagai tabel yang bisa diverifikasi, bukan narasi.
 
 ### `@aureliajs/ssr`
 
-| Status | Item                                                             |
-| ------ | ---------------------------------------------------------------- |
-| Selesai | Render ke string dengan isolasi per request                     |
-| Selesai | Hydration client di bawah 2KB gzipped                           |
-| Selesai | Serializer dengan whitelist dan CSP nonce                       |
-| Selesai | Perbaikan `AUR0757` dengan regression test                      |
-| Selesai | 83 test lulus                                                   |
-| Dibatasi | Mutex membatasi throughput ke 1 render per proses              |
-| Belum  | Streaming render yang benar-benar diuji di bawah beban          |
-| Belum  | Declarative Shadow DOM untuk komponen yang memakainya           |
-| Belum  | Benchmark yang bisa direproduksi pihak lain                     |
-| Belum  | Audit keamanan eksternal                                        |
+| Status   | Item                                                   |
+| -------- | ------------------------------------------------------ |
+| Selesai  | Render ke string dengan isolasi per request            |
+| Selesai  | Hydration client di bawah 2KB gzipped                  |
+| Selesai  | Serializer dengan whitelist dan CSP nonce              |
+| Selesai  | Perbaikan `AUR0757` dengan regression test             |
+| Selesai  | 83 test lulus                                          |
+| Dibatasi | Mutex membatasi throughput ke 1 render per proses      |
+| Belum    | Streaming render yang benar-benar diuji di bawah beban |
+| Belum    | Declarative Shadow DOM untuk komponen yang memakainya  |
+| Belum    | Benchmark yang bisa direproduksi pihak lain            |
+| Belum    | Audit keamanan eksternal                               |
 
 ### `@hono/aurelia-ssr`
 
-| Status | Item                                                                     |
-| ------ | ------------------------------------------------------------------------ |
-| Selesai | Handler `aurelia()` dengan loaders, actions, auth, fallback             |
-| Selesai | Co-located loaders dan actions                                          |
-| Selesai | `aureliaDefaults`, `serveAureliaAssets`, `createAureliaRouteGroup`      |
-| Selesai | Content negotiation HTML/JSON                                           |
-| Selesai | 63 test lulus di Bun                                                    |
+| Status   | Item                                                                             |
+| -------- | -------------------------------------------------------------------------------- |
+| Selesai  | Handler `aurelia()` dengan loaders, actions, auth, fallback                      |
+| Selesai  | Co-located loaders dan actions                                                   |
+| Selesai  | `aureliaDefaults`, `serveAureliaAssets`, `createAureliaRouteGroup`               |
+| Selesai  | Content negotiation HTML/JSON                                                    |
+| Selesai  | 63 test lulus di Bun                                                             |
 | Dibatasi | 1 test gagal di Vitest karena `import.meta.dirname`, dan `root` tidak divalidasi |
-| Belum  | Nama paket `@hono/*` belum beres secara legal maupun teknis             |
-| Belum  | Angka performa di README bukan benchmark independen                     |
-| Belum  | Uji beban                                                               |
+| Belum    | Nama paket `@hono/*` belum beres secara legal maupun teknis                      |
+| Belum    | Angka performa di README bukan benchmark independen                              |
+| Belum    | Uji beban                                                                        |
 
 ### `.aux` dan tooling
 
-| Status | Item                                                                        |
-| ------ | --------------------------------------------------------------------------- |
-| Selesai | Parser `<template>` bersarang, `<script>`, `<script setup>`, `<style scoped>` |
-| Selesai | Template-only component, penamaan tag sesuai W3C                          |
-| Selesai | Dukungan VS Code, Neovim, Zed                                               |
-| Selesai | 29 unit test lulus di Bun                                                   |
-| Dibatasi | 1 test gagal di Vitest karena resolusi `data:` URL pada test compiler    |
-| Dibatasi | Type-checking template belum ada                                          |
-| Dibatasi | `<script setup>` belum menangani semua kasus edge TypeScript              |
-| Belum  | Source map yang sempurna ke file `.aux` asli                                |
-| Belum  | HMR yang mulus untuk perubahan `<script>`                                   |
+| Status   | Item                                                                          |
+| -------- | ----------------------------------------------------------------------------- |
+| Selesai  | Parser `<template>` bersarang, `<script>`, `<script setup>`, `<style scoped>` |
+| Selesai  | Template-only component, penamaan tag sesuai W3C                              |
+| Selesai  | Dukungan VS Code, Neovim, Zed                                                 |
+| Selesai  | 29 unit test lulus di Bun                                                     |
+| Dibatasi | 1 test gagal di Vitest karena resolusi `data:` URL pada test compiler         |
+| Dibatasi | Type-checking template belum ada                                              |
+| Dibatasi | `<script setup>` belum menangani semua kasus edge TypeScript                  |
+| Belum    | Source map yang sempurna ke file `.aux` asli                                  |
+| Belum    | HMR yang mulus untuk perubahan `<script>`                                     |
 
 ### Playground
 
-| Status | Item                                                    |
-| ------ | ------------------------------------------------------- |
-| Selesai | 16 contoh, TUI + Web GUI, audit marker/whitelist/gzip/CWV |
-| Selesai | 35 test, 387 assertion                                  |
+| Status   | Item                                                          |
+| -------- | ------------------------------------------------------------- |
+| Selesai  | 16 contoh, TUI + Web GUI, audit marker/whitelist/gzip/CWV     |
+| Selesai  | 35 test, 387 assertion                                        |
 | Dibatasi | Estimasi Core Web Vitals bersifat heuristik, bukan Lighthouse |
-| Belum  | Mode perbandingan antar framework                       |
+| Belum    | Mode perbandingan antar framework                             |
 
 ### Aurelia Ops
 
-| Status | Item                                                |
-| ------ | --------------------------------------------------- |
-| Selesai | Multi-tenant, auth, Stripe, 1.000 seed projects    |
-| Selesai | 13+ primitif UI berbasis `.aux`                    |
-| Dibatasi | i18n belum lengkap                                |
-| Dibatasi | Aksesibilitas lolos otomatis, belum audit manual  |
-| Belum  | Observability di API                                |
-| Belum  | Rate limiting di endpoint auth                      |
+| Status   | Item                                             |
+| -------- | ------------------------------------------------ |
+| Selesai  | Multi-tenant, auth, Stripe, 1.000 seed projects  |
+| Selesai  | 13+ primitif UI berbasis `.aux`                  |
+| Dibatasi | i18n belum lengkap                               |
+| Dibatasi | Aksesibilitas lolos otomatis, belum audit manual |
+| Belum    | Observability di API                             |
+| Belum    | Rate limiting di endpoint auth                   |
 
 ### Dokumentasi
 
-| Status | Item                                                                                   |
-| ------ | -------------------------------------------------------------------------------------- |
+| Status   | Item                                                                                         |
+| -------- | -------------------------------------------------------------------------------------------- |
 | Dibatasi | Angka test di README root drift (133 vs 63, 24 vs 35) dan di README plugin `.aux` (21 vs 29) |
-| Dibatasi | Label "official" perlu dihapus                                                         |
-| Belum  | Satu file `STATUS.md` sebagai sumber kebenaran                                         |
-| Belum  | CI yang menjalankan suite di lebih dari satu runtime                                   |
+| Dibatasi | Label "official" perlu dihapus                                                               |
+| Belum    | Satu file `STATUS.md` sebagai sumber kebenaran                                               |
+| Belum    | CI yang menjalankan suite di lebih dari satu runtime                                         |
 
 ---
+
 ## Roadmap yang realistis
 
 Saya sengaja tidak menulis roadmap ambisius. Isinya hal-hal yang sudah jelas cara mengerjakannya, hanya belum sempat dikerjakan.
