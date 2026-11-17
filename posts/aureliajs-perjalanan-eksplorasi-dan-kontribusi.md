@@ -47,13 +47,19 @@ Yang berubah kemudian adalah cara saya membaca framework ini. Saya memakai kamus
 Artikel ini mencatat lima hari setelah titik itu: membaca source `@aurelia/runtime-html`, membangun mesin SSR yang belum ada di npm, menulis plugin SFC eksperimental, dan mengukur hasilnya. Ada bagian yang berhasil, ada yang belum selesai, dan beberapa klaim di README saya sendiri ternyata tidak cocok dengan kode yang ada.
 
 > [!NOTE]
-> Seluruh kode yang dibahas ada di [github.com/sandikodev/aureliajs](https://github.com/sandikodev/aureliajs). Dua paket yang paling banyak saya kerjakan adalah `@aureliajs/ssr`, mesin render dan hydration untuk Aurelia 2, dan `@hono/aurelia-ssr`, adapter Hono di atasnya. Sisanya eksperimen pendukung dan satu aplikasi SaaS multi-tenant yang memakai keduanya.
+> Seluruh kode yang dibahas ada di [github.com/sandikodev/aureliajs](https://github.com/sandikodev/aureliajs). Dua paket yang paling banyak saya kerjakan adalah `@aureliajs/ssr`, mesin render dan hydration untuk Aurelia 2, dan `@hono/aurelia`, adapter Hono di atasnya. Sisanya eksperimen pendukung dan satu aplikasi SaaS multi-tenant yang memakai keduanya.
 
 ---
 
-## Modal awal: lima ekosistem yang membentuk intuisi saya
+## Modal awal: lima ekosistem dan satu pertemuan yang terlalu awal
 
-Latar belakang saya menentukan kenapa perjalanan ini terjadi, jadi saya mulai dari situ.
+Aurelia pertama kali saya lihat tahun 2017, di SMK, beberapa saat setelah versi pertamanya dirilis. Saya tidak paham apa yang sedang saya lihat.
+
+Waktu itu dunia frontend yang saya kenal cuma punya satu rivalitas besar: React melawan Vue. jQuery masih jadi cara wajar untuk menyusun halaman, dan bagi saya pertanyaannya sederhana — mau menulis DOM sendiri, atau menyerahkan pekerjaan itu ke framework. Angular hanya nama samar yang terdengar dari proyek-proyek besar, bukan sesuatu yang saya bandingkan secara filosofis dengan React. Perpecahan desain antara keduanya, yang justru menjadi akar Aurelia, tidak masuk ke kepala saya sama sekali.
+
+Jadi saya menilai Aurelia dengan pertanyaan yang salah. Template HTML terpisah dan kelas ViewModel terlihat seperti Angular yang lebih ramah, atau jQuery yang lebih rapi. Saya tidak tahu bahwa kombinasi itu adalah pilihan sadar, hasil pertengkaran di dalam Google yang baru saya baca sembilan tahun kemudian.
+
+Lima hari di artikel ini terjadi setelah saya akhirnya membaca sejarah itu. Tapi intuisi saya sudah terbentuk jauh sebelumnya, dari lima ekosistem yang masing-masing mengajarkan hal yang sama:
 
 | Ekosistem   | Paradigma inti            | Yang saya bawa ke kepala saya                                                                                                                         |
 | ----------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -374,7 +380,7 @@ Tanggal 13 November berisi 55 commit dalam satu hari. Saya tidak membacanya seba
 aureliajs/
 ├── packages/
 │   ├── aurelia-ssr/          # @aureliajs/ssr — mesin SSR & hydration (core)
-│   ├── hono-aurelia-ssr/     # @hono/aurelia-ssr — adapter Hono (submodule)
+│   ├── hono-aurelia/     # @hono/aurelia — adapter Hono (submodule)
 │   ├── vite-plugin-aux/      # @aureliajs/vite-plugin-aux — compiler .aux SFC
 │   ├── vscode-aux/           # @aureliajs/vscode-aux — ekstensi editor
 │   ├── ssr-playground/       # @aureliajs/ssr-playground — laboratorium & inspector
@@ -431,7 +437,7 @@ flowchart TD
     end
 
     subgraph Adapters["Adapter"]
-        I["@hono/aurelia-ssr"]
+        I["@hono/aurelia"]
         J["Express / Fastify / Nitro"]
     end
 
@@ -676,7 +682,7 @@ Dari kelimanya, `multi-request` yang paling penting. Isinya dua render paralel, 
 
 ---
 
-## `@hono/aurelia-ssr`: adapter untuk Hono
+## `@hono/aurelia`: adapter untuk Hono
 
 Mesin SSR tanpa adapter hanya library. Yang membuatnya berguna adalah bagaimana ia bertemu dengan server nyata.
 
@@ -696,7 +702,7 @@ Yang paling berpengaruh ke desain adapter adalah alasan keempat dan kelima. Midd
 
 ```typescript
 import { Hono } from "hono";
-import { aurelia } from "@hono/aurelia-ssr";
+import { aurelia } from "@hono/aurelia";
 import { DashboardPage } from "./pages/index.js";
 
 const app = new Hono();
@@ -1354,7 +1360,7 @@ Bug ini tidak bisa ditemukan dengan membaca kode. Ia hanya muncul saat dijalanka
 
 Ini terjadi dua kali, di dua paket berbeda, karena alasan yang mirip tapi tidak sama.
 
-**Kasus 1, `@hono/aurelia-ssr`.** Test mengambil direktori fixture lewat `import.meta.dirname`. Di Bun tersedia; di Vitest dengan konfigurasi saat ini `undefined`. Efek berantainya: `serveAureliaAssets()` menerima `root: undefined`, lalu meledak di `path.resolve` dengan `TypeError` dari dalam Node, bukan pesan validasi yang berguna.
+**Kasus 1, `@hono/aurelia`.** Test mengambil direktori fixture lewat `import.meta.dirname`. Di Bun tersedia; di Vitest dengan konfigurasi saat ini `undefined`. Efek berantainya: `serveAureliaAssets()` menerima `root: undefined`, lalu meledak di `path.resolve` dengan `TypeError` dari dalam Node, bukan pesan validasi yang berguna.
 
 **Kasus 2, `@aureliajs/vite-plugin-aux`.** Test compiler meng-`import()` hasil transpilasi lewat `data:` URL yang mengimpor modul dengan specifier path absolut. Di Bun berhasil; di Node gagal dengan `Invalid relative URL or base scheme is not hierarchical`.
 
@@ -1430,7 +1436,7 @@ Bagian ini saya buat eksplisit karena batas antara "saya membangun ini" dan "ini
 ### Yang saya klaim
 
 - Saya membangun `@aureliajs/ssr`, mesin SSR dan hydration untuk Aurelia 2 yang berjalan, punya test, dan dipakai oleh aplikasi contoh di repositori yang sama.
-- Saya membangun `@hono/aurelia-ssr`, adapter Hono di atas mesin tersebut.
+- Saya membangun `@hono/aurelia`, adapter Hono di atas mesin tersebut.
 - Saya bereksperimen dengan format `.aux` SFC, terinspirasi SFC `.au` resmi dan SFC Vue/Svelte.
 - Saya membangun playground, ekstensi editor, dan aplikasi SaaS sebagai validasi.
 
@@ -1446,7 +1452,7 @@ Bagian ini saya buat eksplisit karena batas antara "saya membangun ini" dan "ini
 Ini hal kecil yang perlu diselesaikan sebelum publikasi:
 
 - Nama `@aureliajs/*` menyiratkan afiliasi dengan ekosistem Aurelia. Sebaiknya didiskusikan terbuka, atau diganti ke scope pribadi sampai ada restu.
-- Nama `@hono/aurelia-ssr` berada di scope `@hono` yang bukan milik saya. Secara praktis paket ini tidak bisa dipublikasikan ke npm tanpa izin pemilik scope, jadi untuk sementara ia hidup sebagai submodule git.
+- Nama `@hono/aurelia` berada di scope `@hono` yang bukan milik saya. Secara praktis paket ini tidak bisa dipublikasikan ke npm tanpa izin pemilik scope, jadi untuk sementara ia hidup sebagai submodule git.
 
 Saya menuliskan ini di artikel publik karena kesalahan seperti ini, kalau dibiarkan, akan merusak kredibilitas seluruh proyek. Lebih baik saya yang menyebutkannya lebih dulu daripada orang lain menemukannya.
 
@@ -1482,7 +1488,7 @@ Saya susun sebagai tabel yang bisa diverifikasi, bukan narasi.
 | Belum    | Benchmark yang bisa direproduksi pihak lain            |
 | Belum    | Audit keamanan eksternal                               |
 
-### `@hono/aurelia-ssr`
+### `@hono/aurelia`
 
 | Status   | Item                                                                             |
 | -------- | -------------------------------------------------------------------------------- |
@@ -1619,7 +1625,7 @@ Fondasinya sudah ada. Yang belum ada adalah lapisan di atasnya, dan itu bisa dib
 Kalau kamu membaca ini dan menemukan sesuatu yang bisa diperbaiki, ditambahkan, atau dibantah, silakan. Repositorinya terbuka:
 
 - **Repositori:** [github.com/sandikodev/aureliajs](https://github.com/sandikodev/aureliajs)
-- **Adapter Hono:** [github.com/sandikodev/hono-aurelia-ssr](https://github.com/sandikodev/hono-aurelia-ssr)
+- **Adapter Hono:** [github.com/sandikodev/hono-aurelia](https://github.com/sandikodev/hono-aurelia)
 - **Aurelia resmi:** [aurelia.io](https://aurelia.io)
 - **Forum Aurelia:** [discourse.aurelia.io](https://discourse.aurelia.io)
 
@@ -1645,7 +1651,7 @@ Kalau kamu membaca ini dan menemukan sesuatu yang bisa diperbaiki, ditambahkan, 
 - `docs/architecture.md`
 - `docs/case-study.md`
 - `packages/aurelia-ssr/README.md`
-- `packages/hono-aurelia-ssr/README.md`
+- `packages/hono-aurelia/README.md`
 - `packages/vite-plugin-aux/README.md`
 - `packages/ssr-playground/README.md`
 - `packages/vscode-aux/README.md`
