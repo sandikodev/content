@@ -36,7 +36,7 @@ reading_time: true
 
 ## Satu komponen, dua file
 
-Komponen Aurelia pertama yang saya buka terdiri dari dua file: `user-card.ts` dan `user-card.html`.
+Komponen pertama yang saya buka di lima hari itu terdiri dari dua file: `user-card.ts` dan `user-card.html`.
 
 Di dalam `user-card.ts` ada kelas biasa, `@customElement`, `@bindable`, dan `resolve()`. Tidak ada JSX, tidak ada `<script setup>`, tidak ada runes, tidak ada `useState`, tidak ada `export let`. Template-nya HTML yang benar-benar HTML, dengan `${name}` dan `repeat.for` di dalamnya.
 
