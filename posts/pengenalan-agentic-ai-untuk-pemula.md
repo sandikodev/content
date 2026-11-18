@@ -17,6 +17,7 @@ tags:
     "pemula",
     "open-source",
   ]
+image: "/images/blog/agentic-ai-beginner.webp"
 draft: true
 
 ai_features:
@@ -82,7 +83,7 @@ Agent modern bisa:
 
 Yang membuat ini menjadi "agentic" adalah kemampuan untuk **merangkai semua aksi itu secara otomatis** berdasarkan satu instruksi tingkat tinggi dari kamu.
 
-Contoh nyata: kamu bilang *"buatkan REST API sederhana untuk manajemen todo list"*. Agent yang baik akan:
+Contoh nyata: kamu bilang _"buatkan REST API sederhana untuk manajemen todo list"_. Agent yang baik akan:
 
 1. Membuat struktur folder proyek
 2. Menulis kode server
@@ -101,7 +102,7 @@ Kalau kamu baru pertama kali ingin mencoba Agentic AI, **ChatGPT Agent** (tersed
 
 Keduanya punya antarmuka yang familiar — mirip chatbot biasa, tapi dengan kemampuan untuk mengeksekusi aksi. Kamu tidak perlu install apa-apa. Tidak perlu konfigurasi. Tinggal buka browser, ketik instruksi, dan lihat agent bekerja.
 
-Ini bagus untuk pemula yang ingin merasakan *"oh, jadi begini rasanya"* tanpa harus pusing dengan setup teknis.
+Ini bagus untuk pemula yang ingin merasakan _"oh, jadi begini rasanya"_ tanpa harus pusing dengan setup teknis.
 
 Tapi ada satu hal yang perlu kamu tahu: **keduanya adalah black box**.
 
@@ -117,7 +118,7 @@ Di sinilah tiga tool berikut menjadi menarik. Semuanya open source, semuanya bis
 
 ### OpenClaw — Otomasi yang Bisa Berjalan Sendiri
 
-**[OpenClaw](https://github.com/openclaw/openclaw)** (348K+ stars) adalah AI assistant yang dirancang untuk berjalan di berbagai platform dan sistem operasi. Tagline-nya: *"Your own personal AI assistant. Any OS. Any Platform. The lobster way."*
+**[OpenClaw](https://github.com/openclaw/openclaw)** (348K+ stars) adalah AI assistant yang dirancang untuk berjalan di berbagai platform dan sistem operasi. Tagline-nya: _"Your own personal AI assistant. Any OS. Any Platform. The lobster way."_
 
 Yang membedakan OpenClaw dari yang lain adalah fokusnya pada **otomasi**. Ini bukan tool yang kamu ajak ngobrol — ini tool yang kamu kasih tugas, lalu dia kerjakan sendiri di background. Cocok untuk:
 
@@ -160,14 +161,14 @@ Ini adalah pilihan yang tepat kalau kamu ingin memperkenalkan Agentic AI ke tim 
 
 ## Perbandingan Singkat
 
-| | ChatGPT Agent | Claude Cowork | OpenClaw | OpenCode | OpenWork |
-|---|---|---|---|---|---|
-| **Antarmuka** | Web/Chat | Web/Chat | CLI/Otomasi | Terminal TUI | Web GUI |
-| **Open Source** | ✗ | ✗ | ✓ | ✓ | ✓ |
-| **Self-hosted** | ✗ | ✗ | ✓ | ✓ | ✓ |
-| **BYOK** | Terbatas | Terbatas | ✓ | ✓ | ✓ |
-| **LSP Integration** | ✗ | ✗ | ✗ | ✓ | ✓ |
-| **Cocok untuk** | Pemula | Tim non-teknis | Otomasi | Developer | Tim teknis |
+|                     | ChatGPT Agent | Claude Cowork  | OpenClaw    | OpenCode     | OpenWork   |
+| ------------------- | ------------- | -------------- | ----------- | ------------ | ---------- |
+| **Antarmuka**       | Web/Chat      | Web/Chat       | CLI/Otomasi | Terminal TUI | Web GUI    |
+| **Open Source**     | ✗             | ✗              | ✓           | ✓            | ✓          |
+| **Self-hosted**     | ✗             | ✗              | ✓           | ✓            | ✓          |
+| **BYOK**            | Terbatas      | Terbatas       | ✓           | ✓            | ✓          |
+| **LSP Integration** | ✗             | ✗              | ✗           | ✓            | ✓          |
+| **Cocok untuk**     | Pemula        | Tim non-teknis | Otomasi     | Developer    | Tim teknis |
 
 ---
 
@@ -211,7 +212,7 @@ Tool seperti OpenCode sudah membangun mekanisme approval untuk ini — setiap ak
 
 ## Penutup
 
-Agentic AI bukan hype semata. Ini adalah perubahan nyata dalam cara kita berinteraksi dengan komputer — dari *"saya yang mengeksekusi, AI yang menyarankan"* menjadi *"AI yang mengeksekusi, saya yang mengarahkan"*.
+Agentic AI bukan hype semata. Ini adalah perubahan nyata dalam cara kita berinteraksi dengan komputer — dari _"saya yang mengeksekusi, AI yang menyarankan"_ menjadi _"AI yang mengeksekusi, saya yang mengarahkan"_.
 
 ChatGPT Agent dan Claude Cowork adalah pintu masuk yang bagus. Tapi kalau kamu developer yang ingin benar-benar memahami dan mengontrol apa yang terjadi, OpenClaw, OpenCode, dan OpenWork adalah tempat yang jauh lebih menarik untuk belajar.
 
@@ -220,6 +221,7 @@ Kap mesinnya terbuka. Silakan masuk.
 ---
 
 **Referensi:**
+
 - [OpenClaw](https://github.com/openclaw/openclaw) — Personal AI assistant, any OS, any platform
 - [OpenCode](https://github.com/anomalyco/opencode) — The open source coding agent
 - [OpenWork](https://github.com/different-ai/openwork) — Open-source alternative to Claude Cowork

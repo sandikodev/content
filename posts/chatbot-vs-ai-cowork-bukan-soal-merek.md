@@ -3,6 +3,7 @@ title: "Chatbot vs AI Cowork: Bukan Soal Merek, Tapi Soal Cara Kerja"
 description: "Kenapa orang awam salah paham tentang perbedaan ChatGPT, Claude Cowork, dan OpenWork — bukan karena mereka bodoh, tapi karena narasi yang dibangun memang dirancang untuk menyembunyikan perbedaan yang paling penting."
 date: 2026-04-05T12:30:00+07:00
 author: "Sandikodev"
+image: "/images/posts/chatbot-vs-ai-cowork-bukan-soal-merek.png"
 categories: ["AI Engineering", "Vision", "Pemula"]
 tags:
   [
@@ -31,7 +32,7 @@ reading_time: true
 
 ## Masalahnya Bukan di Mereknya
 
-Kalau kamu tanya orang awam apa bedanya ChatGPT dengan Claude Cowork, jawabannya hampir pasti: *"Yang satu dari OpenAI, yang satu dari Anthropic."*
+Kalau kamu tanya orang awam apa bedanya ChatGPT dengan Claude Cowork, jawabannya hampir pasti: _"Yang satu dari OpenAI, yang satu dari Anthropic."_
 
 Itu bukan jawaban yang salah. Tapi itu juga bukan jawaban yang benar — karena pertanyaannya sendiri sudah salah bingkai.
 
@@ -47,7 +48,7 @@ Ini adalah kesalahpahaman yang mahal.
 
 Sebelum masuk ke teknis, ada sesuatu yang perlu kita akui: **narasi produk AI sengaja dibangun untuk menyederhanakan**.
 
-Ketika Anthropic meluncurkan Claude Cowork pada Januari 2025, mereka tidak mempromosikannya sebagai *"agentic AI framework dengan tool execution loop"*. Mereka mempromosikannya sebagai *"asisten yang bisa bekerja bersamamu"*. Kata "cowork" dipilih dengan sangat hati-hati — ia membangkitkan gambaran kolaborasi, bukan gambaran program yang mengeksekusi perintah di komputermu.
+Ketika Anthropic meluncurkan Claude Cowork pada Januari 2025, mereka tidak mempromosikannya sebagai _"agentic AI framework dengan tool execution loop"_. Mereka mempromosikannya sebagai _"asisten yang bisa bekerja bersamamu"_. Kata "cowork" dipilih dengan sangat hati-hati — ia membangkitkan gambaran kolaborasi, bukan gambaran program yang mengeksekusi perintah di komputermu.
 
 Ini bukan kebohongan. Tapi ini adalah framing yang sangat strategis.
 
@@ -80,8 +81,8 @@ Tidak ada aksi di luar itu. Model tidak bisa membuka file di komputermu. Tidak b
 **AI Cowork** — Claude Cowork, ChatGPT Agent, dan padanan open source-nya — bekerja dalam siklus yang berbeda:
 
 ```
-Input teks → Model merencanakan → Model mengeksekusi tool → 
-Hasil tool dikembalikan ke model → Model merencanakan lagi → 
+Input teks → Model merencanakan → Model mengeksekusi tool →
+Hasil tool dikembalikan ke model → Model merencanakan lagi →
 ... (berulang sampai tujuan tercapai) → Output final
 ```
 
@@ -126,7 +127,7 @@ Di sinilah OpenWork masuk dengan cara yang menarik.
 
 OpenWork bukan sekadar "alternatif open source Claude Cowork". Kalau kamu baca [VISION.md](https://github.com/different-ai/openwork/blob/dev/VISION.md)-nya secara langsung, ada satu kalimat yang sangat jelas:
 
-> *"OpenCode is the engine. OpenWork is the experience: onboarding, safety, permissions, progress, artifacts, and a premium-feeling UI."*
+> _"OpenCode is the engine. OpenWork is the experience: onboarding, safety, permissions, progress, artifacts, and a premium-feeling UI."_
 
 Ini adalah arsitektur yang sangat berbeda dari Claude Cowork. Claude Cowork adalah produk monolitik — engine dan experience digabung, dikontrol sepenuhnya oleh Anthropic. OpenWork memisahkan keduanya secara eksplisit.
 
@@ -207,6 +208,7 @@ OpenWork, OpenCode, dan ekosistem di sekitarnya bukan hanya alternatif yang lebi
 ---
 
 **Referensi:**
+
 - [OpenWork VISION.md](https://github.com/different-ai/openwork/blob/dev/VISION.md)
 - [OpenCode Ecosystem](https://opencode.ai/docs/ecosystem)
 - [OpenWork](https://github.com/different-ai/openwork)

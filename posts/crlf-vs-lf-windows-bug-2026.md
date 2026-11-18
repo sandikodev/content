@@ -3,8 +3,21 @@ title: "CRLF vs LF: Kenapa Windows Masih Menyebabkan Bug di 2026"
 description: "Dari \\r\\n yang terlihat tidak berbahaya hingga silent data corruption di AI agent — bedah mendalam tentang line ending, byte representation, dan cara Rust menanganinya dengan benar."
 date: 2026-04-05T06:00:00+07:00
 author: "Sandikodev"
+image: "/images/posts/crlf-vs-lf-windows-bug-2026.png"
 categories: ["Rust", "Software Engineering", "AI Engineering"]
-tags: ["rust", "crlf", "lf", "line-ending", "windows", "byte", "string", "kiro-cli", "fuzzy-matching", "normalization"]
+tags:
+  [
+    "rust",
+    "crlf",
+    "lf",
+    "line-ending",
+    "windows",
+    "byte",
+    "string",
+    "kiro-cli",
+    "fuzzy-matching",
+    "normalization",
+  ]
 draft: true
 ai_features:
   mermaid_diagrams: true
@@ -299,4 +312,4 @@ Kode yang benar bukan kode yang menangani semua kasus di setiap fungsi. Kode yan
 
 ---
 
-*Bug ini ditemukan dan diperbaiki saat mengerjakan fitur fuzzy matching di Kiro CLI. Jika kamu mengerjakan tool yang memproses file dari berbagai platform, periksa asumsi line ending kamu sekarang — sebelum pengguna yang menemukannya.*
+_Bug ini ditemukan dan diperbaiki saat mengerjakan fitur fuzzy matching di Kiro CLI. Jika kamu mengerjakan tool yang memproses file dari berbagai platform, periksa asumsi line ending kamu sekarang — sebelum pengguna yang menemukannya._

@@ -19,6 +19,7 @@ tags:
     "agentic-ai",
     "peta-ai",
   ]
+image: "/images/blog/peta-kekuatan-ai.webp"
 draft: true
 
 ai_features:
@@ -33,9 +34,9 @@ reading_time: true
 
 ## Masalah dengan "Claude vs ChatGPT"
 
-Setiap kali ada diskusi tentang AI di media sosial, hampir pasti ada komentar seperti ini: *"Claude lebih pintar dari ChatGPT"* atau *"ChatGPT lebih bagus dari Gemini"*.
+Setiap kali ada diskusi tentang AI di media sosial, hampir pasti ada komentar seperti ini: _"Claude lebih pintar dari ChatGPT"_ atau _"ChatGPT lebih bagus dari Gemini"_.
 
-Kalimat-kalimat itu tidak salah secara faktual — tapi mereka membandingkan hal yang berbeda level. Seperti bilang *"Toyota lebih bagus dari Elon Musk"*. Toyota adalah produk. Elon Musk adalah orang. Keduanya ada di dunia otomotif, tapi tidak bisa dibandingkan secara langsung.
+Kalimat-kalimat itu tidak salah secara faktual — tapi mereka membandingkan hal yang berbeda level. Seperti bilang _"Toyota lebih bagus dari Elon Musk"_. Toyota adalah produk. Elon Musk adalah orang. Keduanya ada di dunia otomotif, tapi tidak bisa dibandingkan secara langsung.
 
 Untuk benar-benar memahami lanskap AI saat ini, kamu perlu membaca peta yang lebih lengkap — dari basis proyek (perusahaan), model, produk, hingga layer agentic.
 
@@ -73,13 +74,13 @@ GitHub Copilot adalah produk yang dikelola GitHub — perusahaan yang dimiliki M
 
 Perbandingan yang apple to apple:
 
-| | OpenAI | Anthropic | Google DeepMind | Microsoft / GitHub |
-|---|---|---|---|---|
-| **Model** | GPT-4o, o1, o3 | Claude 3.5 Sonnet, Claude 3 Opus | Gemini 2.0 / 3, Gemini Ultra | *(pakai lisensi OpenAI)* |
-| **Chatbot** | ChatGPT | Claude.ai | Google Gemini | Microsoft Copilot |
-| **AI Cowork** | ChatGPT Agent | Claude Cowork | Gemini Advanced | Microsoft Copilot (enterprise) |
-| **CLI Coding Agent** | Codex CLI | Claude CLI | Gemini CLI | Copilot CLI (`/plan`, `/fleet`, `/delegate`) |
-| **IDE** | — | — | Google Antigravity *(fork VS Code, agent-first, Nov 2025)* | VS Code + GitHub Copilot |
+|                      | OpenAI         | Anthropic                        | Google DeepMind                                            | Microsoft / GitHub                           |
+| -------------------- | -------------- | -------------------------------- | ---------------------------------------------------------- | -------------------------------------------- |
+| **Model**            | GPT-4o, o1, o3 | Claude 3.5 Sonnet, Claude 3 Opus | Gemini 2.0 / 3, Gemini Ultra                               | _(pakai lisensi OpenAI)_                     |
+| **Chatbot**          | ChatGPT        | Claude.ai                        | Google Gemini                                              | Microsoft Copilot                            |
+| **AI Cowork**        | ChatGPT Agent  | Claude Cowork                    | Gemini Advanced                                            | Microsoft Copilot (enterprise)               |
+| **CLI Coding Agent** | Codex CLI      | Claude CLI                       | Gemini CLI                                                 | Copilot CLI (`/plan`, `/fleet`, `/delegate`) |
+| **IDE**              | —              | —                                | Google Antigravity _(fork VS Code, agent-first, Nov 2025)_ | VS Code + GitHub Copilot                     |
 
 Microsoft bermain dengan strategi yang berbeda dari tiga lainnya — bukan membangun model sendiri, tapi **menguasai lisensi dan distribusi**. Dengan investasi miliaran dolar ke OpenAI dan integrasi Copilot ke seluruh ekosistem Microsoft 365, Windows, dan GitHub, mereka tidak perlu punya model terbaik untuk menjadi pemain terkuat di enterprise. Ini adalah keputusan bisnis yang sangat cerdas: biarkan OpenAI yang menanggung biaya riset dan infrastruktur model, sementara Microsoft mengontrol jalur distribusi ke ratusan juta pengguna korporat.
 
@@ -188,7 +189,7 @@ graph TD
     B & C & A --> L
 ```
 
-Ketika orang bilang *"Claude lebih pintar dari ChatGPT"*, mereka biasanya membandingkan Level 2 (produk) tapi menggunakan bahasa Level 1 (model). Dan ketika mereka membandingkan Claude Cowork dengan ChatGPT Agent, mereka sebenarnya membandingkan Level 3 (agentic layer) — yang tidak ada hubungannya dengan seberapa "pintar" modelnya.
+Ketika orang bilang _"Claude lebih pintar dari ChatGPT"_, mereka biasanya membandingkan Level 2 (produk) tapi menggunakan bahasa Level 1 (model). Dan ketika mereka membandingkan Claude Cowork dengan ChatGPT Agent, mereka sebenarnya membandingkan Level 3 (agentic layer) — yang tidak ada hubungannya dengan seberapa "pintar" modelnya.
 
 ---
 
@@ -199,6 +200,7 @@ Dari semua ini, ada satu insight yang paling berguna:
 **Kecerdasan model dan kemampuan agentic adalah dua hal yang ortogonal.**
 
 Model yang "lebih pintar" tidak otomatis menghasilkan agent yang lebih baik. Agent yang baik bergantung pada:
+
 - Seberapa baik tool-tool yang tersedia
 - Seberapa baik orkestrator mengelola loop eksekusi
 - Seberapa baik feedback loop antara eksekusi dan model
@@ -214,7 +216,7 @@ Lanskap AI bergerak sangat cepat. Nama-nama baru muncul setiap bulan. Tapi kalau
 
 Cortana mengingatkan kita bahwa tidak ada yang terlalu besar untuk tenggelam. DeepMind mengingatkan kita bahwa yang paling berpengaruh tidak selalu yang paling viral. Dan OpenCode mengingatkan kita bahwa yang paling terbuka sering kali yang paling powerful dalam jangka panjang.
 
-Tapi peta ini masih belum lengkap. Ada pemain-pemain lain yang jarang masuk dalam diskusi AI sehari-hari — Apple dengan Vision Pro dan riset spatial computing-nya, IBM yang diam-diam menguasai infrastruktur enterprise, Meta yang memegang data interaktivitas sosial terbesar di dunia, dan Nvidia yang jauh lebih dari sekadar perusahaan GPU. Microsoft sendiri baru saja mempublikasikan **GigaTIME** di jurnal *Cell* (Desember 2025) — model AI yang bisa memetakan tumor microenvironment dari slide jaringan seharga $10, sesuatu yang sebelumnya membutuhkan ribuan dolar per sampel. Ini bukan lagi soal chatbot atau coding agent — ini adalah AI yang menyentuh fondasi peradaban manusia.
+Tapi peta ini masih belum lengkap. Ada pemain-pemain lain yang jarang masuk dalam diskusi AI sehari-hari — Apple dengan Vision Pro dan riset spatial computing-nya, IBM yang diam-diam menguasai infrastruktur enterprise, Meta yang memegang data interaktivitas sosial terbesar di dunia, dan Nvidia yang jauh lebih dari sekadar perusahaan GPU. Microsoft sendiri baru saja mempublikasikan **GigaTIME** di jurnal _Cell_ (Desember 2025) — model AI yang bisa memetakan tumor microenvironment dari slide jaringan seharga $10, sesuatu yang sebelumnya membutuhkan ribuan dolar per sampel. Ini bukan lagi soal chatbot atau coding agent — ini adalah AI yang menyentuh fondasi peradaban manusia.
 
 Untuk ulasan yang lebih dalam tentang pemain-pemain ini dan ke mana semuanya bermuara, baca: [Fondasi yang Tak Terlihat: Apple, IBM, Meta, Nvidia, dan Pertarungan untuk Masa Depan Manusia](/posts/fondasi-tak-terlihat-apple-ibm-meta-nvidia).
 
@@ -223,6 +225,7 @@ Ingin tahu lebih dalam tentang era sebelum LLM — ketika Siri, Alexa, Cortana, 
 ---
 
 **Referensi:**
+
 - [OpenAI](https://openai.com)
 - [Anthropic](https://anthropic.com)
 - [Google DeepMind](https://deepmind.google)

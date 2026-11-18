@@ -16,6 +16,7 @@ tags:
     "open-source",
     "kiro-cli",
   ]
+image: "/images/blog/rust-test-colocation.webp"
 draft: true
 
 ai_features:
@@ -51,7 +52,7 @@ mod tests {
 }
 ```
 
-Reaksi pertama yang wajar: *"Ini anti-pattern. Harusnya dipisah ke file terpisah."*
+Reaksi pertama yang wajar: _"Ini anti-pattern. Harusnya dipisah ke file terpisah."_
 
 Tapi setelah menggali lebih dalam — dan setelah berkontribusi langsung ke codebase tersebut — ternyata ini bukan ketidakdisiplinan. Ini adalah **keputusan desain yang disengaja**, dengan alasan teknis yang kuat, dan didukung oleh dokumentasi resmi Rust.
 
@@ -109,7 +110,7 @@ Ini bukan komentar, bukan konvensi, bukan konfigurasi build — ini adalah **ins
 
 Dari [The Rust Book](https://doc.rust-lang.org/book/ch11-03-test-organization.html):
 
-> *"The `#[cfg(test)]` annotation on the tests module tells Rust to compile and run the test code only when you run `cargo test`, not when you run `cargo build`."*
+> _"The `#[cfg(test)]` annotation on the tests module tells Rust to compile and run the test code only when you run `cargo test`, not when you run `cargo build`."_
 
 ### `use super::*` — Akses ke Private Functions
 
@@ -132,7 +133,7 @@ mod tests {
 
 Ini adalah keunggulan yang tidak bisa direplikasi dengan file terpisah. Dari [Rust Compiler Dev Guide](https://rust-lang.github.io/rustc-dev-guide/test-implementation.html):
 
-> *"Private items can thus be easily tested without worrying about how to expose them to any sort of external testing apparatus. This is key to the ergonomics of testing in Rust."*
+> _"Private items can thus be easily tested without worrying about how to expose them to any sort of external testing apparatus. This is key to the ergonomics of testing in Rust."_
 
 ---
 
@@ -151,6 +152,7 @@ graph LR
 ```
 
 Ketika kamu membaca `print_diff` di `fs_write.rs`, test-nya ada tepat di bawah. Kamu tidak perlu:
+
 - Membuka file lain
 - Mencari test yang relevan di direktori berbeda
 - Memastikan import path masih valid setelah refactor
@@ -183,7 +185,7 @@ fn internal_helper(x: u32) -> u32 { x * 2 }
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_internal_helper() {
         assert_eq!(internal_helper(3), 6);
@@ -206,14 +208,14 @@ fn test_public_api() {
 
 ### Doc Tests — Di Dalam Komentar
 
-```rust
+````rust
 /// Doubles the input value.
 ///
 /// ```
 /// assert_eq!(my_crate::double(3), 6);
 /// ```
 pub fn double(x: u32) -> u32 { x * 2 }
-```
+````
 
 ---
 
@@ -292,20 +294,21 @@ Pertanyaan "kenapa test Rust tidak dipisah ke file terpisah?" ternyata mengandun
 
 Di Rust, inline test bukan kompromi — ini adalah solusi yang lebih elegan untuk masalah yang bahasa lain selesaikan dengan workaround:
 
-| Masalah | JS/TS | Rust |
-|---------|-------|------|
-| Test tidak masuk production | Konfigurasi bundler | `#[cfg(test)]` di level compiler |
-| Test fungsi private | Buat public / gunakan `rewire` | `use super::*` langsung |
-| Test dekat dengan kode | Konvensi direktori | Colocation native |
-| Dokumentasi yang testable | Tidak ada | Doc tests |
+| Masalah                     | JS/TS                          | Rust                             |
+| --------------------------- | ------------------------------ | -------------------------------- |
+| Test tidak masuk production | Konfigurasi bundler            | `#[cfg(test)]` di level compiler |
+| Test fungsi private         | Buat public / gunakan `rewire` | `use super::*` langsung          |
+| Test dekat dengan kode      | Konvensi direktori             | Colocation native                |
+| Dokumentasi yang testable   | Tidak ada                      | Doc tests                        |
 
 Ini adalah salah satu contoh di mana Rust tidak hanya meminjam konvensi dari bahasa lain, tapi **merancang ulang dari prinsip pertama** — dan hasilnya lebih baik.
 
 ---
 
-*Artikel ini lahir dari sesi kontribusi ke [Kiro CLI](https://github.com/aws/amazon-q-developer-cli) — sebuah AI coding agent open source yang dibangun dengan Rust. PR yang direferensikan ([#3717](https://github.com/aws/amazon-q-developer-cli/pull/3717)) adalah kontribusi nyata yang masih dalam review.*
+_Artikel ini lahir dari sesi kontribusi ke [Kiro CLI](https://github.com/aws/amazon-q-developer-cli) — sebuah AI coding agent open source yang dibangun dengan Rust. PR yang direferensikan ([#3717](https://github.com/aws/amazon-q-developer-cli/pull/3717)) adalah kontribusi nyata yang masih dalam review._
 
 **Referensi:**
+
 - [The Rust Book — Test Organization](https://doc.rust-lang.org/book/ch11-03-test-organization.html)
 - [Rust Compiler Dev Guide — Test Implementation](https://rust-lang.github.io/rustc-dev-guide/test-implementation.html)
 - [Rust Forum — Testing Private Functions](https://users.rust-lang.org/t/testing-private-functions/41097)

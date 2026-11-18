@@ -3,6 +3,7 @@ title: "Etika dan Alur Kontribusi Open Source: Pelajaran dari Pengalaman Nyata"
 description: "Panduan naratif tentang cara berkontribusi ke proyek open source dengan etis dan benar — dari fork, sync, claim issue, hingga submit PR. Termasuk cara menggunakan GitKraken MCP untuk otomasi workflow GitHub."
 date: 2026-04-04T02:00:00+07:00
 author: "Sandikodev"
+image: "/images/posts/etika-kontribusi-open-source-panduan-pemula.png"
 categories: ["Open Source", "Developer Culture"]
 tags:
   [

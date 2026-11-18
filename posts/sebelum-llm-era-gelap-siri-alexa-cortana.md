@@ -19,6 +19,7 @@ tags:
     "sejarah-ai",
     "nostalgia",
   ]
+image: "/images/blog/sejarah-llm.webp"
 draft: true
 
 ai_features:
@@ -33,7 +34,7 @@ reading_time: true
 
 ## Sebuah Kenangan yang Terasa Jauh
 
-Coba ingat kembali. Suatu hari di sekitar 2014-2016, kamu mengangkat ponselmu dan berkata: *"Hey Siri, set alarm jam 7 pagi."* Siri merespons. Kamu merasa seperti sedang hidup di masa depan.
+Coba ingat kembali. Suatu hari di sekitar 2014-2016, kamu mengangkat ponselmu dan berkata: _"Hey Siri, set alarm jam 7 pagi."_ Siri merespons. Kamu merasa seperti sedang hidup di masa depan.
 
 Itu bukan perasaan yang salah. Pada masanya, itu memang masa depan.
 
@@ -45,7 +46,7 @@ Apa yang terjadi di antara dua titik itu? Jawabannya lebih dalam dan lebih drama
 
 ## Era Sebelum Transformer: Kompetisi yang Sunyi tapi Brutal
 
-Sebelum 2017 — sebelum paper *"Attention Is All You Need"* mengubah segalanya — dunia NLP (Natural Language Processing) adalah medan perang yang sangat berbeda.
+Sebelum 2017 — sebelum paper _"Attention Is All You Need"_ mengubah segalanya — dunia NLP (Natural Language Processing) adalah medan perang yang sangat berbeda.
 
 Yang bermain di sana bukan startup dengan 10 engineer dan GPU cloud. Yang bermain adalah perusahaan dengan ribuan peneliti, superkomputer khusus, dan anggaran riset yang tidak pernah dipublikasikan. IBM, Google, Microsoft, Amazon, Apple — mereka semua berlomba, tapi lombanya terjadi di balik pintu tertutup.
 
@@ -79,7 +80,7 @@ timeline
 
 Siri adalah yang pertama masuk ke tangan jutaan orang. Apple mengakuisisinya dari SRI International pada 2010 — sebuah spin-off dari proyek riset DARPA — dan meluncurkannya bersama iPhone 4S pada Oktober 2011.
 
-Pada masanya, Siri terasa ajaib. Kamu bisa bertanya dalam bahasa natural, dan Siri mencoba menjawab. Bukan dengan mengetik query ke search engine — tapi dengan *memahami* maksudmu.
+Pada masanya, Siri terasa ajaib. Kamu bisa bertanya dalam bahasa natural, dan Siri mencoba menjawab. Bukan dengan mengetik query ke search engine — tapi dengan _memahami_ maksudmu.
 
 Tapi ada batasan yang sangat fundamental: Siri bekerja dengan **intent classification**. Ia tidak benar-benar "memahami" bahasa — ia mengklasifikasikan ucapanmu ke dalam kategori yang sudah didefinisikan sebelumnya. "Set alarm" → intent: SET_ALARM, entity: TIME=7AM. "Hubungi ibu" → intent: MAKE_CALL, entity: CONTACT=ibu.
 
@@ -89,7 +90,7 @@ Ini bukan kelemahan Siri saja — ini adalah kelemahan fundamental dari pendekat
 
 ---
 
-## Alexa: Ketika Hardware Menjadi Trojan Horse
+## Alexa: Hardware sebagai Trojan Horse
 
 Amazon meluncurkan Alexa bersama Echo pada 2014, dan strateginya sangat berbeda dari Apple.
 
@@ -105,7 +106,7 @@ Alexa juga menjadi pemain dominan di smart home — menghubungkan lampu, termost
 
 Microsoft meluncurkan Cortana pada 2015 dengan ambisi yang sangat besar. Bukan hanya asisten suara — tapi asisten yang terintegrasi ke seluruh ekosistem Microsoft: Windows, Office, Xbox, bahkan Android dan iOS.
 
-Cortana punya beberapa keunggulan yang sering terlupakan. Ia bisa membaca email dan kalendermu untuk memberikan konteks yang relevan. Ia bisa mengingatkanmu tentang sesuatu berdasarkan lokasi (*"ingatkan saya untuk beli susu ketika saya lewat minimarket"*). Ia punya kepribadian yang lebih kuat dari Siri — Microsoft mempekerjakan penulis fiksi untuk membuat Cortana terasa lebih manusiawi.
+Cortana punya beberapa keunggulan yang sering terlupakan. Ia bisa membaca email dan kalendermu untuk memberikan konteks yang relevan. Ia bisa mengingatkanmu tentang sesuatu berdasarkan lokasi (_"ingatkan saya untuk beli susu ketika saya lewat minimarket"_). Ia punya kepribadian yang lebih kuat dari Siri — Microsoft mempekerjakan penulis fiksi untuk membuat Cortana terasa lebih manusiawi.
 
 Tapi ada masalah yang tidak bisa diselesaikan dengan kepribadian yang bagus: **Cortana tidak cukup pintar untuk use case yang benar-benar penting**.
 
@@ -143,7 +144,7 @@ Kalau Kaggle adalah tempat untuk belajar dan berkompetisi, Hugging Face adalah t
 
 ## "Attention Is All You Need": Selembar Paper yang Mengubah Segalanya
 
-Pada Juni 2017, delapan peneliti Google mempublikasikan sebuah paper dengan judul yang terdengar sederhana: *"Attention Is All You Need"*.
+Pada Juni 2017, delapan peneliti Google mempublikasikan sebuah paper dengan judul yang terdengar sederhana: _"Attention Is All You Need"_.
 
 Paper itu memperkenalkan arsitektur **Transformer** — cara baru untuk memproses urutan data (seperti teks) yang jauh lebih efisien dan efektif dari pendekatan sebelumnya (RNN, LSTM). Kunci inovasinya adalah **self-attention mechanism** — cara model untuk "memperhatikan" bagian-bagian berbeda dari input secara bersamaan, bukan secara berurutan.
 
@@ -177,7 +178,7 @@ Tapi ada beberapa hal yang membuat era itu terasa terbatas dibanding sekarang:
 
 **Barrier to entry yang sangat tinggi.** Untuk melatih model NLP yang serius, kamu butuh dataset yang besar (yang tidak tersedia secara publik), infrastruktur komputasi yang mahal (GPU cluster), dan tim peneliti yang berpengalaman. Ini adalah domain eksklusif perusahaan besar.
 
-**Tidak ada "general intelligence" yang terasa nyata.** Kamu bisa bicara dengan Siri, tapi kamu tidak bisa *berdiskusi* dengannya. Kamu bisa minta Alexa untuk memutar musik, tapi kamu tidak bisa minta Alexa untuk membantu kamu memahami konsep yang kompleks.
+**Tidak ada "general intelligence" yang terasa nyata.** Kamu bisa bicara dengan Siri, tapi kamu tidak bisa _berdiskusi_ dengannya. Kamu bisa minta Alexa untuk memutar musik, tapi kamu tidak bisa minta Alexa untuk membantu kamu memahami konsep yang kompleks.
 
 ---
 
@@ -205,4 +206,4 @@ Sejarah AI bukan garis lurus dari bodoh ke pintar. Ia adalah spiral — setiap p
 
 ---
 
-*Artikel ini adalah bagian dari series tentang lanskap AI. Artikel sebelumnya: [Peta Kekuatan AI: OpenAI, Anthropic, Google DeepMind, dan Microsoft](/posts/peta-kekuatan-ai-openai-anthropic-google-microsoft).*
+_Artikel ini adalah bagian dari series tentang lanskap AI. Artikel sebelumnya: [Peta Kekuatan AI: OpenAI, Anthropic, Google DeepMind, dan Microsoft](/posts/peta-kekuatan-ai-openai-anthropic-google-microsoft)._

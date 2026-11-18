@@ -19,6 +19,7 @@ tags:
     "representation-mismatch",
     "cookbook",
   ]
+image: "/images/blog/rust-representation.webp"
 draft: true
 
 ai_features:
@@ -387,13 +388,13 @@ graph TD
 
 Setiap kali LLM berinteraksi dengan sistem deterministik melalui tool calls, ada potensi representation mismatch:
 
-| LLM menghasilkan | Sistem mengharapkan | Solusi |
-|-----------------|---------------------|--------|
-| Tab indentation | 4 spaces | Fuzzy matching |
-| CRLF line endings | LF | Normalisasi |
-| Trailing spaces | No trailing spaces | Strip |
-| Approximate context | Exact match | Similarity threshold |
-| Stale content | Current content | Freshness check |
+| LLM menghasilkan    | Sistem mengharapkan | Solusi               |
+| ------------------- | ------------------- | -------------------- |
+| Tab indentation     | 4 spaces            | Fuzzy matching       |
+| CRLF line endings   | LF                  | Normalisasi          |
+| Trailing spaces     | No trailing spaces  | Strip                |
+| Approximate context | Exact match         | Similarity threshold |
+| Stale content       | Current content     | Freshness check      |
 
 Ini bukan masalah yang unik untuk Kiro CLI. Cline, Cursor, GitHub Copilot — semua menghadapi masalah yang sama. Yang membedakan adalah seberapa banyak lapisan perlindungan yang dibangun di boundary ini.
 
@@ -483,4 +484,4 @@ Rust, dengan sistem tipe-nya yang eksplisit dan model ownership-nya, sebenarnya 
 
 ---
 
-*Artikel ini lahir dari sesi kontribusi ke [Kiro CLI](https://github.com/aws/amazon-q-developer-cli). PR yang direferensikan: [#3725](https://github.com/aws/amazon-q-developer-cli/pull/3725) (fuzzy str_replace), [#3716](https://github.com/aws/amazon-q-developer-cli/pull/3716) (UTF-8 boundary panic fix).*
+_Artikel ini lahir dari sesi kontribusi ke [Kiro CLI](https://github.com/aws/amazon-q-developer-cli). PR yang direferensikan: [#3725](https://github.com/aws/amazon-q-developer-cli/pull/3725) (fuzzy str_replace), [#3716](https://github.com/aws/amazon-q-developer-cli/pull/3716) (UTF-8 boundary panic fix)._

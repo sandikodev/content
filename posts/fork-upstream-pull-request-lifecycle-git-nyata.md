@@ -15,6 +15,7 @@ tags:
     "kontribusi",
     "lifecycle",
   ]
+image: "/images/blog/git-lifecycle.webp"
 draft: true
 
 ai_features:

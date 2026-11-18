@@ -1,5 +1,5 @@
 ---
-title: "SEO & Social Media Mastery: Solusi Thumbnail Link Muncul Sempurna"
+title: "SEO & Social Media: Solusi Thumbnail Link Muncul Sempurna"
 description: "Panduan lengkap menggunakan Facebook Sharing Debugger dan X Post Inspector untuk memperbaiki preview link, serta tips optimasi Google Lighthouse untuk performa website yang UX-Friendly."
 date: 2026-03-31T02:00:00+07:00
 author: "Sandikodev"

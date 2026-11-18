@@ -3,6 +3,7 @@ title: "Di Balik Semua AI Coding Agent: Tentang Batas Intent, Byte, dan WebAssem
 description: "Dari Kiro CLI hingga OpenCode, dari token LLM hingga instruksi mesin — refleksi mendalam tentang apa yang sebenarnya terjadi ketika AI 'menulis kode', dan ke mana arah evolusinya menuju WebAssembly dan native byte understanding."
 date: 2026-04-05T11:00:00+07:00
 author: "Sandikodev"
+image: "/images/posts/ai-agent-intent-byte-wasm-masa-depan.png"
 categories: ["AI Engineering", "Vision", "Rust", "WebAssembly"]
 tags:
   [
@@ -36,11 +37,11 @@ reading_time: true
 
 ## Prolog: Semua Ini Bukan Tentang Komunitas
 
-Coba perhatikan daftar ini sebentar — OpenCode, Kiro CLI, Cline, Aider, Copilot CLI, Codex, Gemini CLI, Claude CLI, Kimi CLI, Qwen Code, Cody, Windsurf, NxCode, AwanCode, KiloClaw. Kalau kamu baru pertama kali melihatnya, wajar kalau yang terlintas adalah: *ini persaingan ekosistem*. Siapa yang punya komunitas terbesar, toolchain terlengkap, integrasi terbanyak.
+Coba perhatikan daftar ini sebentar — OpenCode, Kiro CLI, Cline, Aider, Copilot CLI, Codex, Gemini CLI, Claude CLI, Kimi CLI, Qwen Code, Cody, Windsurf, NxCode, AwanCode, KiloClaw. Kalau kamu baru pertama kali melihatnya, wajar kalau yang terlintas adalah: _ini persaingan ekosistem_. Siapa yang punya komunitas terbesar, toolchain terlengkap, integrasi terbanyak.
 
 Tapi semakin dalam kamu masuk ke source code masing-masing — dan saya sudah melakukannya cukup dalam belakangan ini — semakin kamu menyadari bahwa semua itu hanyalah lapisan permukaan. Ada sesuatu yang jauh lebih esensial di bawahnya, sesuatu yang jarang dibicarakan secara eksplisit.
 
-Pertanyaan yang sebenarnya bukan *"tool mana yang terbaik?"* Pertanyaan yang lebih menarik adalah: *bagaimana sebuah respons probabilistik dari LLM bisa menjadi instruksi deterministik yang dieksekusi oleh mesin?* Dan lebih jauh lagi: *apakah cara kita menjembatani dua dunia itu sudah benar?*
+Pertanyaan yang sebenarnya bukan _"tool mana yang terbaik?"_ Pertanyaan yang lebih menarik adalah: _bagaimana sebuah respons probabilistik dari LLM bisa menjadi instruksi deterministik yang dieksekusi oleh mesin?_ Dan lebih jauh lagi: _apakah cara kita menjembatani dua dunia itu sudah benar?_
 
 ---
 
@@ -155,6 +156,7 @@ graph TD
 ```
 
 Dengan AST-aware editing:
+
 - Tidak ada masalah whitespace — AST tidak peduli indentasi
 - Tidak ada masalah CRLF — AST adalah struktur, bukan string
 - Modifikasi lebih presisi — kamu mengubah node, bukan substring
@@ -220,6 +222,7 @@ Saat ini, LLM dan mesin berkomunikasi melalui lapisan abstraksi yang tebal: JSON
 Bagaimana jika LLM bisa berkomunikasi langsung di level yang lebih rendah?
 
 **WebAssembly (WASM)** adalah format binary yang:
+
 - Platform-agnostic (berjalan di mana saja)
 - Deterministic (tidak ada undefined behavior)
 - Sandboxed (aman untuk dieksekusi)
@@ -258,15 +261,15 @@ Kalau kamu ingin mengikuti perkembangan di ruang ini secara lebih sistematis, **
 
 Dari perspektif yang kita bahas di artikel ini, begini cara membaca lanskap saat ini secara jujur:
 
-| Tool | String-based | AST-aware | LSP Integration | BYOK | WASM |
-|------|-------------|-----------|-----------------|------|------|
-| OpenCode | ✓ (+ fuzzy) | Partial | ✓ | Partial | ✗ |
-| Kiro CLI | ✓ (+ fuzzy*) | ✗ | ✗ | ✗ | ✗ |
-| Cline | ✓ (+ fuzzy) | ✗ | Partial | ✓ | ✗ |
-| Aider | ✓ | ✗ | ✗ | ✓ | ✗ |
-| Copilot CLI | ✓ | ✗ | Via IDE | ✗ | ✗ |
+| Tool        | String-based  | AST-aware | LSP Integration | BYOK    | WASM |
+| ----------- | ------------- | --------- | --------------- | ------- | ---- |
+| OpenCode    | ✓ (+ fuzzy)   | Partial   | ✓               | Partial | ✗    |
+| Kiro CLI    | ✓ (+ fuzzy\*) | ✗         | ✗               | ✗       | ✗    |
+| Cline       | ✓ (+ fuzzy)   | ✗         | Partial         | ✓       | ✗    |
+| Aider       | ✓             | ✗         | ✗               | ✓       | ✗    |
+| Copilot CLI | ✓             | ✗         | Via IDE         | ✗       | ✗    |
 
-*fuzzy matching yang kita implementasikan di PR #3725
+\*fuzzy matching yang kita implementasikan di PR #3725
 
 Tidak ada yang sudah sampai ke WASM. Tidak ada yang benar-benar AST-aware secara penuh. Ini adalah frontier yang masih terbuka.
 
@@ -292,10 +295,10 @@ Kalau kamu tertarik untuk menggali lebih jauh:
 - **[tower-lsp](https://github.com/ebkalderon/tower-lsp)** — untuk membangun LSP server di Rust
 - **[aws/amazon-q-developer-cli](https://github.com/aws/amazon-q-developer-cli)** — untuk berkontribusi langsung ke Kiro CLI
 
-Pertanyaan yang paling menarik bukan *"tool mana yang terbaik sekarang?"* — tapi *"arsitektur apa yang akan membuat semua tool ini menjadi lebih baik secara fundamental?"*
+Pertanyaan yang paling menarik bukan _"tool mana yang terbaik sekarang?"_ — tapi _"arsitektur apa yang akan membuat semua tool ini menjadi lebih baik secara fundamental?"_
 
 Jawabannya, saya percaya, ada di persimpangan antara byte-level precision Rust, AST-aware parsing, LSP feedback loops, dan — mungkin suatu hari — WebAssembly sebagai lingua franca antara LLM dan mesin.
 
 ---
 
-*Artikel ini adalah bagian dari series [Rust Cookbook untuk AI Engineer](/tags/cookbook). Kontribusi yang direferensikan: [PR #3725](https://github.com/aws/amazon-q-developer-cli/pull/3725) dan seri PR lainnya di Kiro CLI.*
+_Artikel ini adalah bagian dari series [Rust Cookbook untuk AI Engineer](/tags/cookbook). Kontribusi yang direferensikan: [PR #3725](https://github.com/aws/amazon-q-developer-cli/pull/3725) dan seri PR lainnya di Kiro CLI._

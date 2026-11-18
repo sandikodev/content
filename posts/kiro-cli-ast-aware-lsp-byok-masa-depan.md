@@ -4,7 +4,20 @@ description: "Dari match_indices yang exact-byte hingga visi Kiro CLI yang AST-a
 date: 2026-04-05T07:00:00+07:00
 author: "Sandikodev"
 categories: ["Rust", "AI Engineering", "Open Source", "Vision"]
-tags: ["rust", "ast", "lsp", "byok", "kiro-cli", "opencode", "ai-agent", "llm", "open-source", "vision"]
+tags:
+  [
+    "rust",
+    "ast",
+    "lsp",
+    "byok",
+    "kiro-cli",
+    "opencode",
+    "ai-agent",
+    "llm",
+    "open-source",
+    "vision",
+  ]
+image: "/images/blog/kiro-cli-ast-aware.webp"
 draft: true
 ai_features:
   mermaid_diagrams: true
@@ -48,7 +61,7 @@ Pendekatan ini pragmatis dan cukup untuk banyak kasus. Tapi ada skenario yang se
 
 ## Apa Itu AST-Aware Editing?
 
-AST (*Abstract Syntax Tree*) adalah representasi struktural dari kode sumber. Alih-alih melihat kode sebagai string, parser mengubahnya menjadi pohon node yang merepresentasikan konstruksi bahasa: fungsi, blok, ekspresi, tipe, dan seterusnya.
+AST (_Abstract Syntax Tree_) adalah representasi struktural dari kode sumber. Alih-alih melihat kode sebagai string, parser mengubahnya menjadi pohon node yang merepresentasikan konstruksi bahasa: fungsi, blok, ekspresi, tipe, dan seterusnya.
 
 AST-aware editing berarti kita tidak lagi mencari string `"fn calculate"` lalu menggantinya secara buta. Kita parse file menjadi AST, temukan node `FnItem` dengan nama `calculate`, lalu modifikasi node tersebut secara presisi — tanpa risiko mengenai kode lain yang kebetulan mengandung teks yang sama.
 
@@ -84,7 +97,7 @@ let root = tree.root_node();
 // bukan berdasarkan konten string
 ```
 
-Perbedaannya fundamental: `match_indices` bertanya *"di mana teks ini?"*, sedangkan AST-aware editing bertanya *"di mana konstruksi kode ini?"*
+Perbedaannya fundamental: `match_indices` bertanya _"di mana teks ini?"_, sedangkan AST-aware editing bertanya _"di mana konstruksi kode ini?"_
 
 ---
 
@@ -139,7 +152,7 @@ Ketiga komponen ini — tree-sitter, tower-lsp, byte precision — sudah ada di 
 
 ## Visi BYOK: Bring Your Own Key, Bring Your Own Model
 
-Ada dimensi lain yang belum banyak dibicarakan dalam konteks Kiro CLI: BYOK, atau *Bring Your Own Key/Model*.
+Ada dimensi lain yang belum banyak dibicarakan dalam konteks Kiro CLI: BYOK, atau _Bring Your Own Key/Model_.
 
 Saat ini, Kiro CLI terikat pada model tertentu dengan konfigurasi yang terbatas. Tapi bayangkan skenario ini: komunitas open source bisa menghubungkan LLM mereka sendiri — model yang di-host sendiri, model fine-tuned, atau model dari provider alternatif — ke Kiro CLI melalui konfigurasi API endpoint yang sederhana.
 
@@ -163,7 +176,7 @@ Jika kita punya model yang bisa menghasilkan AST-aware edits, dan kita merekam s
 Loop-nya menjadi:
 
 ```
-BYOK model → AST-aware edit → LSP validation → 
+BYOK model → AST-aware edit → LSP validation →
   jika berhasil: simpan sebagai training signal →
   fine-tune model → model yang lebih baik → kembali ke awal
 ```
@@ -269,4 +282,4 @@ Rust memberikan fondasinya. Pertanyaannya adalah: siapa yang akan membangun di a
 
 ---
 
-*Artikel ini adalah bagian dari seri eksplorasi Kiro CLI dari perspektif Rust engineering. Jika tertarik berkontribusi pada salah satu proposal di atas, cek repo Kiro CLI dan buka diskusi di issue tracker.*
+_Artikel ini adalah bagian dari seri eksplorasi Kiro CLI dari perspektif Rust engineering. Jika tertarik berkontribusi pada salah satu proposal di atas, cek repo Kiro CLI dan buka diskusi di issue tracker._

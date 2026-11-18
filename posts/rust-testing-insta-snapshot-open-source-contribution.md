@@ -17,6 +17,7 @@ tags:
     "tdd",
     "assert",
   ]
+image: "/images/blog/rust-testing-insta.webp"
 draft: true
 
 ai_features:
@@ -300,15 +301,15 @@ Dalam kasus ini: `cargo install cargo-insta` seharusnya jadi langkah pertama, bu
 
 Hasil dari satu sesi kontribusi malam itu:
 
-| PR | Judul | Status |
-|----|-------|--------|
-| [#3716](https://github.com/aws/amazon-q-developer-cli/pull/3716) | fix(chat): prevent panic on UTF-8 boundary | Open |
-| [#3717](https://github.com/aws/amazon-q-developer-cli/pull/3717) | fix(fs_write): suppress spurious trailing-newline diff lines | Open |
+| PR                                                               | Judul                                                        | Status |
+| ---------------------------------------------------------------- | ------------------------------------------------------------ | ------ |
+| [#3716](https://github.com/aws/amazon-q-developer-cli/pull/3716) | fix(chat): prevent panic on UTF-8 boundary                   | Open   |
+| [#3717](https://github.com/aws/amazon-q-developer-cli/pull/3717) | fix(fs_write): suppress spurious trailing-newline diff lines | Open   |
 
 Dan satu issue yang dilaporkan:
 
-| Issue | Deskripsi |
-|-------|-----------|
+| Issue                                                              | Deskripsi                                                  |
+| ------------------------------------------------------------------ | ---------------------------------------------------------- |
 | [#3715](https://github.com/aws/amazon-q-developer-cli/issues/3715) | panic: byte index out of bounds in chat response rendering |
 
 ---

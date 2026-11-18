@@ -1,55 +1,45 @@
 ---
 title: "SKILL.md dan Agent Skills: Standar Baru yang Mengubah Cara AI Bekerja dengan Tools"
-description: "Dari drama rebranding Clawdbot → Moltbot → OpenClaw hingga lahirnya SKILL.md sebagai open standard, risiko keamanan yang diungkap Palo Alto Networks, dan 5 skill nyata yang dipakai engineer setiap hari — panduan lengkap ekosistem agent skills."
+description: "Dari drama rebranding Clawdbot ke OpenClaw, risiko keamanan yang diungkap Palo Alto Networks, sampai 5 skill nyata yang dipakai engineer setiap hari — ekosistem agent skills sedang membentuk ulang cara LLM memahami dan menggunakan tools."
 date: 2026-04-06T14:00:00+07:00
 author: "Sandikodev"
-categories: ["AI Engineering", "Agentic AI", "Tools", "Security"]
+categories: ["DevOps"]
 tags:
   [
     "skill-md",
     "agent-skills",
     "openclaw",
-    "moltbot",
-    "clawdbot",
     "opencode",
-    "claude",
-    "cursor",
-    "gemini-cli",
     "agentic-ai",
     "open-standard",
     "llm",
     "security",
-    "prompt-injection",
+    "developer-tools",
   ]
-draft: true
-
+image: "/images/blog/skill-md-agent-skills.webp"
+draft: false
 ai_features:
   mermaid_diagrams: true
   code_snippets: true
   technical_depth: "intermediate"
-
 content_type: "technical"
 auto_toc: true
 reading_time: true
 ---
 
-## Sebuah Drama Rebranding yang Mengungkap Sesuatu yang Lebih Besar
+## Drama Rebranding yang Mengungkap Pergeseran Besar
 
-Januari 2026. Seorang developer bernama Peter Steinberger merilis sebuah tool bernama **Clawdbot** — personal AI assistant yang langsung viral. Dalam hitungan minggu, ia mendapat surat dari Anthropic: nama itu terlalu mirip dengan "Claude". Ia harus ganti nama.
+Januari 2026. Peter Steinberger merilis **Clawdbot** — asisten AI personal yang langsung viral. Namun, popularitas membawa konsekuensi: Anthropic mengirim surat keberatan karena nama itu terlalu mirip dengan "Claude".
 
-Pada 27 Januari 2026, ia mengumumkan rebranding ke **Moltbot** — terinspirasi dari proses molting lobster, melepas cangkang lama untuk tumbuh:
+Peter kemudian mencoba nama **Moltbot** — terinspirasi dari proses lobster melepas cangkang lama untuk tumbuh. Namun akhirnya ia menetap di **OpenClaw**.
 
-> *"Molt fits perfectly — it's what lobsters do to grow."*
-
-Tapi nama itu pun tidak bertahan lama. Akhirnya ia menetap di **OpenClaw** — nama yang sekarang dikenal sebagai salah satu personal AI assistant paling populer di 2026 dengan ratusan ribu stars di GitHub, lebih dari 11.500 forks, semua dalam waktu kurang dari seminggu.
-
-Tiga nama, satu produk. Tapi yang menarik bukan dramanya — yang menarik adalah *mengapa* tool ini begitu cepat viral, dan apa yang ia ungkap tentang arah ekosistem AI agent.
+Dramanya mungkin soal nama, tapi esensinya jauh lebih dalam: OpenClaw berhasil meraih ratusan ribu stars di GitHub dalam hitungan hari bukan karena branding, tapi karena ia memecahkan masalah **kemandirian (autonomy)** AI.
 
 ---
 
 ## Apa yang Membuat OpenClaw Berbeda
 
-OpenClaw bukan sekadar chatbot. Ia adalah autonomous agent yang bisa:
+OpenClaw bukan sekadar chatbot yang bisa diajak ngobrol. Ia adalah autonomous agent yang bisa benar-benar mengerjakan sesuatu di sistemmu — dan ini yang membuat orang langsung tertarik sekaligus khawatir:
 
 - Browse web dan merangkum PDF
 - Menjadwalkan kalender
@@ -59,13 +49,13 @@ OpenClaw bukan sekadar chatbot. Ia adalah autonomous agent yang bisa:
 - Terintegrasi dengan WhatsApp, Telegram, dan messaging app lainnya
 - **Menyimpan memori persisten** — ia ingat interaksi dari minggu atau bulan lalu
 
-Memori persisten inilah yang menjadi pembeda sekaligus sumber kontroversi terbesar.
+Memori persisten inilah yang menjadi pembeda sekaligus sumber kontroversi terbesar. Bukan karena fiturnya buruk — tapi karena ia mengubah agent dari "tool yang kamu panggil" menjadi "entitas yang terus berjalan dan mengingat".
 
 ---
 
 ## Sisi Gelap: Ketika Power Bertemu Kerentanan
 
-Palo Alto Networks mempublikasikan analisis keamanan yang sangat detail tentang OpenClaw (saat itu masih bernama Moltbot) pada Januari 2026. Judulnya cukup provokatif: *"Why Moltbot May Signal the Next AI Security Crisis"*.
+Palo Alto Networks mempublikasikan analisis keamanan yang sangat detail tentang OpenClaw (saat itu masih bernama Moltbot) pada Januari 2026. Judulnya cukup provokatif: _"Why Moltbot May Signal the Next AI Security Crisis"_.
 
 Argumen utamanya: OpenClaw memiliki akses ke root files, authentication credentials, browser history, cookies, dan semua folder di sistemmu. Kombinasi ini dengan memori persisten menciptakan attack surface yang sangat luas.
 
@@ -85,16 +75,16 @@ Skenario serangan yang paling mengkhawatirkan: pesan WhatsApp yang berisi payloa
 
 Palo Alto memetakan kerentanan OpenClaw ke **OWASP Top 10 for Agentic Applications 2026**:
 
-| OWASP Risk | Kerentanan OpenClaw |
-|---|---|
-| A01: Prompt Injection | Web results dan messages bisa inject instruksi berbahaya |
-| A02: Insecure Tool Invocation | Tools dipanggil berdasarkan reasoning yang termasuk untrusted memory |
-| A03: Excessive Autonomy | Root access + credential access + network, tanpa privilege boundaries |
-| A04: Missing Human-in-the-Loop | Tidak ada approval untuk operasi destruktif |
-| A05: Memory Poisoning | Semua memory tidak dibedakan berdasarkan sumber atau trust level |
-| A06: Insecure Third-Party Skills | Skills pihak ketiga berjalan dengan full agent privileges |
+| OWASP Risk                       | Kerentanan OpenClaw                                                   |
+| -------------------------------- | --------------------------------------------------------------------- |
+| A01: Prompt Injection            | Web results dan messages bisa inject instruksi berbahaya              |
+| A02: Insecure Tool Invocation    | Tools dipanggil berdasarkan reasoning yang termasuk untrusted memory  |
+| A03: Excessive Autonomy          | Root access + credential access + network, tanpa privilege boundaries |
+| A04: Missing Human-in-the-Loop   | Tidak ada approval untuk operasi destruktif                           |
+| A05: Memory Poisoning            | Semua memory tidak dibedakan berdasarkan sumber atau trust level      |
+| A06: Insecure Third-Party Skills | Skills pihak ketiga berjalan dengan full agent privileges             |
 
-Ini bukan berarti OpenClaw adalah produk yang buruk — ini adalah peringatan bahwa **power yang besar membutuhkan governance yang setara**.
+Ini bukan berarti OpenClaw adalah produk yang buruk — ini adalah peringatan bahwa power yang besar membutuhkan governance yang setara. Dan peringatan ini berlaku untuk semua agent dengan akses luas, bukan hanya OpenClaw.
 
 ---
 
@@ -122,19 +112,26 @@ Yang membuat arsitektur ini unik dibanding agent lain:
 Salah satu deployment pattern yang menarik adalah **Moltworker** — cara menjalankan OpenClaw di Cloudflare Workers (serverless) alih-alih VPS tradisional.
 
 Dalam setup ini:
+
 - Execution logic OpenClaw berjalan di Cloudflare Workers
 - Agent memory, logs, dan artifacts disimpan di Cloudflare R2 (object storage)
 - R2 menyediakan free tier hingga 10GB — deployment kecil bisa berjalan tanpa biaya infrastruktur tambahan
 
 Cocok untuk: chat-based assistants, on-demand automation agents, dan personal/experimental agents dengan traffic rendah. Tidak cocok untuk: long-running autonomous agents atau agents yang butuh GPU atau local filesystem access.
 
+---
 
+## Masalah yang Belum Terpecahkan: AI Tahu Banyak tapi Sering Salah
 
 Di luar isu keamanan, ada paradoks yang dialami siapapun yang pernah serius menggunakan AI coding agent: model yang sangat canggih, tapi sering menghasilkan kode yang salah untuk library atau framework tertentu.
 
 Bukan karena modelnya bodoh. Tapi karena **dokumentasi ditulis untuk manusia, bukan untuk AI**.
 
 Dokumentasi manusia menyebar informasi di puluhan halaman, mengasumsikan pembaca akan browsing secara non-linear, dan sering melewatkan detail teknis yang "sudah jelas" bagi developer berpengalaman. LLM tidak bisa memegang seluruh dokumentasi dalam context window-nya sekaligus — dan bahkan kalau bisa, performa model menurun drastis ketika context terlalu panjang.
+
+Hasilnya: AI menggunakan API yang sudah deprecated, melewatkan best practice yang tidak eksplisit, dan membuat keputusan yang salah karena tidak punya konteks yang tepat.
+
+Saya sendiri mengalami ini berkali-kali. Minta agent untuk setup sesuatu dengan library tertentu, hasilnya compile tapi tidak bekerja seperti yang diharapkan — karena agent menggunakan pattern dari versi lama yang masih ada di training data-nya. Tidak ada yang salah dengan modelnya. Yang kurang adalah konteks yang tepat tentang _versi ini_, _project ini_, _keputusan yang sudah dibuat di sini_.
 
 **SKILL.md** adalah jawaban untuk masalah ini.
 
@@ -219,6 +216,7 @@ Dokumentasi lengkap: [opencode.ai/docs/skills](https://opencode.ai/docs/skills/)
 Anthropic mendokumentasikan agent skills di [platform.claude.com/docs/en/agents-and-tools/agent-skills/overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview). Skills di Claude Code berjalan di VM environment dengan filesystem access — memungkinkan skills untuk menjalankan scripts dan mengakses resources secara langsung.
 
 Perbedaan penting antar platform Claude:
+
 - **Claude API**: Tidak ada network access untuk skills
 - **Claude Code**: Full network access
 - **Claude.ai**: Bervariasi tergantung settings
@@ -242,6 +240,9 @@ Copilot CLI mengimplementasikan skills melalui AGENTS.md dan Agent Skills — me
 SKILL.md bukan hanya fitur satu tool. Ia sedang menjadi **open standard** yang diadopsi secara luas.
 
 **Mintlify** mengumumkan bahwa semua dokumentasi yang dihosting di platform mereka otomatis menghasilkan file `/.well-known/skills/default/SKILL.md`. Setiap kali dokumentasi diupdate, SKILL.md-nya diregenerasi otomatis. Artikel lengkap: [mintlify.com/blog/skill-md](https://www.mintlify.com/blog/skill-md).
+
+> [!TIP]
+> Standar `/.well-known/skills/` ini memungkinkan AI agent untuk "menemukan" kemampuan sebuah website secara otomatis hanya dengan membaca root directory-nya, mirip seperti `robots.txt` atau `sitemap.xml`.
 
 **Vercel** merilis `skills` CLI — tool untuk menginstall skills dari URL ke berbagai agent sekaligus:
 
@@ -274,9 +275,9 @@ npx skills@latest add mattpocock/skills/grill-me
 
 Hanya tiga kalimat, tapi sangat impactful:
 
-> *"Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one by one. And finally, if a question can be answered by exploring the code base, explore the code base instead."*
+> _"Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one by one. And finally, if a question can be answered by exploring the code base, explore the code base instead."_
 
-Konsep "design tree" dari buku *The Design of Design* oleh Frederick P. Brooks — kamu harus menjelajahi semua cabang keputusan sebelum commit ke kode. Skill ini memaksa Claude untuk bertanya 16-50 pertanyaan sebelum mulai coding.
+Konsep "design tree" dari buku _The Design of Design_ oleh Frederick P. Brooks — kamu harus menjelajahi semua cabang keputusan sebelum commit ke kode. Skill ini memaksa Claude untuk bertanya 16-50 pertanyaan sebelum mulai coding.
 
 ### 2. `/write-a-prd` — From Conversation to Document
 
@@ -300,7 +301,7 @@ Mengubah PRD menjadi Kanban board berisi independent issues. Setiap issue adalah
 npx skills@latest add mattpocock/skills/tdd
 ```
 
-Memaksa agent mengikuti red-green-refactor loop. Skill ini berisi filosofi tentang refactoring, mocking, dan deep modules. Menurut Matt: *"Doing really good TDD has been the most consistent way to improve agent outputs."*
+Memaksa agent mengikuti red-green-refactor loop. Skill ini berisi filosofi tentang refactoring, mocking, dan deep modules. Menurut Matt: _"Doing really good TDD has been the most consistent way to improve agent outputs."_
 
 ### 5. `/improve-codebase-architecture` — Making Code Agent-Friendly
 
@@ -308,7 +309,7 @@ Memaksa agent mengikuti red-green-refactor loop. Skill ini berisi filosofi tenta
 npx skills@latest add mattpocock/skills/improve-codebase-architecture
 ```
 
-Mengeksplorasi codebase untuk menemukan "deepening opportunities" — tempat di mana shallow modules bisa diperdalam untuk membuat testing lebih mudah dan agent output lebih baik. *"If you have a garbage code base, the AI will produce garbage within that code base."*
+Mengeksplorasi codebase untuk menemukan "deepening opportunities" — tempat di mana shallow modules bisa diperdalam untuk membuat testing lebih mudah dan agent output lebih baik. _"If you have a garbage code base, the AI will produce garbage within that code base."_
 
 ---
 
@@ -321,10 +322,10 @@ Berdasarkan praktik terbaik dari komunitas dan artikel [Deep Dive: SKILL.md](htt
 ```markdown
 ## Component Selection
 
-| Need | Use |
-|------|-----|
-| Hide optional details | `<Accordion>` |
-| Sequential steps | `<Steps>` |
+| Need                       | Use           |
+| -------------------------- | ------------- |
+| Hide optional details      | `<Accordion>` |
+| Sequential steps           | `<Steps>`     |
 | Code in multiple languages | `<CodeGroup>` |
 ```
 
@@ -332,10 +333,12 @@ Berdasarkan praktik terbaik dari komunitas dan artikel [Deep Dive: SKILL.md](htt
 
 ```markdown
 ## What agents can do
+
 - Update content in any .mdx file
 - Add new pages to existing sections
 
 ## Requires human action
+
 - Custom domain setup (needs DNS access)
 - Billing changes (needs dashboard access)
 ```
@@ -408,7 +411,7 @@ Kembali ke peringatan Palo Alto Networks — ada beberapa prinsip keamanan yang 
 
 Seperti yang diargumentasikan dalam artikel [What Are Agent Skills](https://medium.com/@tahirbalarabe2/what-are-agent-skills-c7793b206daf) oleh Tahir Balarabe:
 
-> *"The value shifts from the raw capability of the AI to the quality of the Skills built for it. The AI is the engine. The Skills are the specialized attachments."*
+> _"The value shifts from the raw capability of the AI to the quality of the Skills built for it. The AI is the engine. The Skills are the specialized attachments."_
 
 Model LLM yang lebih besar tidak selalu lebih baik untuk task spesifik. Model yang lebih kecil dengan konteks yang tepat — termasuk SKILL.md yang relevan — sering menghasilkan output yang lebih akurat dan lebih konsisten.
 
@@ -429,15 +432,18 @@ graph TD
 
 ## Penutup
 
-Dari drama rebranding Clawdbot → Moltbot → OpenClaw, peringatan keamanan dari Palo Alto Networks, hingga lahirnya SKILL.md sebagai open standard yang diadopsi Mintlify, Vercel, OpenCode, Claude, Cursor, dan Gemini CLI — ada satu benang merah yang jelas: **ekosistem AI agent sedang membangun infrastruktur untuk membuat AI bekerja lebih presisi dan lebih aman**.
+Dari drama rebranding Clawdbot → Moltbot → OpenClaw, peringatan keamanan dari Palo Alto Networks, hingga lahirnya SKILL.md sebagai open standard yang diadopsi Mintlify, Vercel, OpenCode, Claude, Cursor, dan Gemini CLI — ada satu benang merah yang jelas: ekosistem AI agent sedang membangun infrastruktur untuk membuat AI bekerja lebih presisi dan lebih aman.
 
 Bukan dengan membuat model lebih besar. Tapi dengan memberikan konteks yang lebih tepat, pada waktu yang tepat, dalam format yang dioptimalkan untuk mesin — sambil membangun governance yang setara dengan power yang diberikan.
 
-SKILL.md adalah langkah kecil tapi signifikan dalam arah itu.
+SKILL.md adalah langkah kecil tapi signifikan dalam arah itu. Dan yang menarik adalah ia lahir bukan dari lab riset besar, tapi dari komunitas developer yang frustrasi dengan AI yang terlalu sering salah — lalu memutuskan untuk memperbaikinya sendiri.
+
+Familiar? Itu memang cara open source bekerja.
 
 ---
 
 **Referensi lengkap:**
+
 - [What are Clawdbot, Moltbot, and OpenClaw? — Medium](https://medium.com/data-science-collective/what-are-clawdbot-moltbot-and-openclaw-7cc9faaae6c3)
 - [Why Moltbot May Signal the Next AI Security Crisis — Palo Alto Networks](https://www.paloaltonetworks.com/blog/network-security/why-moltbot-may-signal-ai-crisis/)
 - [Moltbot Overview — AIMultiple](https://aimultiple.com/moltbot)

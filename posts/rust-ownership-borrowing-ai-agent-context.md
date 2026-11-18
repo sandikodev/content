@@ -4,7 +4,19 @@ description: "Bagaimana model ownership Rust secara alami mencegah bug yang umum
 date: 2026-04-05T06:30:00+07:00
 author: "Sandikodev"
 categories: ["Rust", "AI Engineering", "Software Engineering"]
-tags: ["rust", "ownership", "borrowing", "ai-agent", "context", "state", "kiro-cli", "tool-execution", "memory"]
+tags:
+  [
+    "rust",
+    "ownership",
+    "borrowing",
+    "ai-agent",
+    "context",
+    "state",
+    "kiro-cli",
+    "tool-execution",
+    "memory",
+  ]
+image: "/images/blog/rust-ownership.webp"
 draft: true
 ai_features:
   mermaid_diagrams: true
@@ -93,7 +105,7 @@ fn read_file_tool(
     line_tracker.entry(path.to_string())
         .or_insert_with(FileLineTracker::new)
         .mark_read(0..50);
-    
+
     ToolResult::success(/* ... */)
 }
 ```
@@ -145,7 +157,7 @@ for tool_call in tool_calls {
         mtime_cache: &mut session.mtime_cache,
         working_dir: &session.working_dir,
     };
-    
+
     let result = tool_manager.execute(tool_call, &mut ctx)?;
     session.tool_results.insert(tool_call.id.clone(), result);
 }
@@ -185,7 +197,7 @@ Bandingkan dengan JavaScript, di mana locking adalah konvensi yang bisa diabaika
 ```typescript
 class SharedToolState {
   resultsCache: Map<string, ToolResult> = new Map();
-  
+
   async cacheResult(id: string, result: ToolResult) {
     // Tidak ada mekanisme locking — ini race condition menunggu terjadi
     this.resultsCache.set(id, result);
@@ -229,13 +241,13 @@ Perhatikan bahwa Tool A dan Tool B tidak bisa memegang `&mut ctx` secara bersama
 
 ## Perbandingan: Rust vs TypeScript untuk AI Agent State
 
-| Aspek | TypeScript | Rust |
-|---|---|---|
-| Shared mutable state | Default behavior | Dilarang tanpa `Arc<Mutex<T>>` |
-| Race condition detection | Runtime (atau tidak terdeteksi) | Compile-time |
-| Stale reference | Mungkin terjadi | Tidak mungkin (lifetime) |
-| Locking | Konvensi | Kontrak tipe |
-| Refactoring safety | Perlu test coverage | Compiler sebagai safety net |
+| Aspek                    | TypeScript                      | Rust                           |
+| ------------------------ | ------------------------------- | ------------------------------ |
+| Shared mutable state     | Default behavior                | Dilarang tanpa `Arc<Mutex<T>>` |
+| Race condition detection | Runtime (atau tidak terdeteksi) | Compile-time                   |
+| Stale reference          | Mungkin terjadi                 | Tidak mungkin (lifetime)       |
+| Locking                  | Konvensi                        | Kontrak tipe                   |
+| Refactoring safety       | Perlu test coverage             | Compiler sebagai safety net    |
 
 Di TypeScript, kamu bisa menulis kode yang benar — tapi kamu harus disiplin, menulis test yang tepat, dan berharap tidak ada edge case yang terlewat. Di Rust, kamu tidak punya pilihan selain menulis kode yang benar. Compiler tidak akan membiarkanmu.
 
@@ -267,4 +279,4 @@ Borrow checker bukan hambatan. Borrow checker adalah pair programmer yang tidak 
 
 ---
 
-*Artikel ini adalah bagian dari seri Rust Cookbook untuk AI Engineer. Seri ini membahas bagaimana konsep-konsep Rust yang sering dianggap "terlalu low-level" ternyata sangat relevan untuk membangun sistem AI yang robust.*
+_Artikel ini adalah bagian dari seri Rust Cookbook untuk AI Engineer. Seri ini membahas bagaimana konsep-konsep Rust yang sering dianggap "terlalu low-level" ternyata sangat relevan untuk membangun sistem AI yang robust._
